@@ -1,2 +1,9 @@
 .meteor/local
 .meteor/meteorite
+.DS_Store
+.tern_project
+.idea/
+
+/mup.json
+/settings.json
+/server/settings.json
