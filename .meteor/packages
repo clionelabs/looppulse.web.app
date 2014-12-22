@@ -8,4 +8,6 @@ autopublish
 insecure
 fourseven:scss
 coffeescript
+mrt:firebase
+iron:router
 
