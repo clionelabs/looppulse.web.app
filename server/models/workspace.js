@@ -1,19 +1,19 @@
 /**
- * This is the server extension on the Application class {@link lib/models/application.js}
+ * This is the server extension on the Workspace class {@link lib/models/workspace.js}
  */
 
 /**
- * Authenticate application; Check appId and apiToken.
+ * Authenticate workspace; Check appId and appToken.
  *
- * @param {String} appId {@link Application}
- * @param {String} apiToken
+ * @param {String} appId
+ * @param {String} appTokeni
  * @param {Object} sessionInfo {visitorUUID: xxx, sdk: xxx, device: xxx}
  *
  * @return {Object} response in JSON
  */
-Application.authenticate = function(appId, apiToken, sessionInfo) {
-  var app = Applications.findOne({_id: appId, apiToken: apiToken});
-  if (!app) {
+Workspace.authenticate = function(appId, appToken, sessionInfo) {
+  var workspace = Workspaces.findOne({"applications.appId": appId, "applications.appToken": appToken});
+  if (!workspace) {
     return {authenticated: false, statusCode: 401};
   }
 
@@ -24,7 +24,7 @@ Application.authenticate = function(appId, apiToken, sessionInfo) {
 
   // Create session data
   var session = Sessions.create(
-    app._id,
+    workspace._id,
     sessionInfo.visitorUUID,
     sessionInfo.sdk,
     sessionInfo.device);

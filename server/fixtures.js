@@ -1,21 +1,21 @@
 /**
- * This class handle Importing fixtures for boostrapping application
+ * This class handle Importing testing fixtures
  * Mostly for development/ debugging purposes
  */
 Fixtures = {};
 
-Fixtures.prefix = "==FIXTURE=="; // To append application name with prefix, so we know how to remove fixture data.
+Fixtures.prefix = "==FIXTURE=="; // To append workspace name with prefix, so we know how to remove fixture data.
 
 /**
  * Clear all existing fixtures
  */
 Fixtures.clear = function() {
-  var appSelector = {"name": {$regex: "^"+Fixtures.prefix}};
-  var apps = Applications.find(appSelector).fetch();
-  _.each(apps, function(app) {
-    console.log("[Fixtures] Removing: ", JSON.stringify(app));
-    Pois.remove({appId: app.id});
-    Applications.remove({_id: app.id});
+  var wsSelector = {"name": {$regex: "^"+Fixtures.prefix}};
+  var workspaces = Workspaces.find(wsSelector).fetch();
+  _.each(workspaces, function(workspace) {
+    console.log("[Fixtures] Removing: ", JSON.stringify(workspace));
+    Pois.remove({wsId: workspace.id});
+    Workspaces.remove({_id: workspace.id});
   });
 }
 
@@ -23,17 +23,18 @@ Fixtures.clear = function() {
  * Load fixture data from json file
  */
 Fixtures.load = function() {
-  var appsFixture = JSON.parse(Assets.getText("fixtures.json"));
+  var fixture = JSON.parse(Assets.getText("fixtures.json"));
+  var workspacesFixture = fixture.workspaces;
 
-  _.each(appsFixture, function(appFixture) {
-    var application = new Application();
-    application.init(Fixtures.prefix + appFixture.appName, appFixture.appToken);
-    var appId = application.save();
-    console.log("[Fixtures] Importing appId: ", appId);
+  _.each(workspacesFixture, function(workspaceFixture) {
+    var workspace = new Workspace();
+    workspace.init(Fixtures.prefix + workspaceFixture.wsName, workspaceFixture.applications);
+    var wsId = workspace.save();
+    console.log("[Fixtures] Importing wsId: ", wsId);
 
-    _.each(appFixture.pois, function(poiFixture) {
+    _.each(workspaceFixture.pois, function(poiFixture) {
       var poi = new Poi();
-      poi.init(appId, poiFixture.name, poiFixture.beacon);
+      poi.init(wsId, poiFixture.name, poiFixture.beacon);
       poi.save();
     });
   });
