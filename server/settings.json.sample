@@ -1,0 +1,8 @@
+{
+  "firebase": {
+    "beaconEvents": "FIREBASE_REF_URL_FOR_BEACON_EVENTS"
+  },
+  "clearFirebaseEvents": false,
+
+  "loadFixtures": true
+}
