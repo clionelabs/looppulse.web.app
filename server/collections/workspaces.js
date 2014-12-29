@@ -21,10 +21,15 @@ Workspace.authenticate = function(appId, appToken, sessionInfo) {
   var visitor = Visitors.findOneOrCreate(workspace._id, sessionInfo.visitorUUID);
   var session = Sessions.create(workspace._id, visitor._id, sessionInfo.sdk, sessionInfo.device);
 
+  var beacons = _.reduce(Pois.findByWsId(workspace._id), function(memo, poi) {
+    memo.push(poi.beacon);
+    return memo;
+  }, []);
+
   var response = {
     authenticate: true,
     statusCode: 200,
-    beacons: [], // TODO
+    beacons: beacons,
     session: session._id
   };
   return response;
