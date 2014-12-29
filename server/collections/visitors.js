@@ -12,11 +12,12 @@
  * @return {Visitor} visitor
  */
 Visitors.findOneOrCreate = function(wsId, uuid) {
-  var visitor = Visitors.findOne({wsId: wsId, uuid: uuid});
+  var visitorDoc = {wsId: wsId, uuid: uuid};
+
+  var visitor = Visitors.findOne(visitorDoc);
   if (visitor) return visitor;
 
-  visitor = new Visitor();
-  visitor.init(wsId, uuid, '');
+  visitor = new Visitor(visitorDoc);
   visitor.save();
-  return Visitors.findOne({_id: visitor._id});
+  return visitor;
 }

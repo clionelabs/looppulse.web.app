@@ -1,5 +1,5 @@
 /**
- * This is the server extension on the Workspace class {@link lib/models/workspace.js}
+ * This is the server extension on the Workspace class {@link lib/collections/workspaces.js}
  */
 
 /**
@@ -17,18 +17,15 @@ Workspace.authenticate = function(appId, appToken, sessionInfo) {
     return {authenticated: false, statusCode: 401};
   }
 
-  var response = {};
-  response["authenticated"] = true;
-  response["statusCode"] = 200;
-  response["beacons"] = []; // TODO
-
   // Create session data
-  var session = Sessions.create(
-    workspace._id,
-    sessionInfo.visitorUUID,
-    sessionInfo.sdk,
-    sessionInfo.device);
-  response["session"] = session._id;
+  var visitor = Visitors.findOneOrCreate(workspace._id, sessionInfo.visitorUUID);
+  var session = Sessions.create(workspace._id, visitor._id, sessionInfo.sdk, sessionInfo.device);
 
+  var response = {
+    authenticate: true,
+    statusCode: 200,
+    beacons: [], // TODO
+    session: session._id
+  };
   return response;
 };

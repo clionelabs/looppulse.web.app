@@ -3,7 +3,7 @@
  */
 Settings = {
   firebase: {
-    beacon_events: null,
+    beaconEvents: null,
   },
   clearFirebaseEvents: true,
   loadFixtures: false

@@ -4,6 +4,11 @@
       "wsName": "Demo",
       "applications": [
         {
+          "appName": "Android SDK",
+          "appId": "hashkey_android_appId",
+          "appToken": "hashkey_android_token"
+        },
+        {
           "appName": "Simulator",
           "appId": "hashkey_appId",
           "appToken": "hashkey_token"

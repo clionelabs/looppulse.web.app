@@ -15,7 +15,7 @@ Processing.start = function() {
  * Observe beacon events from firebase and insert them into DB
  */
 Processing._observeBeaconEvents = function() {
-  var firebaseRef = new Firebase(Settings.firebase.beacon_events);
+  var firebaseRef = new Firebase(Settings.firebase.beaconEvents);
   firebaseRef.on("child_added", Meteor.bindEnvironment(function(snapshot) {
     BeaconEvents.insertFromFBSnapshot(snapshot);
     if (Settings.clearFirebaseEvents) {

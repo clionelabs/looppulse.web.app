@@ -14,8 +14,8 @@ Fixtures.clear = function() {
   var workspaces = Workspaces.find(wsSelector).fetch();
   _.each(workspaces, function(workspace) {
     console.log("[Fixtures] Removing: ", JSON.stringify(workspace));
-    Pois.remove({wsId: workspace.id});
-    Workspaces.remove({_id: workspace.id});
+    Pois.remove({wsId: workspace._id});
+    Workspaces.remove({_id: workspace._id});
   });
 }
 
@@ -27,14 +27,15 @@ Fixtures.load = function() {
   var workspacesFixture = fixture.workspaces;
 
   _.each(workspacesFixture, function(workspaceFixture) {
-    var workspace = new Workspace();
-    workspace.init(Fixtures.prefix + workspaceFixture.wsName, workspaceFixture.applications);
+    var workspace = new Workspace({
+      name: Fixtures.prefix +  workspaceFixture.wsName,
+      applications: workspaceFixture.applications 
+    });
     var wsId = workspace.save();
     console.log("[Fixtures] Importing wsId: ", wsId);
 
     _.each(workspaceFixture.pois, function(poiFixture) {
-      var poi = new Poi();
-      poi.init(wsId, poiFixture.name, poiFixture.beacon);
+      var poi = new Poi({wsId: wsId, name: poiFixture.name, beacon: poiFixture.beacon});
       poi.save();
     });
   });
