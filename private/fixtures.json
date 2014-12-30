@@ -12,11 +12,32 @@
           "token": "sdlfkjwoeif"
         }
       ],
-      "pois": [
-        {"name": "poi1", "beacon": {"uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe", "major": 1, "minor": 1}},
-        {"name": "poi2", "beacon": {"uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe", "major": 1, "minor": 2}},
-        {"name": "poi3", "beacon": {"uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe", "major": 1, "minor": 3}}
-      ]
+      "pois": {
+        "name": { "one" : "restaurant", "many" :"restaurants" },
+        "list": [
+          {"name": "poi1",
+            "beacon": {
+              "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
+              "major": 1,
+              "minor": 1
+            }
+          },
+          {"name": "poi2",
+            "beacon": {
+              "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
+              "major": 1,
+              "minor": 2
+            }
+          },
+          {"name": "poi3",
+            "beacon": {
+              "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
+              "major": 1,
+              "minor": 3
+            }
+          }
+        ]
+      }
     }
   ]
 }
