@@ -21,7 +21,7 @@ Router.map(function() {
       var token = this.request.headers["x-auth-token"];
       var applicationId = this.params.applicationId;
       var session = this.request.body.session;
-      var authenticatedResponse = Workspace.authenticate(applicationId, token, session);
+      var authenticatedResponse = Applications.authenticate(applicationId, token, session);
       if (authenticatedResponse.statusCode != 200) {
         console.warn("[API] Application " + applicationId +
           " failed to authenticate with token " + token +

@@ -1,17 +1,15 @@
 {
   "workspaces": [
     {
-      "wsName": "Demo",
+      "name": "Demo",
       "applications": [
         {
-          "appName": "Android SDK",
-          "appId": "hashkey_android_appId",
-          "appToken": "hashkey_android_token"
+          "name": "Android SDK",
+          "token": "wefijoweifj"
         },
         {
-          "appName": "Simulator",
-          "appId": "hashkey_appId",
-          "appToken": "hashkey_token"
+          "name": "Simulator",
+          "token": "sdlfkjwoeif"
         }
       ],
       "pois": [
