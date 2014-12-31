@@ -1,0 +1,13 @@
+@import 'variable';
+nav.navbar-default {
+  background-color: $color-header;
+  height:$dimen-header-height;
+}
+
+nav.navbar-default .container-fluid .navbar-brand {
+  background-image: url("/images/logo.png");
+  background-size: contain;
+  margin:17.5px 2.5px;
+  width:$dimen-header-height - 35px;
+  height:$dimen-header-height - 35px;
+}
