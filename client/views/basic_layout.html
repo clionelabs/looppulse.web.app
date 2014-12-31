@@ -1,0 +1,8 @@
+<template name="basicLayout">
+    {{> notifications}}
+    {{> yield region='header'}}
+    <div id="content" role="main">
+        {{> yield}}
+    </div>
+    {{> yield region='footer'}}
+</template>
