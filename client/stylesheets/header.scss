@@ -1,74 +1,64 @@
 @import 'variable';
 
-body {
-  /* all */
 
-  font-size:20px;
+/* header navbar */
 
-  /* navbar / header */
+nav.navbar-default {
+  background: $dimen-header-bg;
+  height:$dimen-header-height;
+  border-color: transparent transparent  #e7e7e7 transparent ;
+  border-radius: 0;
+  margin-bottom: 0;
+}
 
-  nav.navbar-default {
-    background-color: $lp-blue;
-    height:$dimen-header-height;
-    * {
-      height:$dimen-header-height;
-    }
-  }
-
-  nav.navbar-default .container-fluid {
-    .navbar-collapse {
-      ul.navbar-nav {
-        li {
-          > a {
-            background-color: transparent;
-            background-repeat: repeat-x;
-            background-position: bottom;
-            color: $lp-white;
-            line-height: 43px;
-          }
-          &.active > a {
-            background-image: url("/images/header_link_active.png");
-          }
+nav.navbar-default .container-fluid {
+  .navbar-collapse {
+    ul.navbar-nav {
+      li {
+        > a {
+          background-color: transparent;
+          background-repeat: repeat-x;
+          background-position: bottom;
+          color: $lp-white;
+          line-height: 43px;
+        }
+        &.active > a {
+          background-image: url("/images/header_link_active.png");
         }
       }
     }
-    .navbar-brand {
-      background-image: url("/images/logo.png");
-      background-size: contain;
-      margin:17.5px 25.5px 17.5px 2.5px;
-      width:$dimen-logo-size;
-      height:$dimen-logo-size;
-    }
-    .navbar-right #settings {
-      background-image: url("/images/setting.png");
-      background-size: contain;
-      margin: 22.5px 0 22.5px 0;
-      width:$dimen-icon-size;
-      height:$dimen-icon-size;
-      display:block;
-    }
   }
-
-  /* main */
-
-  main {
-    height: 100% - #{$dimen-footer-height} - #{$dimen-header-height};
+  .navbar-brand {
+    background-image: url("/images/logo.png");
+    background-size: contain;
+    margin:17.5px 25.5px 17.5px 2.5px;
+    width:$dimen-logo-size;
+    height:$dimen-logo-size;
   }
+  .navbar-right #settings {
+    background-image: url("/images/setting.png");
+    background-size: contain;
+    margin: 22.5px 0 22.5px 0;
+    width:$dimen-icon-size;
+    height:$dimen-icon-size;
+    display:block;
+  }
+}
 
-  /* footer */
+/* footer */
 
-  footer {
-    background-color: $lp-dark-grey;
-    bottom: 0;
-    width: 100%;
-    height: $dimen-footer-height;
-    position: absolute;
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: $dimen-footer-height;
+  background-color: $dimen-footer-bg;
 
-    p {
-      color: $lp-white;
-      margin: 0;
-      font-size: 0.75em;
-      line-height: $dimen-footer-height;
-    }
+  p {
+    color: $lp-white;
+    margin: 0;
+    font-size: 0.75em;
+    line-height: $dimen-footer-height;
   }
 }
