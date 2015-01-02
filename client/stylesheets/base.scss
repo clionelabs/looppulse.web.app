@@ -1,0 +1,13 @@
+@import 'variable';
+// Base Style go here
+/* Sticky footer styles by bootstrap */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: $dimen-footer-height;
+  /* Other Setting */
+  font-size: 20px;
+}

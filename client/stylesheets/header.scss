@@ -1,0 +1,60 @@
+@import 'variable';
+
+/* header navbar */
+.navbar-dimen { //same specificity as `.navbar-default`, but it will override the default as it appear later
+  background: $dimen-header-bg;
+  height: $dimen-header-height;
+  border-color: transparent transparent #e7e7e7 transparent;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+.navbar-dimen.navbar { //better meaning with higher level of specificity
+  .navbar-collapse {
+    ul.navbar-nav {
+      li {
+        > a {
+          background-color: transparent;
+          background-repeat: repeat-x;
+          background-position: bottom;
+          color: $lp-white;
+          line-height: 43px; //height of the element
+        }
+        &.active > a {
+          background-image: url("/images/header_link_active.png");
+        }
+      }
+    }
+  }
+  .navbar-brand {
+    background-image: url("/images/logo.png");
+    background-size: contain;
+    margin: 15px 25px 17px 2px;
+    width: $dimen-logo-size;
+    height: $dimen-logo-size;
+  }
+  .navbar-right .navbar-settings {
+    background-image: url("/images/setting.png");
+    background-size: contain;
+    margin: 22px 0;
+    width: $dimen-icon-size;
+    height: $dimen-icon-size;
+    display: block;
+  }
+}
+
+/* footer */
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: $dimen-footer-height;
+  background-color: $dimen-footer-bg;
+
+  p {
+    color: $lp-white;
+    margin: 0;
+    font-size: 0.75em;
+    line-height: $dimen-footer-height;
+  }
+}

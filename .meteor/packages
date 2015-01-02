@@ -5,8 +5,8 @@
 
 meteor-platform
 fourseven:scss
-coffeescript
 mrt:firebase
 iron:router
 
 gfk:notifications
+twbs:bootstrap
