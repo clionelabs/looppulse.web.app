@@ -13,15 +13,19 @@ nav.navbar-default .container-fluid {
   .navbar-collapse {
     ul.navbar-nav {
       li {
-        &.active > a {
+        > a {
           background-color: transparent;
-          background-image: url("/images/header_link_active.png");
           background-repeat: repeat-x;
           background-position: bottom;
 
           color: $looppulse-white;
           line-height: 43px;
           font-size: $font-size-header;
+
+        }
+
+        &.active > a {
+          background-image: url("/images/header_link_active.png");
         }
 
       }
@@ -36,5 +40,14 @@ nav.navbar-default .container-fluid {
     margin:17.5px 25.5px 17.5px 2.5px;
     width:$dimen-header-height - 35px;
     height:$dimen-header-height - 35px;
+  }
+
+  .navbar-right #settings {
+    background-image: url("/images/setting.png");
+    background-size: contain;
+    margin: 22.5px 0 22.5px 0;
+    width:$dimen-header-height - 45px;
+    height:$dimen-header-height - 45px;
+    display:block;
   }
 }
