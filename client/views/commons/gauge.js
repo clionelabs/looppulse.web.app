@@ -1,11 +1,12 @@
 /**
- * Template functions related to template "pois"
+ * Template functions related to template "gauge"
  */
 Template.gauge.rendered = function() {
 
     var width = 240;
     var height = width;
 
+    //TODO maybe merge to demoData to support color + number pair?
     var colorsMulti = ["#1A48AF", "#3D78FB", "#82BCFF", "#BCDBFF"];
     var colorsSingle = ["#3D78FB"];
     var convertToPieData = function(data) {
@@ -34,14 +35,14 @@ Template.gauge.rendered = function() {
     var model = demoData; //TODO replace with realData
     var colors = model.percentage.length > 1 ? colorsMulti : colorsSingle;
 
-    var svg = d3.select("svg.circular");
+    var gauge = d3.select("div.gauge");
+    var gaugeInfo = gauge.select("div.info");
+
+    var svg = gauge.selectAll("svg.circular");
 
     var arc = d3.svg.arc()
             .outerRadius(width / 2)
             .innerRadius((width / 2) - 10);
-
-
-    console.log(convertToPieData(model));
 
     var path = svg.selectAll("path")
             .data(convertToPieData(model))
@@ -49,5 +50,30 @@ Template.gauge.rendered = function() {
             .attr("d", arc)
             .attr("fill", function(d,i) { return colors[i]; })
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    var totalText = gaugeInfo
+                        .selectAll("div.total")
+                        .data([model]) //convert to array because of d3 convention
+                        .enter()
+                        .append("div")
+                        .attr("class", "text total")
+                        .text(function(d) { return d.total; });
+
+    var titleText = gaugeInfo
+        .selectAll("div.title")
+        .data([model]) //convert to array because of d3 convention
+        .enter()
+        .append("div")
+        .attr("class", "text title")
+        .text(function(d) { return d.title; });
+
+
+    var changeText = gaugeInfo
+        .selectAll("div.change")
+        .data([model]) //convert to array because of d3 convention
+        .enter()
+        .append("div")
+        .attr("class", function(d) { return "text change " + (d.delta ? "plus" : "minus"); })
+        .text(function(d) { return d.change + "%"; });
 
 };
