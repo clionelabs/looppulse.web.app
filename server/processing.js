@@ -7,16 +7,32 @@ Processing = {};
  * Start background processing
  */
 Processing.start = function() {
-  Processing._observeBeaconEvents();
+  Processing._authenticateFirebase();
 }
 
 /**
  * @private
- * Observe beacon events from firebase and insert them into DB
  */
-Processing._observeBeaconEvents = function() {
-  var firebaseRef = new Firebase(Settings.firebase.beaconEvents);
-  firebaseRef.on("child_added", Meteor.bindEnvironment(function(snapshot) {
+Processing._authenticateFirebase = function() {
+  var firebaseRef = new Firebase(Settings.firebase.root);
+  firebaseRef.auth(Settings.firebase.secret, Meteor.bindEnvironment(function(error, authData) {
+    if (error) {
+      console.error("[Processing] failed to authenticate firebase. Error: ", error);
+    } else {
+      Workspaces.find().observe({
+        "added": function(workspace) {
+          Processing._observeWorkspaceEvents(workspace);
+        }
+      });
+    }
+  }));
+}
+
+Processing._observeWorkspaceEvents = function(workspace) {
+  var firebasePaths = workspace.getFirebaseEventPaths();
+  var beaconEventsRef = new Firebase(firebasePaths.beaconEvents);
+  console.log("[Processing] observing", firebasePaths.beaconEvents);
+  beaconEventsRef.on("child_added", Meteor.bindEnvironment(function(snapshot) {
     BeaconEvents.insertFromFBSnapshot(snapshot);
     if (Settings.clearFirebaseEvents) {
       snapshot.ref().remove();
