@@ -1,5 +1,6 @@
 @import "variable";
 
+<<<<<<< HEAD
 .gauge {
 
   width:$dimen-gauge-width;
@@ -40,5 +41,13 @@
     .glyphicon-user {
       font-size: 1.875em;
     }
+=======
+svg.circular {
+  margin:0 auto;
+
+  circle {
+    stroke: $lp-blue;
+    fill: transparent;
+>>>>>>> Added gauge circle
   }
 }
