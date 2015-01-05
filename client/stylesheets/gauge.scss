@@ -1,0 +1,10 @@
+@import "variable";
+
+svg.circular {
+  margin:0 auto;
+
+  circle {
+    stroke: $lp-blue;
+    fill: transparent;
+  }
+}
