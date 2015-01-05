@@ -7,7 +7,7 @@ Template.gauge.rendered = function() {
     var height = width;
 
     var colorsMulti = ["#1A48AF", "#3D78FB", "#82BCFF", "#BCDBFF"];
-    var colorsSingle = ["#4A90E2"];
+    var colorsSingle = ["#3D78FB"];
     var convertToPieData = function(data) {
         var _totalPercentage = _.reduce(data.percentage, function(memo, d) {
         return memo + d;

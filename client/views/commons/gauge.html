@@ -1,6 +1,14 @@
 <template name="gauge">
-    <svg class="circular" width="240px" height="240px">
-        <circle cx="120px" cy="120px" r="115px">
-        </circle>
-    </svg>
+    <div class="gauge">
+        <svg class="circular">
+            <circle cx="120px" cy="120px" r="115px">
+            </circle>
+        </svg>
+        <div class="info">
+            <div class="text glyphicon glyphicon-user"></div>
+            <div class="text total">10,204</div>
+            <div class="text title">CURRENT</div>
+            <div class="text change minus">-23%</div>
+        </div>
+    </div>
 </template>
