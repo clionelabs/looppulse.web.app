@@ -1,7 +1,13 @@
 {
   "firebase": {
-    "beaconEvents": "FIREBASE_REF_URL_FOR_BEACON_EVENTS"
+    "root": "FIREBASE_REF_URL",
+    "secret": "FIREBASE_SECRET",
+    "paths": {
+      "beaconEvents": "beacon_events",
+      "visitorEvents": "visitor_events"
+    }
   },
+
   "clearFirebaseEvents": false,
 
   "loadFixtures": true
