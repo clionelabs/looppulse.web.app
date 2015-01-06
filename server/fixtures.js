@@ -32,7 +32,7 @@ Fixtures.load = function() {
       var app = Applications.create(workspace._id, appFixture.name, appFixture.token);
     });
 
-    _.each(workspaceFixture.pois, function(poiFixture) {
+    _.each(workspaceFixture.pois.list, function(poiFixture) {
       var poi = Pois.create(workspace._id, poiFixture.name, poiFixture.beacon);
     });
   });
