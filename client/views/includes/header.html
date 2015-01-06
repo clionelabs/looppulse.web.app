@@ -11,6 +11,7 @@
               <a class="navbar-brand" href="/"></a>
           </div>
           <div id="looppulse-navbar-collapse" class="collapse navbar-collapse">
+              {{#if currentUser}}
               <ul class="nav navbar-nav">
                   <li class="active">
                       <a href="/pois">{{ poiName.many }}</a>
@@ -22,6 +23,16 @@
               <div class="navbar-right">
                   <a class="navbar-settings" href="/settings"></a>
               </div>
+
+              {{else}}
+              <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                  <li>
+                    <a href="/sign-in">Sign In</a>
+                  </li>
+                </ul>
+              </div>
+              {{/if}}
           </div>
       </div>
   </nav>
