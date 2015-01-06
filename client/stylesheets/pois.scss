@@ -1,9 +1,13 @@
 @import "variable";
 
 .total {
-  font-size: 2.7em;
-  font-weight: 300;
+  font-size: $dimen-em-h1;
+  font-weight: $dimen-font-weight-light;
   height:65px;
   line-height:65px;
 }
 
+.title {
+  font-size: $dimen-em-h3;
+
+}

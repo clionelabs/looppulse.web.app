@@ -62,7 +62,7 @@
 
       text {
         fill: $lp-blue;
-        font-size: 1.333em;
+        font-size: $dimen-em-h3;
       }
     }
   }
@@ -71,7 +71,7 @@
 
   .info {
     position: absolute;
-    top: 60px;
+    top: 70px;
     width: $dimen-gauge-width;
 
     .text {
@@ -90,7 +90,12 @@
       margin-top: 10px;
     }
     .glyphicon-user {
-      font-size: 1.875em;
+      font-size: $dimen-em-h2;
+    }
+
+    .change {
+      font-size: $dimen-em-h3;
+      font-weight: $dimen-font-weight-light;
     }
 =======
 svg.circular {
