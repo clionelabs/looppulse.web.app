@@ -1,6 +1,5 @@
 @import "variable";
 
-<<<<<<< HEAD
 .gauge {
 
   width:$dimen-gauge-width;
@@ -24,25 +23,25 @@
     .corner {
       &.top-left {
         text {
-          transform: translate(10px, 40px);
+          transform: translate(10px, 35px);
         }
       }
       &.top-right {
         transform: translate(206px,0px);
         text {
-          transform: translate(50px, 40px);
+          transform: translate(56px, 35px);
         }
       }
       &.bottom-right {
         transform: translate(206px,206px);
         text {
-          transform: translate(50px, 74px);
+          transform: translate(56px, 76px);
         }
       }
       &.bottom-left {
         transform: translate(0px,206px);
         text {
-          transform: translate(10px, 74px);
+          transform: translate(10px, 76px);
         }
       }
 
@@ -66,8 +65,6 @@
       }
     }
   }
-
-
 
   .info {
     position: absolute;
@@ -97,13 +94,5 @@
       font-size: $dimen-em-h3;
       font-weight: $dimen-font-weight-light;
     }
-=======
-svg.circular {
-  margin:0 auto;
-
-  circle {
-    stroke: $lp-blue;
-    fill: transparent;
->>>>>>> Added gauge circle
   }
 }
