@@ -25,7 +25,7 @@ Fixtures.load = function() {
   var workspacesFixture = fixture.workspaces;
 
   _.each(workspacesFixture, function(workspaceFixture) {
-    var workspace = Workspaces.create(Fixtures.prefix + workspaceFixture.name);
+    var workspace = Workspaces.create(Fixtures.prefix + workspaceFixture.name, workspaceFixture.pois.name);
     console.log("[Fixtures] Importing wsId: ", workspace._id);
 
     _.each(workspaceFixture.applications, function(appFixture) {

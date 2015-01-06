@@ -1,0 +1,44 @@
+@import "variable";
+
+.gauge {
+
+  width:$dimen-gauge-width;
+  height:$dimen-gauge-height;
+
+  svg.circular {
+    width:$dimen-gauge-width;
+    height:$dimen-gauge-height;
+    margin: 0 auto;
+    display: block;
+
+    circle {
+      stroke: $lp-blue;
+      fill: transparent;
+    }
+  }
+
+  .info {
+    position: absolute;
+    top: 35px;
+    width: $dimen-gauge-width;
+
+    .text {
+      text-align: center;
+      width: $dimen-gauge-width;
+    }
+
+    .minus {
+      color: $lp-red;
+    }
+    .plus {
+      color: $lp-green;
+    }
+
+    .title {
+      margin-top: 10px;
+    }
+    .glyphicon-user {
+      font-size: 1.875em;
+    }
+  }
+}

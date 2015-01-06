@@ -10,4 +10,5 @@ iron:router
 
 gfk:notifications
 twbs:bootstrap
+d3js:d3
 mrt:firebase-token-generator
