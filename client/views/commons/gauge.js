@@ -3,8 +3,11 @@
  */
 Template.gauge.rendered = function() {
 
-    var width = 240;
+    var width = 292;
     var height = width;
+
+    var circleWidth = 240;
+    var circleHeight = circleWidth;
 
     //TODO maybe merge to demoData to support color + number pair?
     var colorsMulti = ["#1A48AF", "#3D78FB", "#82BCFF", "#BCDBFF"];
@@ -39,17 +42,18 @@ Template.gauge.rendered = function() {
     var gaugeInfo = gauge.select("div.info");
 
     var svg = gauge.selectAll("svg.circular");
+    var circular = svg.select("g.circle");
 
     var arc = d3.svg.arc()
-            .outerRadius(width / 2)
-            .innerRadius((width / 2) - 10);
+            .outerRadius(circleWidth / 2)
+            .innerRadius((circleWidth / 2) - 10);
 
-    var path = svg.selectAll("path")
+    var path = circular.selectAll("path")
             .data(convertToPieData(model))
             .enter().append("path")
             .attr("d", arc)
             .attr("fill", function(d,i) { return colors[i]; })
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            .attr("transform", "translate(" + circleWidth / 2 + "," + circleHeight / 2 + ")");
 
     var totalText = gaugeInfo
                         .selectAll("div.total")

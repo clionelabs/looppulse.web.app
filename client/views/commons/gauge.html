@@ -1,8 +1,29 @@
 <template name="gauge">
     <div class="gauge">
         <svg class="circular">
-            <circle cx="120px" cy="120px" r="115px">
-            </circle>
+            <g class="corner top-left">
+                <polygon points="0,0 86,0 0,86"></polygon>
+                <!-- cannot use glyphicon class as text doesn't have 'content' attr -->
+                <text class="glyphicon">&#xe005;</text>
+            </g>
+            <g class="corner top-right">
+                <polygon points="0,0 86,0 86,86"></polygon>
+                <!-- cannot use glyphicon class as text doesn't have 'content' attr -->
+                <text class="glyphicon">&#xe162;</text>
+            </g>
+            <g class="corner bottom-right">
+                <polygon points="86,0 86,86 0,86"></polygon>
+                <!-- cannot use glyphicon class as text doesn't have 'content' attr -->
+                <text class="glyphicon">&#xe025;</text>
+            </g>
+            <g class="corner bottom-left">
+                <polygon points="0,0 86,86 0,86"></polygon>
+                <!-- cannot use glyphicon class as text doesn't have 'content' attr -->
+                <text class="glyphicon">&#xe185;</text>
+            </g>
+            <g class="circle">
+                <circle cx="120px" cy="120px" r="115px"></circle>
+            </g>
         </svg>
         <div class="info">
             <div class="text glyphicon glyphicon-user"></div>

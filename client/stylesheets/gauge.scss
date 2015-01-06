@@ -12,15 +12,66 @@
     margin: 0 auto;
     display: block;
 
-    circle {
-      stroke: $lp-blue;
-      fill: transparent;
+    g.circle {
+      transform: translate(26px,26px);
+
+      circle {
+        stroke: $lp-blue;
+        fill: transparent;
+      }
+    }
+
+    .corner {
+      &.top-left {
+        text {
+          transform: translate(10px, 40px);
+        }
+      }
+      &.top-right {
+        transform: translate(206px,0px);
+        text {
+          transform: translate(50px, 40px);
+        }
+      }
+      &.bottom-right {
+        transform: translate(206px,206px);
+        text {
+          transform: translate(50px, 74px);
+        }
+      }
+      &.bottom-left {
+        transform: translate(0px,206px);
+        text {
+          transform: translate(10px, 74px);
+        }
+      }
+
+      &:hover,&>.active {
+        polygon {
+          fill: $lp-blue;
+        }
+        text {
+          fill: $lp-white;
+        }
+      }
+
+      polygon {
+        fill: transparent;
+        stroke: transparent;
+      }
+
+      text {
+        fill: $lp-blue;
+        font-size: 1.333em;
+      }
     }
   }
 
+
+
   .info {
     position: absolute;
-    top: 35px;
+    top: 60px;
     width: $dimen-gauge-width;
 
     .text {
