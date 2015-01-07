@@ -35,6 +35,10 @@ Fixtures.load = function() {
     _.each(workspaceFixture.pois.list, function(poiFixture) {
       var poi = Pois.create(workspace._id, poiFixture.name, poiFixture.beacon);
     });
+
+    _.each(workspaceFixture.geofences, function(geofenceFixture) {
+      var geoFence = Geofences.create(workspace._id, geofenceFixture.lat, geofenceFixture.lng, geofenceFixture.radius);
+    });
   });
 }
 
