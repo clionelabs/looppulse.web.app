@@ -19,14 +19,14 @@
   margin-bottom: 30px;
 
   h1 {
-    font-size: $dimen-em-h1;
+    font-size: $dimen-h1-size;
     display:inline-block;
     font-weight: $dimen-font-weight-light;
     margin:0;
     padding:0;
   }
   .activity {
-    font-size: $dimen-em-h1;
+    font-size: $dimen-h1-size;
     font-weight: bolder;
     &.active {
       color: $lp-light-green;
@@ -39,7 +39,7 @@
   .btn-lp {
     background-color: $lp-blue;
     color: $lp-white;
-    font-size:$dimen-em-h3;
+    font-size:$dimen-h3-size;
     width:200px;
     height:50px;
     font-weight: $dimen-font-weight-light;
@@ -64,11 +64,11 @@
     }
 
     .detail {
-      font-size: $dimen-em-h1;
+      font-size: $dimen-h1-size;
     }
     .data-type-icon {
       width:55px;
-      font-size: $dimen-em-h2;
+      font-size: $dimen-h2-size;
       .glyphicon {
         line-height:55px;
       }
@@ -77,7 +77,7 @@
       width : 230px;
     }
     .title {
-      font-size: $dimen-em-h3;
+      font-size: $dimen-h3-size;
     }
   }
 
