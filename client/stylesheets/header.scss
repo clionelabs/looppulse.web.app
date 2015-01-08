@@ -7,7 +7,7 @@
   border-color: transparent transparent #e7e7e7 transparent;
   border-radius: 0;
   margin-bottom: 0;
-  font-size:$dimen-em-h3;
+  font-size:$dimen-h3-size;
 }
 .navbar-dimen.navbar { //better meaning with higher level of specificity
   .navbar-collapse {
@@ -55,7 +55,7 @@ footer {
   p {
     color: $lp-white;
     margin: 0;
-    font-size: $dimen-em-h4;
+    font-size: $dimen-h4-size;
     line-height: $dimen-footer-height;
   }
 }

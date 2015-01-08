@@ -61,7 +61,7 @@
 
       text {
         fill: $lp-blue;
-        font-size: $dimen-em-h3;
+        font-size: $dimen-h3-size;
       }
     }
   }
@@ -87,11 +87,11 @@
       margin-top: 10px;
     }
     .glyphicon-user {
-      font-size: $dimen-em-h2;
+      font-size: $dimen-h2-size;
     }
 
     .change {
-      font-size: $dimen-em-h3;
+      font-size: $dimen-h3-size;
       font-weight: $dimen-font-weight-light;
     }
   }
