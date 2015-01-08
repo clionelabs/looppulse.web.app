@@ -18,6 +18,7 @@
           background-repeat: repeat-x;
           background-position: bottom;
           color: $lp-white;
+          font-weight: $dimen-font-weight-light;
           line-height: 43px; //height of the element
         }
         &.active > a {

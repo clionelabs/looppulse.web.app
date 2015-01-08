@@ -10,4 +10,11 @@ body {
   margin-bottom: $dimen-footer-height;
   /* Other Setting */
   font-size: $dimen-font-size;
+  font-weight: $dimen-font-weight-light;
+  color:$lp-dark-grey;
+
+  .title {
+    font-weight: normal;
+  }
+
 }
