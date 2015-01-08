@@ -36,6 +36,10 @@ PoisMetric.prototype._publishCursor = function (sub) {
 PoisMetric.prototype._createAggregate = function () {
     var self = this;
     var subObj = {};
+    //TODO impl
+    subObj.wsName = "EZTable";
+    //TODO impl
+    subObj.activity = "active";
     subObj.count = self.pois.length;
     //TODO impl
     subObj.totalVisitors = 0;
@@ -43,8 +47,6 @@ PoisMetric.prototype._createAggregate = function () {
     subObj.interestedVisitors = 0;
     //TODO impl
     subObj.averageDwellTime = 0;
-    //TODO impl
-    subObj.newVisits = 0;
     //TODO impl
     subObj.pois = self.pois;
     return subObj;

@@ -11,15 +11,64 @@
     margin: 0 auto;
     display: block;
 
-    circle {
-      stroke: $lp-blue;
-      fill: transparent;
+    g.circle {
+      transform: translate(26px,26px);
+
+      circle {
+        stroke: $lp-blue;
+        fill: transparent;
+      }
+    }
+
+    .corner {
+      &.top-left {
+        text {
+          transform: translate(10px, 35px);
+        }
+      }
+      &.top-right {
+        transform: translate(206px,0px);
+        text {
+          transform: translate(56px, 35px);
+        }
+      }
+      &.bottom-right {
+        transform: translate(206px,206px);
+        text {
+          transform: translate(56px, 76px);
+        }
+      }
+      &.bottom-left {
+        transform: translate(0px,206px);
+        text {
+          transform: translate(10px, 76px);
+        }
+      }
+
+      &:hover,&>.active {
+        polygon {
+          fill: $lp-blue;
+        }
+        text {
+          fill: $lp-white;
+        }
+      }
+
+      polygon {
+        fill: transparent;
+        stroke: transparent;
+      }
+
+      text {
+        fill: $lp-blue;
+        font-size: $dimen-h3-size;
+      }
     }
   }
 
   .info {
     position: absolute;
-    top: 35px;
+    top: 70px;
     width: $dimen-gauge-width;
 
     .text {
@@ -38,7 +87,12 @@
       margin-top: 10px;
     }
     .glyphicon-user {
-      font-size: 1.875em;
+      font-size: $dimen-h2-size;
+    }
+
+    .change {
+      font-size: $dimen-h3-size;
+      font-weight: $dimen-font-weight-light;
     }
   }
 }

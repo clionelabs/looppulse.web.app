@@ -1,9 +1,84 @@
+/**
+ * This file includes /pois and /poi as they are very similar
+ */
 @import "variable";
 
 .total {
-  font-size: 2.7em;
-  font-weight: 300;
+  font-size: $dimen-h1-size;
+  font-weight: $dimen-font-weight-light;
   height:65px;
   line-height:65px;
 }
 
+.title {
+  font-size: $dimen-h3-size;
+}
+
+.page-top-bar {
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: $dimen-em-h1;
+    display:inline-block;
+    font-weight: $dimen-font-weight-light;
+    margin:0;
+    padding:0;
+  }
+  .activity {
+    font-size: $dimen-em-h1;
+    font-weight: bolder;
+    &.active {
+      color: $lp-light-green;
+    }
+    &.inactive {
+      color: $lp-light-grey;
+    }
+  }
+
+  .btn-lp {
+    background-color: $lp-blue;
+    color: $lp-white;
+    font-size:$dimen-em-h3;
+    width:200px;
+    height:50px;
+    font-weight: $dimen-font-weight-light;
+    vertical-align: middle;
+  }
+}
+
+.middle {
+  margin-top: 90px;
+  margin-bottom: 90px;
+  .col-md-6:first-child {
+    border-right: 1px solid $lp-light-grey;
+  }
+  .aggregate-info {
+    width : 280px;
+    margin-top:10px;
+    margin-bottom:10px;
+    height : 260px;
+
+    hr {
+      border-color: $lp-light-grey;
+    }
+
+    .detail {
+      font-size: $dimen-em-h1;
+    }
+    .data-type-icon {
+      width:55px;
+      font-size: $dimen-em-h2;
+      .glyphicon {
+        line-height:55px;
+      }
+    }
+    .row {
+      width : 230px;
+    }
+    .title {
+      font-size: $dimen-em-h3;
+    }
+  }
+
+}
