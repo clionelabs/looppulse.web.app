@@ -11,10 +11,7 @@ Fixtures.prefix = "==FIXTURE=="; // To append workspace name with prefix, so we 
  */
 Fixtures.clear = function() {
   var wsSelector = {"name": {$regex: "^"+Fixtures.prefix}};
-  var workspaces = Workspaces.find(wsSelector).fetch();
-  _.each(workspaces, function(workspace) {
-    Workspaces.remove({_id: workspace._id});
-  });
+  Workspaces.remove(wsSelector);
 }
 
 /**
@@ -25,19 +22,19 @@ Fixtures.load = function() {
   var workspacesFixture = fixture.workspaces;
 
   _.each(workspacesFixture, function(workspaceFixture) {
-    var workspace = Workspaces.create(Fixtures.prefix + workspaceFixture.name, workspaceFixture.pois.name);
-    console.log("[Fixtures] Importing wsId: ", workspace._id);
+    var wsId = Workspaces.insert({name: Fixtures.prefix + workspaceFixture.name, poiDescriptors: workspaceFixture.poiDescriptors});
+    console.log("[Fixtures] Importing wsId: ", wsId);
 
     _.each(workspaceFixture.applications, function(appFixture) {
-      var app = Applications.create(workspace._id, appFixture.name, appFixture.token);
+      Applications.insert({wsId: wsId, name: appFixture.name, token: appFixture.token});
     });
 
-    _.each(workspaceFixture.pois.list, function(poiFixture) {
-      var poi = Pois.create(workspace._id, poiFixture.name, poiFixture.beacon);
+    _.each(workspaceFixture.pois, function(poiFixture) {
+      Pois.insert({wsId: wsId, name: poiFixture.name, beacon: poiFixture.beacon});
     });
 
     _.each(workspaceFixture.geofences, function(geofenceFixture) {
-      var geoFence = Geofences.create(workspace._id, geofenceFixture.lat, geofenceFixture.lng, geofenceFixture.radius);
+      Geofences.insert({wsId: wsId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
     });
   });
 }
