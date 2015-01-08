@@ -22,12 +22,8 @@ Applications.authenticate = function(appId, appToken, sessionInfo) {
   var visitorId = Visitors.findOneOrInsert({wsId: workspace._id, uuid: sessionInfo.visitorUUID});
   var sessionId = Sessions.insert({appId: application._id, visitorId: visitorId, sdk: sessionInfo.sdk, device: sessionInfo.device});
 
-  var pois = _.map(Pois.find({wsId: workspace._id}).fetch(), function(item) {
-    return {_id: item._id, name: item.name, beacon: item.beacon};
-  });
-  var geofences = _.map(Geofences.find({wsId: workspace._id}).fetch(), function(item){
-    return {_id: item._id, lat: item.lat, lng: item.lng, radius: item.radius};
-  });
+  var pois = Pois.find({wsId: workspace._id}, {fields: {_id: 1, name: 1, beacon: 1}}).fetch();
+  var geofences = Geofences.find({wsId: workspace._id}, {fields: {_id: 1, lat: 1, lng: 1, radius: 1}}).fetch();
 
   var response = {
     authenticated: true,
