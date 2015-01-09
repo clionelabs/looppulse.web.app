@@ -7,5 +7,6 @@ Meteor.startup(function() {
       Pois.remove({wsId: workspace._id});
     }
   });
+  Pois._ensureIndex({wsId: 1});
 });
 
