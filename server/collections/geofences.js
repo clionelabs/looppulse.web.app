@@ -7,4 +7,5 @@ Meteor.startup(function() {
       Geofences.remove({wsId: workspace._id});
     }
   });
+  Geofences._ensureIndex({wsId: 1});
 });
