@@ -44,22 +44,37 @@ _.extend(UserAccount, {
     // Add admin permission
     console.info("[UserAccount] Adding Admin Role")
     Roles.addUsersToRoles(_userId, ['admin'], self.ADMIN_GROUP);
-    
+
     _login = null
     _phrase = null
 
   },
   config: function() {
+    var self = this;
     // Extra User Account Settings
+
+    // Creation Limit
     Accounts.validateNewUser(function(user) {
       var loggedInUser = Meteor.user();
+      var userOrgGroups = self.getUserOrgGroups(user);
+      var userOrgGroup = "";
+      var isAdmin = false;
 
-      //@@TODO: configurable function access
-      if (Roles.userIsInRole(loggedInUser, ['admin'], [UserAccount.ADMIN_GROUP])) {
-        return true;
+
+      if (userOrgGroups.length !== 1){
+        throw new Meteor.Error(401, "Multiple new user organization is not allowed");
       }
 
-      throw new Meteor.Error(403, "Not authorized to create new users");
+      userOrgGroup = userOrgGroups[0];
+      isAdmin = Roles.userIsInRole(loggedInUser, ['admin'], UserAccount.ADMIN_GROUP)
+                      ? true
+                      : Roles.userIsInRole(loggedInUser, ['admin'], userOrgGroup) ? true: false;
+
+      // Creator Role checking
+      if (!isAdmin) {
+        throw new Meteor.Error(403, "Not authorized to create new users");
+      }
+
     });
   },
   startup: function() {
