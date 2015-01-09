@@ -1,8 +1,8 @@
 <template name="layout">
     {{> notifications}}
-    {{> yield region='header'}}
+    {{> header ws}}
     <main id="content" role="main">
         {{> yield}}
     </main>
-    {{> yield region='footer'}}
+    {{> footer}}
 </template>

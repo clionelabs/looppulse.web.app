@@ -42,6 +42,7 @@ mobile-status-bar@1.0.2
 mongo@1.0.11
 mrt:firebase@0.6.15
 mrt:firebase-token-generator@0.1.4
+mrt:moment@2.8.1
 observe-sequence@1.0.4
 ordered-dict@1.0.2
 random@1.0.2
@@ -61,3 +62,4 @@ underscore@1.0.2
 url@1.0.3
 webapp@1.1.5
 webapp-hashing@1.0.2
+wizonesolutions:underscore-string@1.0.0
