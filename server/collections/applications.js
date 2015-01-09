@@ -19,11 +19,15 @@ Applications.authenticate = function(appId, appToken, sessionInfo) {
   var firebasePaths = workspace.getFirebaseEventPaths();
 
   // Create session data
-  var visitorId = Visitors.findOneOrInsert({wsId: workspace._id, uuid: sessionInfo.visitorUUID});
-  var sessionId = Sessions.insert({appId: application._id, visitorId: visitorId, sdk: sessionInfo.sdk, device: sessionInfo.device});
+  var sessionId = Sessions.insert({appId: application._id, visitorUUID: sessionInfo.visitorUUID, sdk: sessionInfo.sdk, device: sessionInfo.device});
 
-  var pois = Pois.find({wsId: workspace._id}, {fields: {_id: 1, name: 1, beacon: 1}}).fetch();
-  var geofences = Geofences.find({wsId: workspace._id}, {fields: {_id: 1, lat: 1, lng: 1, radius: 1}}).fetch();
+  // Other workspace data
+  var pois = _.map(workspace.getPois(), function(poi) {
+    return {_id: poi._id, name: poi.name, beacon: poi.beacon}; // It's not necessary that all fields are public.
+  });
+  var geofences = _.map(workspace.getGeofences(), function(geofence) {
+    return {_id: geofence._id, lat: geofence.lat, lng: geofence.lng, radius: geofence.radius}; // It's not necessary that all fields are public.
+  });
 
   var response = {
     authenticated: true,

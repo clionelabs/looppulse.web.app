@@ -14,3 +14,11 @@ Workspace.prototype.getFirebaseEventPaths = function() {
     visitorEvents: visitorEventsPath
   }
 }
+
+Workspace.prototype.getPois = function() {
+  return Pois.find({wsId: this._id}).fetch();
+}
+
+Workspace.prototype.getGeofences = function() {
+  return Geofences.find({wsId: this._id}).fetch();
+}
