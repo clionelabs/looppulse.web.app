@@ -37,16 +37,14 @@ PoisMetric.prototype._createAggregate = function () {
     var self = this;
     var subObj = {};
     //TODO impl
-    subObj.wsName = "EZTable";
-    //TODO impl
     subObj.activity = "active";
     subObj.count = self.pois.length;
     //TODO impl
-    subObj.totalVisitors = 0;
+    subObj.totalVisitors = 12345;
     //TODO impl
-    subObj.interestedVisitors = 0;
+    subObj.interestedVisitors = 3268;
     //TODO impl
-    subObj.averageDwellTime = 0;
+    subObj.averageDwellTime = 60 * 1000 * 36 + 42 * 1000; //36:42
     //TODO impl
     subObj.pois = self.pois;
     return subObj;

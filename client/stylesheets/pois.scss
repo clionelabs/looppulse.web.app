@@ -17,7 +17,6 @@
 .page-top-bar {
   margin-top: 30px;
   margin-bottom: 30px;
-
   h1 {
     font-size: $dimen-h1-size;
     display:inline-block;
@@ -35,7 +34,6 @@
       color: $lp-light-grey;
     }
   }
-
   .btn-lp {
     background-color: $lp-blue;
     color: $lp-white;
@@ -58,11 +56,9 @@
     margin-top:10px;
     margin-bottom:10px;
     height : 260px;
-
     hr {
       border-color: $lp-light-grey;
     }
-
     .detail {
       font-size: $dimen-h1-size;
     }
@@ -80,5 +76,35 @@
       font-size: $dimen-h3-size;
     }
   }
+}
+
+.list {
+  font-size: $dimen-h3-size;
+  font-weight: $dimen-font-weight-light;
+  th {
+    font-weight: $dimen-font-weight-light;
+    color: $lp-light-grey;
+    width:15%;
+    border-bottom: 1px solid $lp-light-grey;
+    text-align: right;
+    &:first-child {
+      text-align: left;
+      color: $lp-dark-grey;
+      .glyphicon {
+        color: $lp-blue;
+      }
+      font-weight: normal;
+      width:70%;
+
+    }
+  }
+  td {
+    padding: 15px 0px;
+    &:first-child {
+      width:70%;
+    }
+  }
 
 }
+
+
