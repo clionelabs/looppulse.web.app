@@ -75,6 +75,7 @@ _.extend(UserAccount, {
         throw new Meteor.Error(403, "Not authorized to create new users");
       }
 
+      return true;
     });
   },
   startup: function() {
@@ -94,5 +95,8 @@ _.extend(UserAccount, {
 
     self.config();
 
+  },
+  isOrgAdmin: function(currentUser, orgId){
+    return (Roles.userIsInRole(currentUser, ['admin'], UserAccount.ADMIN_GROUP) || Roles.userIsInRole(currentUser, ['admin'], UserAccount.getOrgGroup(orgId)) )
   }
 });
