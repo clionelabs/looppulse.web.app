@@ -10,7 +10,8 @@ Settings = {
     }
   },
   clearFirebaseEvents: true,
-  loadFixtures: false
+  loadFixtures: false,
+  visitGraceInSec: 60
 };
 
 Settings.load = function(customSettings) {
