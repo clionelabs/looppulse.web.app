@@ -14,10 +14,10 @@
               {{#if currentUser}}
               <ul class="nav navbar-nav">
                   <li class="active">
-                      <a href="/pois">{{ poiName.many }}</a>
+                      <a href="{{pathFor route="pois"}}">{{_.str.capitalize poiDescriptors.many }}</a>
                   </li>
                   <li>
-                      <a href="/engagements">Engagements</a>
+                      <a href="{{pathFor route="engagements"}}">Engagements</a>
                   </li>
               </ul>
               <div class="navbar-right">

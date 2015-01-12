@@ -49,6 +49,7 @@ mongo@1.0.11
 mrt:firebase@0.6.15
 npm-bcrypt@0.7.7
 mrt:firebase-token-generator@0.1.4
+mrt:moment@2.8.1
 observe-sequence@1.0.4
 ordered-dict@1.0.2
 random@1.0.2
@@ -74,3 +75,4 @@ useraccounts:bootstrap@1.4.1
 useraccounts:core@1.4.1
 webapp@1.1.5
 webapp-hashing@1.0.2
+wizonesolutions:underscore-string@1.0.0

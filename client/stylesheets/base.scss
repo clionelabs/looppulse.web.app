@@ -17,4 +17,11 @@ body {
     font-weight: normal;
   }
 
+  a {
+    color: $lp-blue;
+    &:hover {
+      color:darken($lp-blue, 25%);
+      text-decoration: none;
+    }
+  }
 }
