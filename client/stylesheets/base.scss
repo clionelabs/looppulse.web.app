@@ -9,5 +9,12 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: $dimen-footer-height;
   /* Other Setting */
-  font-size: 20px;
+  font-size: $dimen-font-size;
+  font-weight: $dimen-font-weight-light;
+  color:$lp-dark-grey;
+
+  .title {
+    font-weight: normal;
+  }
+
 }

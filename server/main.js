@@ -11,5 +11,7 @@ Meteor.startup(function() {
 
 // Reload fixtures
 if (Settings.loadFixtures) {
-  Fixtures.reload();
+  Meteor.startup(function() {
+    Fixtures.reload();
+  });
 }
