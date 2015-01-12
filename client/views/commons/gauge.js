@@ -81,3 +81,12 @@ Template.gauge.rendered = function() {
         .text(function(d) { return d.change + "%"; });
 
 };
+
+Template.gauge.events({
+    "click #heart": function(e) {
+        var heart = $(e.currentTarget);
+        heart.toggleSVGClass("active");
+        //Is it right way to do?
+        Template.pois.swipe(heart.hasSVGClass("active"));
+    }
+});

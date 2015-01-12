@@ -48,35 +48,34 @@
 .middle {
   margin-top: 90px;
   margin-bottom: 90px;
-  .col-md-6:first-child {
-    border-right: 1px solid $lp-light-grey;
-  }
-  .aggregate-info {
-    width : 280px;
-    margin-top:10px;
-    margin-bottom:10px;
-    height : 260px;
-    hr {
-      border-color: $lp-light-grey;
-    }
-    .detail {
-      font-size: $dimen-h1-size;
-    }
-    .data-type-icon {
-      width:55px;
-      font-size: $dimen-h2-size;
-      .glyphicon {
-        line-height:55px;
+  .container {
+    .aggregate-info {
+        width: 280px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 260px;
+        hr {
+          border-color: $lp-light-grey;
+        }
+        .detail {
+          font-size: $dimen-h1-size;
+        }
+        .data-type-icon {
+          width: 55px;
+          font-size: $dimen-h2-size;
+          .glyphicon {
+            line-height: 55px;
+          }
+        }
+        .row {
+          width: 230px;
+        }
+        .title {
+          font-size: $dimen-h3-size;
+        }
       }
     }
-    .row {
-      width : 230px;
-    }
-    .title {
-      font-size: $dimen-h3-size;
-    }
   }
-}
 
 .list {
   font-size: $dimen-h3-size;
