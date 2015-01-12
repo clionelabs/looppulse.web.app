@@ -4,7 +4,8 @@
 Template.pois.rendered = function() {
     $(".container").slick({
         infinite: false,
-        slidesToShow: 2
+        slidesToShow: 2,
+        arrows: false
     });
 };
 
