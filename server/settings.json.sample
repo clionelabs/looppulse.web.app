@@ -10,5 +10,6 @@
 
   "clearFirebaseEvents": false,
 
-  "loadFixtures": true
+  "loadFixtures": true,
+  "resetFixturesOnStart": true,
 }

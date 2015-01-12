@@ -41,5 +41,10 @@
         {"lat": 22.303868, "lng": 114.252089, "radius": 10}
       ]
     }
+  ],
+  "organizations": [
+    {
+      "name": "Default Organization"
+    }
   ]
 }
