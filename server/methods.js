@@ -58,11 +58,11 @@ Meteor.methods({
       throw new Meteor.Error(403, "You need to login")
 
     //arguments checking
-    if (!userData || !orgId  || !roles || _.isEmpty(userData) || !userData.email || !roles.length)
+    if (!userData || _.isEmpty(userData) || !userData.orgId  || !userData.roles  || !userData.email || !userData.roles.length)
       throw new Meteor.Error(401, "Missing Parameter")
 
     //Permission
-    if (!UserAccount.isOrgAdmin(currentUser, orgId))
+    if (!UserAccount.isOrgAdmin(currentUser, userData.orgId))
       throw new Meteor.Error(403, "You need to be an admin");
 
     //Argument Checking
@@ -71,11 +71,9 @@ Meteor.methods({
 
     //Check the organization exist or not.
 
-    userData.orgId = orgId;
-
     userId = Accounts.createUser(userData)
 
-    Roles.addUsersToRoles(userId, roles, UserAccount.getOrgGroup(orgId))
+    Roles.addUsersToRoles(userId, userData.roles, UserAccount.getOrgGroup(userData.orgId))
 
     Accounts.sendEnrollmentEmail(userId, userData.email);
 
