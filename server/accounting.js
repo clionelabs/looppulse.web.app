@@ -9,7 +9,7 @@ _.extend(UserAccount, {
     // Admin Account Config
     var _userId = "";
     var _phrase = "";
-    var _login = Meteor.settings.accounts.admin.login
+    var _login = Settings.accounts.admin.login
     var _user = Meteor.users.findOne({ emails: { $elemMatch: { address:  _login } } })
     var self = this;
 
@@ -93,16 +93,14 @@ _.extend(UserAccount, {
     var self = this;
     var _settings = null;
     console.info("[Startup] User Account Config on Server side")
-    if(Meteor.settings && Meteor.settings.accounts) {
-      _settings = {};
-    } else {
+    if (!Settings || !Settings.accounts) {
       console.info("[UserAccount] No user accounts setting found. skip.")
       return;
     }
 
     //Meteor Account Setting transfer to `user-accounts`
 
-    self.setupAdminUser(Meteor.settings.accounts.admin);
+    self.setupAdminUser(Settings.accounts.admin);
 
     self.config();
 

@@ -11,14 +11,7 @@ Fixtures.prefix = "==FIXTURE=="; // To append workspace name with prefix, so we 
  */
 Fixtures.clear = function() {
   var fixtureSelector = {"name": {$regex: "^"+Fixtures.prefix}};
-  var wsCollections = [Applications, Pois, Geofences];
-  console.log("[Fixtures] Clearing Up...")
-  Workspaces.find().forEach(function(doc){
-    var wsId = doc._id;
-    wsCollections.forEach(function(collection){
-      collection.remove({wsId:wsId});
-    })
-  })
+  console.log("[Fixtures] Clearing Up...");
   Workspaces.remove(fixtureSelector);
   Organizations.remove(fixtureSelector);
 }
@@ -76,7 +69,7 @@ Fixtures.load = function() {
  * Wrapper to do clear and load
  */
 Fixtures.reload = function() {
-  if (Meteor.settings.resetFixturesOnStart)
+  if (Settings.resetFixturesOnStart)
     Fixtures.clear();
   Fixtures.load();
 }
