@@ -5,12 +5,15 @@ Template.pois.rendered = function() {
     $(".container").slick({
         infinite: false,
         slidesToShow: 2,
+        onBeforeChange: function(self, currentIndex, targetIndex) {
+            Template.gauge.toggleActive($("#gauge-heart"));
+        },
         arrows: false
     });
 };
 
 Template.pois.swipe = function(isActive) {
-    if (isActive) {
+    if (!isActive) {
         $(".container").slickNext();
     } else {
         $(".container").slickPrev();
