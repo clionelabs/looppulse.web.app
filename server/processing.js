@@ -14,6 +14,10 @@ Processing.start = function() {
  * @private
  */
 Processing._authenticateFirebase = function() {
+  //some checking
+  if (!Settings.firebase.root) 
+    throw new Error("[Settings] Missing firebase URL setting")
+  //if everything alright
   var firebaseRef = new Firebase(Settings.firebase.root);
   firebaseRef.auth(Settings.firebase.secret, Meteor.bindEnvironment(function(error, authData) {
     if (error) {
