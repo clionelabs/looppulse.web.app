@@ -83,7 +83,7 @@ Template.gauge.rendered = function() {
 };
 
 Template.gauge.events({
-    "click #heart": function(e) {
+    "click #gauge-heart": function(e) {
         var heart = $(e.currentTarget);
         heart.toggleSVGClass("active");
         //Is it right way to do?
