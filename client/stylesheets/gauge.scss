@@ -1,25 +1,21 @@
 @import "variable";
 
 .gauge {
-
-  width:$dimen-gauge-width;
-  height:$dimen-gauge-height;
+  width: $dimen-gauge-width;
+  height: $dimen-gauge-height;
 
   svg.circular {
-    width:$dimen-gauge-width;
-    height:$dimen-gauge-height;
+    width: $dimen-gauge-width;
+    height: $dimen-gauge-height;
     margin: 0 auto;
     display: block;
-
     g.circle {
-      transform: translate(26px,26px);
-
+      transform: translate(26px, 26px);
       circle {
         stroke: $lp-blue;
         fill: transparent;
       }
     }
-
     .corner {
       &.top-left {
         text {
@@ -27,25 +23,25 @@
         }
       }
       &.top-right {
-        transform: translate(206px,0px);
+        transform: translate(206px, 0px);
         text {
           transform: translate(56px, 35px);
         }
       }
       &.bottom-right {
-        transform: translate(206px,206px);
+        transform: translate(206px, 206px);
         text {
           transform: translate(56px, 76px);
         }
       }
       &.bottom-left {
-        transform: translate(0px,206px);
+        transform: translate(0px, 206px);
         text {
           transform: translate(10px, 76px);
         }
       }
 
-      &:hover,&>.active {
+      &:hover, &.active {
         polygon {
           fill: $lp-blue;
         }
