@@ -10,6 +10,16 @@
 
   "clearFirebaseEvents": false,
 
+  "accounts": {
+    "forbidClientAccountCreation": true,
+    "admin" :{
+      "login": "hello@looppulse.com",
+      "passphrase": null,
+      "showInfoAfterCreation": false,
+      "mailInfoAfterCreation": true
+    }
+  },
+  
   "loadFixtures": true,
-  "resetFixturesOnStart": true,
+  "resetFixturesOnStart": false
 }
