@@ -21,3 +21,13 @@ Meteor.publish('getCurrentWorkspace', function(/*wsId*/) {
   var workspace = Workspaces.find(/*{ _id : wsId }*/);
   return workspace;
 });
+
+/**
+ * Always publish logged-in user's orgIds & wsIds for client-side fast checking
+ */
+Meteor.publish(null, function () {
+  var userId = this.userId;
+  var fields = {orgIds:1, wsIds:1};
+
+  return Meteor.users.find({_id:userId}, {fields: fields})
+})
