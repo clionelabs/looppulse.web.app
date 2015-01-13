@@ -39,7 +39,7 @@ Fixtures.load = function() {
       var wsId = '';
 
       if (!res.insertedId)
-        wsId = Workspaces.find({name: name})
+        wsId = Workspaces.findOne({name: name})._id
       else
         wsId = res.insertedId;
       console.log("[Fixtures] Imported Workspace: ", wsId , res);
@@ -66,7 +66,7 @@ Fixtures.load = function() {
     orgFixture.forEach(function(org){
       var name = Fixtures.prefix + " " + org.name;
       var res = Organizations.upsert({name: name}, {name: name});
-      var orgId = (res.insertedId) ? res.insertedId : Organizations.find({name:name});
+      var orgId = (res.insertedId) ? res.insertedId : Organizations.findOne({name:name})._id;
       console.log("[Fixture] Imported org", orgId,  res)
     })
   }

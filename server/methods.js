@@ -71,23 +71,15 @@ Meteor.methods({
 
     //Check the organization exist or not.
 
-    //Add Organization to the list
-    Accounts.onCreateUser(function(options, user) {
-      //Add organization
-      user.orgIds = [];
-      user.orgIds.push(orgId);
-      // Maintain the default hook's 'profile' behavior.
-      if (options.profile)
-        user.profile = options.profile;
-      return user;
-    });
+    userData.orgId = orgId;
 
     userId = Accounts.createUser(userData)
 
-    Accounts.sendEnrollmentEmail(userId, email);
-
     Roles.addUsersToRoles(userId, roles, UserAccount.getOrgGroup(orgId))
 
-    return userId;
+    Accounts.sendEnrollmentEmail(userId, userData.email);
+
+    console.log("[User] User created successfully: ", userData.email, userId)
+    return { result:"success", userId: userId, email: userData.email };
   }
 })

@@ -52,6 +52,17 @@ _.extend(UserAccount, {
   config: function() {
     var self = this;
     // Extra User Account Settings
+    // Creation Hook
+    // Add Organization to the list
+    Accounts.onCreateUser(function(options, user) {
+      //Add organization
+      user.orgIds = [];
+      user.orgIds.push(options.orgId);
+      // Maintain the default hook's 'profile' behavior.
+      if (options.profile)
+        user.profile = options.profile;
+      return user;
+    });
 
     // Creation Limit
     Accounts.validateNewUser(function(user) {
