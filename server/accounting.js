@@ -67,19 +67,15 @@ _.extend(UserAccount, {
     // Creation Limit
     Accounts.validateNewUser(function(user) {
       var loggedInUser = Meteor.user();
-      var userOrgGroups = self.getUserOrgGroups(user);
-      var userOrgGroup = "";
+      var userOrgs = user.orgIds;
       var isAdmin = false;
 
 
-      if (userOrgGroups.length !== 1){
+      if (userOrgs.length !== 1){
         throw new Meteor.Error(401, "Multiple new user organization is not allowed");
       }
 
-      userOrgGroup = userOrgGroups[0];
-      isAdmin = Roles.userIsInRole(loggedInUser, ['admin'], UserAccount.ADMIN_GROUP)
-                      ? true
-                      : Roles.userIsInRole(loggedInUser, ['admin'], userOrgGroup) ? true: false;
+      isAdmin = self.isOrgAdmin(loggedInUser, userOrgs[0]);
 
       // Creator Role checking
       if (!isAdmin) {
@@ -106,6 +102,7 @@ _.extend(UserAccount, {
 
   },
   isOrgAdmin: function(currentUser, orgId){
-    return (Roles.userIsInRole(currentUser, ['admin'], UserAccount.ADMIN_GROUP) || Roles.userIsInRole(currentUser, ['admin'], UserAccount.getOrgGroup(orgId)) )
+    var self = this;
+    return (Roles.userIsInRole(currentUser, ['admin'], self.ADMIN_GROUP) || Roles.userIsInRole(currentUser, ['admin'], self.getOrgGroup(orgId)) )
   }
 });
