@@ -64,7 +64,7 @@
 
   .info {
     position: absolute;
-    top: 70px;
+    top: 60px;
     width: $dimen-gauge-width;
 
     .text {
@@ -72,23 +72,32 @@
       width: $dimen-gauge-width;
     }
 
-    .minus {
-      color: $lp-red;
-    }
-    .plus {
-      color: $lp-green;
-    }
-
-    .title {
-      margin-top: 10px;
-    }
     .glyphicon-user {
       font-size: $dimen-h2-size;
     }
 
-    .change {
-      font-size: $dimen-h3-size;
-      font-weight: $dimen-font-weight-light;
+    .sub {
+      .row {
+        width: 120px;
+        margin: 0 auto;
+        .subContent {
+          color:$lp-light-grey;
+          font-size: $dimen-h3-size;
+          font-weight: $dimen-font-weight-light;
+
+          &.minus {
+            color: $lp-red;
+          }
+          &.plus {
+            color: $lp-green;
+          }
+        }
+        .subTitle {
+          color:$lp-light-grey;
+          font-size: 10px;
+          font-weight: $dimen-font-weight-light;
+        }
+      }
     }
   }
 }

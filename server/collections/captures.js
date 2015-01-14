@@ -4,7 +4,7 @@
 Meteor.startup(function() {
   Applications.find().observe({
     "removed": function(application) {
-      Sessions.remove({appId: application._id});
+      Captures.remove({appId: application._id});
     }
   });
 });
