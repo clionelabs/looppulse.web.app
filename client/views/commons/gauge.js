@@ -13,21 +13,21 @@ GaugeData = function(data) {
             /*TODO remove Demo Data*/
             var demoData = {
                 current: {
-                    "total": "3,268",
+                    "total": 3268,
                     "title": "CURRENT",
-                    "left-content": "5,691",
-                    "left-title": "max. daily",
-                    "right-content": "+10%",
-                    "right-title": "since last week",
+                    "leftContent": "5,691",
+                    "leftTitle": "max. daily",
+                    "rightContent": "+10%",
+                    "rightTitle": "since last week",
                     percentage: [0.29]//array because need to cater "related top 3" in detail view
                 },
                 interested: {
-                    "total": "666",
+                    "total": 674,
                     "title": "INTERESTED",
-                    "left-content": "5,691",
-                    "left-title": "total unique",
-                    "right-content": "-23%",
-                    "right-title": "since last week",
+                    "leftContent": "5,691",
+                    "leftTitle": "total unique",
+                    "rightContent": "-23%",
+                    "rightTitle": "since last week",
                     percentage: [0.14, 0.12, 0.05, 0.08]//array because need to cater "related top 3" in detail view
 
                 }
@@ -60,13 +60,26 @@ Template.gauge.updateGauge = function(data) {
             return memo + d;
         }, 0);
         var _endAngle = _totalPercentage * Math.PI * 2;
-        var pieFunc = d3.layout.pie().value(function (d) {
+        var pieFunc = d3.layout.pie().sort(null).value(function (d) {
             return d;
         }).endAngle(_endAngle);
-        console.log(pieFunc(data.percentage));
         return pieFunc(data.percentage);
     };
 
+    var textTween = function(d) {
+        var iFunc = d3.interpolate(this.textContent, d);
+        return function(t) {
+            this.textContent = iFunc(t);
+        }
+    };
+
+    var numTween = function(d) {
+        var iFunc = d3.interpolate(0, d);
+        return function(t) {
+            this.textContent = _.str.numberFormat(iFunc(t), 0);
+        }
+
+    };
     var arcTween = function(d) {
         var iFunc = d3.interpolate({startAngle: 0, endAngle : 0 }, d);
         return function (t) {
@@ -88,54 +101,64 @@ Template.gauge.updateGauge = function(data) {
     var path = circular.selectAll("path")
         .data(convertToPieData(data));
         path.enter().append("path");
-
     path.attr("fill", function (d, i) {
-            console.log(i + " " + colors[i]);
             return colors[i];
         })
         .attr("transform", "translate(" + circleWidth / 2 + "," + circleHeight / 2 + ")")
-
     path.transition().duration(1000).attrTween("d", arcTween);
     path.exit().remove();
 
     var gaugeInfo = gauge.select("div.info");
+
     var totalText = gaugeInfo
         .selectAll("div.total")
-        .data([data]); //convert to array because of d3 convention
-    totalText
-        .enter()
-        .append("div")
-        .attr("class", "text total");
-    totalText
-        .text(function (d) {
-            console.log(d.total);
-            return d.total;
-        });
+        .data([data.total]); //convert to array because of d3 convention
+    totalText.transition().duration(1000)
+        .tween("text", numTween);
     totalText.exit().remove();
 
     var titleText = gaugeInfo
         .selectAll("div.title")
-        .data([data]) //convert to array because of d3 convention
-        .enter()
-        .append("div")
-        .attr("class", "text title")
+        .data([data.title]); //convert to array because of d3 convention
+    titleText.transition().duration(1000)
+        .tween("text", textTween);
+    titleText.exit().transition().duration(1000).remove();
+
+
+    var rightContentText = gaugeInfo
+        .selectAll("div.pull-right.subContent")
+        .data([data.rightContent]); //convert to array because of d3 convention
+
+    rightContentText
+        .classed("plus", function (d) { return d[0] === '+'; })
+        .classed("minus", function(d) { return d[0] === '-'; })
         .text(function (d) {
-            return d.title;
+            return d;
         });
 
+    var leftContentText = gaugeInfo
+        .selectAll("div.pull-left.subContent")
+        .data([data.leftContent]); //convert to array because of d3 convention
 
-    var changeText = gaugeInfo
-        .selectAll("div.change")
-        .data([data]) //convert to array because of d3 convention
-        .enter()
-        .append("div")
-        .attr("class", function (d) {
-            return "text change " + (d.deta ? "plus" : "minus");
-        })
+    leftContentText
+        .classed("plus", function (d) { return d[0] === '+'; })
+        .classed("minus", function(d) { return d[0] === '-'; })
         .text(function (d) {
-            return d.change + "%";
+            return d;
         });
 
+    var rightTitleText = gaugeInfo
+        .selectAll("div.pull-right.subTitle")
+        .data([data.rightTitle]); //convert to array because of d3 convention
+    rightTitleText
+        .text(function (d) { return d; });
+
+    var leftTitleText = gaugeInfo
+        .selectAll("div.pull-left.subTitle")
+        .data([data.leftTitle]); //convert to array because of d3 convention
+
+    leftTitleText
+        .text(function (d) { return d; });
 }
 
 Template.gauge.events({
