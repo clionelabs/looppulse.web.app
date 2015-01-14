@@ -25,15 +25,15 @@ _.extend(UserAccount, {
       console.info("[UserAccount] Admin not found. Creating Account...")
       // Set initial password or random string (when passphrase is null)
       // If random string is set in config, showInfoAfterCreation or mailInfoAfterCreation must have either one to be true
-      _phrase = Meteor.settings.accounts.admin.passphrase || Math.random().toString(36).slice(-8);
+      _phrase = Settings.accounts.admin.passphrase || Math.random().toString(36).slice(-8);
       _userId = Accounts.createUser({
         'email': _login,
         'password': _phrase
       });
-      if (Meteor.settings.accounts.admin.showInfoAfterCreation) {
+      if (Settings.accounts.admin.showInfoAfterCreation) {
         console.info("[UserAccount] New admin created:", _login, _phrase)
       }
-      if (Meteor.settings.accounts.admin.mailInfoAfterCreation) {
+      if (Settings.accounts.admin.mailInfoAfterCreation) {
         Accounts.sendEnrollmentEmail(_userId)
       }
     } else {
