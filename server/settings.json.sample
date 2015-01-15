@@ -1,4 +1,5 @@
 {
+  "firstRun": false,
   "firebase": {
     "root": "FIREBASE_REF_URL",
     "secret": "FIREBASE_SECRET",

@@ -70,7 +70,6 @@ _.extend(UserAccount, {
       var userOrgs = user.orgIds;
       var isAdmin = false;
 
-
       if (userOrgs.length !== 1){
         throw new Meteor.Error(401, "Multiple new user organization is not allowed");
       }
@@ -87,17 +86,13 @@ _.extend(UserAccount, {
   },
   startup: function() {
     var self = this;
-    var _settings = null;
-    console.info("[Startup] User Account Config on Server side")
-    if (!Settings || !Settings.accounts) {
-      console.info("[UserAccount] No user accounts setting found. skip.")
-      return;
+
+    //Check if we have any user account
+    if (!Meteor.users.findOne()) {
+      console.warn('[UserAccount] You need to have an account to start. See `Settings.firstRun()`')
     }
 
     //Meteor Account Setting transfer to `user-accounts`
-
-    self.setupAdminUser(Settings.accounts.admin);
-
     self.config();
 
   },
