@@ -18,11 +18,10 @@ BeaconEvents.insertFromFBSnapshot = function(snapshot) {
 
   var eventJSON = snapshot.val();
   var visitorUUID = eventJSON.visitor_uuid;
-  var sessionId = eventJSON.session_id;
   var type = eventJSON.type;
   var captureId = eventJSON.capture_id;
   var beacon = {
-    uuid: eventJSON.uuid,
+    uuid: eventJSON.uuid.toLowerCase(),
     major: eventJSON.major,
     minor: eventJSON.minor
   }
@@ -30,7 +29,6 @@ BeaconEvents.insertFromFBSnapshot = function(snapshot) {
   var doc = {
     key: key,
     visitorUUID: visitorUUID,
-    sessionId: sessionId,
     beacon: beacon,
     type: type,
     createdAt: createdAt,
