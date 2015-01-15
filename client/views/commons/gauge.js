@@ -126,7 +126,7 @@ Template.gauge.updateGauge = function(data) {
 
 
     var rightContentText = gaugeInfo
-        .selectAll("div.pull-right.subContent")
+        .selectAll("div.pull-right.sub-content")
         .data([data.rightContent]); //convert to array because of d3 convention
 
     rightContentText
@@ -137,7 +137,7 @@ Template.gauge.updateGauge = function(data) {
         });
 
     var leftContentText = gaugeInfo
-        .selectAll("div.pull-left.subContent")
+        .selectAll("div.pull-left.sub-content")
         .data([data.leftContent]); //convert to array because of d3 convention
 
     leftContentText
@@ -148,13 +148,13 @@ Template.gauge.updateGauge = function(data) {
         });
 
     var rightTitleText = gaugeInfo
-        .selectAll("div.pull-right.subTitle")
+        .selectAll("div.pull-right.sub-title")
         .data([data.rightTitle]); //convert to array because of d3 convention
     rightTitleText
         .text(function (d) { return d; });
 
     var leftTitleText = gaugeInfo
-        .selectAll("div.pull-left.subTitle")
+        .selectAll("div.pull-left.sub-title")
         .data([data.leftTitle]); //convert to array because of d3 convention
 
     leftTitleText
