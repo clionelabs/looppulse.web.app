@@ -90,7 +90,7 @@ Journeys.handleNewBeaconEvent = function(beaconEvent) {
   var poiId = poi._id;
   var visitorUUID = beaconEvent.visitorUUID;
   var at = beaconEvent.createdAt;
-  var lastEncounter = Journeys._findLastEncounter(poi._id, beaconEvent.visitorUUID);
+  var lastEncounter = Journeys._findLastEncounter(poiId, visitorUUID);
 
   // There are six cases (2 x 3):
   // 1) new event is i) ENTER, or ii) EXIT
@@ -141,4 +141,3 @@ Meteor.startup(function() {
     }
   });
 });
-
