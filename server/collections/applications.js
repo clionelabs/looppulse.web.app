@@ -18,8 +18,8 @@ Applications.authenticate = function(appId, appToken, sessionInfo) {
   var firebaseRoot = workspace.getFirebaseRoot();
   var firebasePaths = workspace.getFirebaseEventPaths();
 
-  // Create session data
-  var sessionId = Sessions.insert({appId: application._id, visitorUUID: sessionInfo.visitorUUID, sdk: sessionInfo.sdk, device: sessionInfo.device});
+  // Create capture data
+  var sessionId = Captures.insert({appId: application._id, visitorUUID: sessionInfo.visitorUUID, sdk: sessionInfo.sdk, device: sessionInfo.device});
 
   // Other workspace data
   var pois = _.map(workspace.getPois(), function(poi) {
