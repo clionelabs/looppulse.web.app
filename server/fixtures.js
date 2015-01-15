@@ -29,13 +29,8 @@ Fixtures.load = function() {
     wsFixture.forEach(function(ws) {
       var name = Fixtures.prefix + " " + ws.name;
       var res = Workspaces.upsert({name: name}, {name: name, poiDescriptors: ws.poiDescriptors});
-      var wsId = '';
-
-      if (!res.insertedId)
-        wsId = Workspaces.findOne({name: name})._id
-      else
-        wsId = res.insertedId;
-      console.log("[Fixtures] Imported Workspace: ", wsId , res);
+      var wsId = (res.insertedId) ? res.insertedId : Workspaces.findOne({name: name})._id;
+      console.log("[Fixture] Imported Workspace: ", wsId , res);
 
       if (ws.applications)
         ws.applications.forEach(function(appFixture) {
@@ -63,13 +58,4 @@ Fixtures.load = function() {
       console.log("[Fixture] Imported org", orgId,  res)
     })
   }
-}
-
-/**
- * Wrapper to do clear and load
- */
-Fixtures.reload = function() {
-  if (Settings.resetFixturesOnStart)
-    Fixtures.clear();
-  Fixtures.load();
 }

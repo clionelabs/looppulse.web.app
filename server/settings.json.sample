@@ -20,6 +20,9 @@
     }
   },
   
-  "loadFixtures": true,
-  "resetFixturesOnStart": false
+
+  "fixtures":{ 
+    "load": true, 
+    "clear": false
+  }
 }

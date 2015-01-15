@@ -10,8 +10,11 @@ Meteor.startup(function() {
 })
 
 // Reload fixtures
-if (Settings.loadFixtures) {
+if (Settings.fixtures) {
   Meteor.startup(function() {
-    Fixtures.reload();
+    if (Settings.fixtures.clear)
+      Fixtures.clear();
+    if (Settings.fixtures.load)
+      Fixtures.load();
   });
 }
