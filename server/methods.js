@@ -45,10 +45,8 @@ Meteor.methods({
   },
   // create user with org.
   // @param:
-  // data : {email, [profile]} - do not sent unencrypted password over the wire!
-  // orgId: string
-  // roles: array of roles
-  createOrgUser: function(userData, orgId, roles){
+  // data : {email, orgId, [roles], {profile}} - do not sent unencrypted password over the wire!
+  createOrgUser: function(userData){
     var currentUser = Meteor.user();
     var userId = "";
     console.log("Updating User profile:", userData)
