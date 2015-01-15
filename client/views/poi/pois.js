@@ -4,6 +4,7 @@
 Template.pois.rendered = function() {
     $(".container").slick({
         infinite: false,
+        swipe: false,
         slidesToShow: 2,
         onBeforeChange: function(self, currentIndex, targetIndex) {
             Template.gauge.toggleActive($("#gauge-heart"));
