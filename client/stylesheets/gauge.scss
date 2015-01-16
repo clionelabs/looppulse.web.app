@@ -1,25 +1,21 @@
 @import "variable";
 
 .gauge {
-
-  width:$dimen-gauge-width;
-  height:$dimen-gauge-height;
+  width: $dimen-gauge-width;
+  height: $dimen-gauge-height;
 
   svg.circular {
-    width:$dimen-gauge-width;
-    height:$dimen-gauge-height;
+    width: $dimen-gauge-width;
+    height: $dimen-gauge-height;
     margin: 0 auto;
     display: block;
-
     g.circle {
-      transform: translate(26px,26px);
-
+      transform: translate(26px, 26px);
       circle {
         stroke: $lp-blue;
         fill: transparent;
       }
     }
-
     .corner {
       &.top-left {
         text {
@@ -27,25 +23,25 @@
         }
       }
       &.top-right {
-        transform: translate(206px,0px);
+        transform: translate(206px, 0px);
         text {
           transform: translate(56px, 35px);
         }
       }
       &.bottom-right {
-        transform: translate(206px,206px);
+        transform: translate(206px, 206px);
         text {
           transform: translate(56px, 76px);
         }
       }
       &.bottom-left {
-        transform: translate(0px,206px);
+        transform: translate(0px, 206px);
         text {
           transform: translate(10px, 76px);
         }
       }
 
-      &:hover,&>.active {
+      &:hover, &.active {
         polygon {
           fill: $lp-blue;
         }
@@ -68,7 +64,7 @@
 
   .info {
     position: absolute;
-    top: 70px;
+    top: 60px;
     width: $dimen-gauge-width;
 
     .text {
@@ -76,23 +72,32 @@
       width: $dimen-gauge-width;
     }
 
-    .minus {
-      color: $lp-red;
-    }
-    .plus {
-      color: $lp-green;
-    }
-
-    .title {
-      margin-top: 10px;
-    }
     .glyphicon-user {
       font-size: $dimen-h2-size;
     }
 
-    .change {
-      font-size: $dimen-h3-size;
-      font-weight: $dimen-font-weight-light;
+    .sub {
+      .row {
+        width: 120px;
+        margin: 0 auto;
+        .sub-content {
+          color:$lp-light-grey;
+          font-size: $dimen-h3-size;
+          font-weight: $dimen-font-weight-light;
+
+          &.minus {
+            color: $lp-red;
+          }
+          &.plus {
+            color: $lp-green;
+          }
+        }
+        .sub-title {
+          color:$lp-light-grey;
+          font-size: $dimen-h5-size;
+          font-weight: $dimen-font-weight-light;
+        }
+      }
     }
   }
 }

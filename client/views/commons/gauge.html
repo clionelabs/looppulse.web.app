@@ -1,7 +1,7 @@
 <template name="gauge">
     <div class="gauge center-block">
         <svg class="circular">
-            <g class="corner top-left">
+            <g id="gauge-heart" class="corner top-left">
                 <polygon points="0,0 86,0 0,86"></polygon>
                 <!-- cannot use glyphicon class as text doesn't have 'content' attr -->
                 <text class="glyphicon">&#xe005;</text>
@@ -27,6 +27,16 @@
         </svg>
         <div class="info">
             <div class="text glyphicon glyphicon-user"></div>
+            <div class="text total"></div>
+            <div class="text title"></div>
+            <div class="sub text">
+                <div class="row">
+                    <div class="sub-content pull-left"></div><div class="sub-content pull-right"></div>
+                </div>
+                <div class="row">
+                    <div class="sub-title pull-left"></div><div class="sub-title pull-right"></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

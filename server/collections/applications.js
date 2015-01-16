@@ -1,7 +1,7 @@
 /**
  * Server extension for applications.js
  */
-Applications.authenticate = function(appId, appToken, sessionInfo) {
+Applications.authenticate = function(appId, appToken, captureInfo) {
   var application = Applications.findOne({_id: appId, token: appToken});
   if (!application) {
     return {authenticated: false, statusCode: 401};
@@ -18,8 +18,8 @@ Applications.authenticate = function(appId, appToken, sessionInfo) {
   var firebaseRoot = workspace.getFirebaseRoot();
   var firebasePaths = workspace.getFirebaseEventPaths();
 
-  // Create session data
-  var sessionId = Sessions.insert({appId: application._id, visitorUUID: sessionInfo.visitorUUID, sdk: sessionInfo.sdk, device: sessionInfo.device});
+  // Create capture data
+  var captureId = Captures.insert({appId: application._id, visitorUUID: captureInfo.visitorUUID, sdk: captureInfo.sdk, device: captureInfo.device});
 
   // Other workspace data
   var pois = _.map(workspace.getPois(), function(poi) {
@@ -32,7 +32,7 @@ Applications.authenticate = function(appId, appToken, sessionInfo) {
   var response = {
     authenticated: true,
     statusCode: 200,
-    session: sessionId,
+    captureId: captureId,
     system: {
       firebase: {
         root: firebaseRoot,

@@ -3,38 +3,50 @@
         <div class="row page-top-bar">
             <div class="col-md-12 name"><h1>{{ ws.name }}</h1><sup class="activity {{ pm.activity }}">&#8226;</sup><button class="btn btn-lp pull-right">Engage Visitors</button></div>
         </div>
-        <div class="row middle">
-            <div class="col-md-6">
-                <div class="center-block aggregate-info">
-                    <div class="row center-block">
-                        <table>
-                            <tr>
-                                <td class="data-type-icon"><span class="glyphicon glyphicon-user"></span></td>
-                                <td class="detail"> {{_.numberFormat pm.totalVisitors }}</td>
-                            </tr>
-                            <tr>
-                                <td class="data-type-icon"></td>
-                                <td class="title pull-right">TOTAL VISITORS</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <hr/>
-                    <div class="row center-block">
-                        <table>
-                            <tr>
-                                <td class="data-type-icon"><span class="glyphicon glyphicon-time"></span></td>
-                                <td class="detail"> {{formatDuration pm.averageDwellTime }}</td>
-                            </tr>
-                            <tr>
-                                <td class="data-type-icon"></td>
-                                <td class="title pull-right">AVERAGE DWELL</td>
-                            </tr>
-                        </table>
+        <div class="row main-slider">
+            <div class="col-md-12 container">
+                <div class="content">
+                    <div class="aggregate-info center-block">
+                        <div class="row center-block">
+                            <table>
+                                <tr>
+                                    <td class="data-type-icon"><span class="glyphicon glyphicon-user"></span></td>
+                                    <td class="detail"> {{_.numberFormat pm.totalVisitors }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="data-type-icon"></td>
+                                    <td class="title pull-right">TOTAL VISITORS</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <hr/>
+                        <div class="row center-block">
+                            <table>
+                                <tr>
+                                    <td class="data-type-icon"><span class="glyphicon glyphicon-time"></span></td>
+                                    <td class="detail"> {{formatDuration pm.averageDwellTime }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="data-type-icon"></td>
+                                    <td class="title pull-right">AVERAGE DWELL</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                {{> gauge }}{{! TODO add data }}
+                <div class="content">
+                    {{> gauge }}{{! TODO add data }}
+                </div>
+                <div class="content">
+                    <table class="highlighted-list table-responsive">
+                       <tr>
+                           <th>Top Interested</th><th>number</th>
+                       </tr>
+                        <tr>
+                            <td>ddd</td><td>123</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="row list">
