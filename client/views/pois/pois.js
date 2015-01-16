@@ -13,6 +13,16 @@ Template.pois.rendered = function() {
     });
 };
 
+Template.pois.events({
+    "click #pois-goto-create-engage" : function() {
+        Router.go("/engagement/create");
+    }
+});
+
+/**
+ * A helper for other template to swipe
+ * @param isActive
+ */
 Template.pois.swipe = function(isActive) {
     if (!isActive) {
         $(".container").slickNext();
@@ -20,3 +30,6 @@ Template.pois.swipe = function(isActive) {
         $(".container").slickPrev();
     }
 };
+
+
+

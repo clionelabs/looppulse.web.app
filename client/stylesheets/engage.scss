@@ -1,0 +1,42 @@
+@import 'variable';
+
+.engage-create {
+  .name-input {
+    margin-top:30px;
+    .create-btn-container {
+      height: 80px;
+      button {
+        margin: 18px 0px;
+        &:hover,&:active {
+          color: darken($lp-white, 10%);
+        }
+      }
+    }
+  }
+  #engage-name {
+    box-shadow: none;
+    border-color: transparent;
+    border-bottom: 1px solid $lp-light-grey;
+    border-radius: 0;
+
+    font-size: $dimen-h1-size;
+    background: none;
+    margin-right: 25px;
+    padding: 0;
+    height: auto;
+  }
+  .btn-lp {
+    width: auto;
+    height: auto;
+  }
+
+  .poi-selection {
+    margin-top: 30px;
+  }
+
+  .ps-title {
+    div {
+      border-bottom: 1px solid $lp-light-grey;
+    }
+  }
+}
