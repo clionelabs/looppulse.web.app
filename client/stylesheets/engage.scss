@@ -29,4 +29,14 @@
     width: auto;
     height: auto;
   }
+
+  .poi-selection {
+    margin-top: 30px;
+  }
+
+  .ps-title {
+    div {
+      border-bottom: 1px solid $lp-light-grey;
+    }
+  }
 }
