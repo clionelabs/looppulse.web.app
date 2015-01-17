@@ -36,7 +36,21 @@
 
   .ps-title {
     div {
+      font-size: $dimen-h3-size;
       border-bottom: 1px solid $lp-light-grey;
+    }
+  }
+
+  .ps-selected {
+    margin:45px 0px;
+    .ps-poi-name {
+      text-align: center;
+      font-size: $dimen-h1-size;
+      color: $lp-blue-light1;
+    }
+    .ps-poi-num-targeted {
+      text-align: center;
+      font-size: $dimen-h2-size;
     }
   }
 }

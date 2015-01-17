@@ -1,26 +1,34 @@
-<template name="engage-create">
+<template name="engageCreate">
     <div class="container-fluid engage-create">
         <form class="form-inline">
-        <div class="row name-input">
+        <section class="row name-input">
             <div class="col-sm-12">
                 <input id="engage-name" class="form-control" type="text" placeholder="Engagement On...">
                 <button class="btn btn-lp pull-right">Create</button>
             </div>
-        </div>
-        <div class="row poi-selection">
-            <div class="col-sm-12 ps-title">
-                <div>VISITORS WHO ARE INTERESTED IN:
-                    <a class="pull-right" href="#select_poi">Edit</a>
+        </section>
+        <section class="row poi-selection">
+            <div class="col-sm-12">
+                <div class="ps-title">
+                    <div>VISITORS WHO ARE INTERESTED IN:
+                        <a class="pull-right" href="#select_poi">Edit</a>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="col-sm-12">
+                <div class="ps-selected">
+                    <div class="ps-poi-name">{{ getSelectedPoi.name }}</div>
+                    <div class="ps-poi-num-targeted">{{_.numberFormat getSelectedPoi.numInterested }} targeted</div>
+                </div>
+            </div>
+        </section>
 
-        <div class="row poi-selection">
+        <section class="row poi-selection">
 
-        </div>
-        <div class="row retargeting">
+        </section>
+        <section class="row retargeting">
 
-        </div>
+        </section>
     </form>
     </div>
 </template>
