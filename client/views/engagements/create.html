@@ -1,9 +1,8 @@
 <template name="engageCreate">
     <div class="container-fluid engage-create">
-        <form class="form-inline">
         <section class="row name-input">
             <div class="col-sm-12">
-                <input id="engage-name" class="form-control" type="text" placeholder="Engagement On...">
+                <input id="engage-name" class="col-sm-9 form-control" type="text" placeholder="Engagement On...">
                 <button class="btn btn-lp pull-right">Create</button>
             </div>
         </section>
@@ -11,14 +10,32 @@
             <div class="col-sm-12">
                 <div class="ps-title">
                     <div>VISITORS WHO ARE INTERESTED IN:
-                        <a class="pull-right" href="#select_poi">Edit</a>
+                        <a class="pull-right" data-toggle="modal" data-target="#poiSelectionModal">Edit</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="ps-selected">
-                    <div class="ps-poi-name">{{ getSelectedPoi.name }}</div>
+                    {{#if getSelectedPoi }}
+                    <div class="ps-poi-name">{{ getSelectedPoi.value }}</div>
                     <div class="ps-poi-num-targeted">{{_.numberFormat getSelectedPoi.numInterested }} targeted</div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="modal fade" id="poiSelectionModal" tabindex="-1" role="dialog" aria-labelledby="poiSelectionModelLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="poiSelectionModelLabel">Which {{ ws.poiDescriptors.one }} you want to target?</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{> poiNameSelection }}
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -29,6 +46,5 @@
         <section class="row retargeting">
 
         </section>
-    </form>
     </div>
 </template>

@@ -18,16 +18,17 @@
     border-color: transparent;
     border-bottom: 1px solid $lp-light-grey;
     border-radius: 0;
-
     font-size: $dimen-h1-size;
     background: none;
     margin-right: 25px;
     padding: 0;
     height: auto;
+    width: 75%;
   }
   .btn-lp {
     width: auto;
     height: auto;
+    margin:10px 0;
   }
 
   .poi-selection {
@@ -52,5 +53,28 @@
       text-align: center;
       font-size: $dimen-h2-size;
     }
+  }
+
+  #poiSelectionModal {
+    .form-group {
+      width:100%;
+      .twitter-typeahead {
+        width: 100%;
+        .pois-selection-input {
+          width: 100%
+        }
+        .tt-dropdown-menu {
+          width: 100%;
+          background-color: $lp-white;
+          border-radius: 3px;
+          color: $lp-dark-grey;
+          .tt-suggestion {
+            padding:5px;
+          }
+
+        }
+      }
+    }
+
   }
 }
