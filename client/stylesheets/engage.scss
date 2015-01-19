@@ -1,6 +1,33 @@
 @import 'variable';
 
 .engage-create {
+  .ec-form-table {
+    width: 100%;
+    td:first-child {
+      width:60%;
+      border-right:1px solid $lp-light-grey;
+      text-align: center;
+      .toggle-i-v {
+        width:300px;
+        margin: 0 auto;
+        button {
+          font-size: $dimen-h4-size;
+          width:50%;
+        }
+      }
+    }
+    td {
+      width:40%;
+      padding-bottom:20px;
+      font-size: $dimen-h4-size;
+      vertical-align: middle;
+      .help-text {
+        margin: 0 15px;
+
+      }
+    }
+
+  }
   .name-input {
     margin-top:30px;
     .create-btn-container {
@@ -26,8 +53,6 @@
     width: 75%;
   }
   .btn-lp {
-    width: auto;
-    height: auto;
     margin:10px 0;
   }
 
@@ -47,7 +72,7 @@
     .ps-poi-name {
       text-align: center;
       font-size: $dimen-h1-size;
-      color: $lp-blue-light1;
+      color: $lp-blue;
     }
     .ps-poi-num-targeted {
       text-align: center;
