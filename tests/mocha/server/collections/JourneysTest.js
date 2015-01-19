@@ -51,7 +51,7 @@ if (!(typeof MochaWeb === 'undefined')) {
         var journey = Journeys.findOne();
         chai.assert.equal(journey.visitorUUID, visitorUUID);
         chai.assert.equal(journey.encounters.length, 1);
-        chai.assert.deepEqual(journey.encounters[0], {enteredAt: createdAt, exitedAt: null, duration: null});
+        chai.assert.deepEqual(journey.encounters[0], new JourneyEncounter({enteredAt: createdAt, exitedAt: null}));
       });
 
       it("handleBeaconEvent - first EXIT", function() {
@@ -75,7 +75,7 @@ if (!(typeof MochaWeb === 'undefined')) {
         var journey = Journeys.findOne();
         chai.assert.equal(journey.visitorUUID, visitorUUID);
         chai.assert.equal(journey.encounters.length, 1);
-        chai.assert.deepEqual(journey.encounters[0], {enteredAt: createdAt2, exitedAt: null, duration: null});
+        chai.assert.deepEqual(journey.encounters[0], new JourneyEncounter({enteredAt: createdAt2, exitedAt: null}));
       });
 
       it("handleBeaconEvent - EXIT on an opening encounter", function() {
@@ -91,7 +91,7 @@ if (!(typeof MochaWeb === 'undefined')) {
         var journey = Journeys.findOne();
         chai.assert.equal(journey.visitorUUID, visitorUUID);
         chai.assert.equal(journey.encounters.length, 1);
-        chai.assert.deepEqual(journey.encounters[0], {enteredAt: enteredAt1, exitedAt: exitedAt1, duration: 10});
+        chai.assert.deepEqual(journey.encounters[0], new JourneyEncounter({enteredAt: enteredAt1, exitedAt: exitedAt1}));
       });
 
       it("handleBeaconEvent - EXIT on an closed encounter", function() {
@@ -113,7 +113,7 @@ if (!(typeof MochaWeb === 'undefined')) {
         var journey = Journeys.findOne();
         chai.assert.equal(journey.visitorUUID, visitorUUID);
         chai.assert.equal(journey.encounters.length, 1);
-        chai.assert.deepEqual(journey.encounters[0], {enteredAt: enteredAt1, exitedAt: exitedAt1, duration: 10});
+        chai.assert.deepEqual(journey.encounters[0], new JourneyEncounter({enteredAt: enteredAt1, exitedAt: exitedAt1}));
       });
 
       it("handleBeaconEvent - ENTER on an closed encounter - beyond grace period", function() {
@@ -135,8 +135,8 @@ if (!(typeof MochaWeb === 'undefined')) {
         var journey = Journeys.findOne();
         chai.assert.equal(journey.visitorUUID, visitorUUID);
         chai.assert.equal(journey.encounters.length, 2);
-        chai.assert.deepEqual(journey.encounters[0], {enteredAt: enteredAt1, exitedAt: exitedAt1, duration: 10});
-        chai.assert.deepEqual(journey.encounters[1], {enteredAt: enteredAt2, exitedAt: null, duration: null});
+        chai.assert.deepEqual(journey.encounters[0], new JourneyEncounter({enteredAt: enteredAt1, exitedAt: exitedAt1}));
+        chai.assert.deepEqual(journey.encounters[1], new JourneyEncounter({enteredAt: enteredAt2, exitedAt: null}));
       });
 
       it("handleBeaconEvent - ENTER on an closed encounter - within grace period", function() {
@@ -158,7 +158,7 @@ if (!(typeof MochaWeb === 'undefined')) {
         var journey = Journeys.findOne();
         chai.assert.equal(journey.visitorUUID, visitorUUID);
         chai.assert.equal(journey.encounters.length, 1);
-        chai.assert.deepEqual(journey.encounters[0], {enteredAt: enteredAt1, exitedAt: null, duration: null});
+        chai.assert.deepEqual(journey.encounters[0], new JourneyEncounter({enteredAt: enteredAt1, exitedAt: null}));
       });
     });
   });
