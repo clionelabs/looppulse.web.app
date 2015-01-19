@@ -1,6 +1,6 @@
 var selectedPoiSessionKey = Template.engageCreate.selectedPoiSessionKey;
 
-Template.poiNameSelection.helpers({
+Template.poiNameSelector.helpers({
     get : function() {
         return PoisMetric.get().pois.map(function(item) {
             console.log(item);
@@ -13,7 +13,7 @@ Template.poiNameSelection.helpers({
     }
 });
 
-Template.poiNameSelection.rendered = function() {
+Template.poiNameSelector.rendered = function() {
     Meteor.typeahead.inject();
 };
 
