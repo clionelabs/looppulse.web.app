@@ -18,7 +18,7 @@ Template.registerHelper("formatDuration", function(duration) {
     }
 });
 
-Template.registerHelper("printActiveIfTrue", function(funcOrBoolean) {
+Template.registerHelper("printActiveIf", function(funcOrBoolean) {
     if(_.isFunction(funcOrBoolean)) {
         return funcOrBoolean() ? "active" : "";
     } else {

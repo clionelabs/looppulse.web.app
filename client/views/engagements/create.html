@@ -20,11 +20,11 @@
                         <td>
                             <div class="btn-group toggle-i-v" role="group">
                                 <button id="interested"
-                                        class="btn btn-lp-r {{ printActiveIfTrue isVisitorGroupSelectedInterested}}">
+                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedInterested}}">
                                     INTERESTED
                                 </button>
                                 <button id="visited"
-                                        class="btn btn-lp-r {{ printActiveIfTrue isVisitorGroupSelectedVisited}}">
+                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedVisited}}">
                                     VISITED
                                 </button>
                             </div>
@@ -40,14 +40,6 @@
                         <td><div class="help-text">{{{ getSelectedVisitorGroupHelpText }}}</div></td>
                     </tr>
                 </table>
-                <!--
-                <div class="ps-sm-8">
-                    <div class="ps-poi-num-targeted">{{_.numberFormat getSelectedPoi.numInterested }} targeted</div>
-                </div>
-                <div class="ps-sm-4">
-
-                </div>
-                -->
             </div>
             <div class="modal fade" id="poiSelectionModal" tabindex="-1" role="dialog" aria-labelledby="poiSelectionModelLabel" aria-hidden="true">
                 <div class="modal-dialog">
