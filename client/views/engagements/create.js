@@ -47,11 +47,17 @@ Template.engageCreate.created = function() {
     if (!Session.get(selectedVisitorGroupKey)) {
        Session.set(selectedVisitorGroupKey, "interested");
     }
-
 };
 
 Template.engageCreate.destroyed = function() {
     Session.clear(selectedPoiSessionKey);
     Session.clear(selectedVisitorGroupKey);
 };
+
+Template.engageCreate.rendered = function() {
+   $("#poiSelectionModal").on('shown.bs.modal', function() {
+       $("#pois-selection-input").focus();
+   });
+};
+
 
