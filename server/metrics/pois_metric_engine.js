@@ -17,6 +17,7 @@ PoisMetricEngine = function(pois, current) {
 
 /**
  * Compute the total number of visitors who have ever visited any of the pois
+ * @returns {Number}
  */
 PoisMetricEngine.prototype.computeTotalVisitorsCnt = function() {
   var users = _.reduce(this.journeys, function(memo, journey) {
@@ -28,6 +29,7 @@ PoisMetricEngine.prototype.computeTotalVisitorsCnt = function() {
 
 /**
  * Compute the current number of visitors still inside any of the poi regions
+ * @returns {Number}
  */
 PoisMetricEngine.prototype.computeCurrentVisitorsCnt = function() {
   var users = _.reduce(this.journeys, function(memo, journey) {
@@ -41,7 +43,7 @@ PoisMetricEngine.prototype.computeCurrentVisitorsCnt = function() {
  * Compute the peak number of "current" visitors within a period
  * @param {Moment} from From period
  * @param {Moment} to To period
- * return {Number} peak count
+ * @returns {Number} peak count
  */
 PoisMetricEngine.prototype.computePeakVisitorsCnt = function(from, to) {
   // TODO: implement
@@ -50,13 +52,19 @@ PoisMetricEngine.prototype.computePeakVisitorsCnt = function(from, to) {
 
 /**
  * Compute number of visitors who show interested in any of the poiss
+ * @returns {Number} number of interested visitors
  */
 PoisMetricEngine.prototype.computeInterestedCnt = function() {
+  // TODO: implement
   return Math.floor(this.journeys.length * 0.1);
 };
 
 /**
- * Compute average dwell time per single visit
+ * Compute average dwell time per journey, with the following logic:
+ *   1. per each journey, aggregate the duration of all encounters
+ *   2. take an average of all the journeys computed in 1.
+ *
+ * @returns {Number} average dwell time in ms rouned down
  */
 PoisMetricEngine.prototype.computeAvgDwellTime = function() {
   var self = this;
