@@ -45,7 +45,7 @@ PoisMetric.prototype._createAggregate = function () {
     subObj.interestedVisitors = 3268;
     //TODO impl
     subObj.averageDwellTime = 60 * 1000 * 36 + 42 * 1000; //36:42
-    //TODO impl
+    //TODO impl to use poimetric
     subObj.pois = self.pois;
     return subObj;
 
