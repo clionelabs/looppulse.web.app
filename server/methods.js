@@ -43,27 +43,29 @@ Meteor.methods({
 
     return res;
   },
-  // create user with org.
+  // create user with org and send an "invitation" email to them
   // @param:
-  // data : {email, orgId, [roles], {profile}} - do not sent unencrypted password over the wire!
-  createOrgUser: function(userData){
-    var currentUser = Meteor.user();
+  // data : {email, orgId, {profile}} - do not sent unencrypted password over the wire!
+  inviteOrgUser: function(userData){
+    var currentUser = Meteor.user(); //Current loggedIn user, which should be an admin
     var userId = "";
-    console.log("Updating User profile:", userData)
+    console.log("Going to setup User:", userData)
 
     //check current user
     if (!currentUser)
       throw new Meteor.Error(403, "You need to login")
 
-    //arguments checking
-    if (!userData || _.isEmpty(userData) || !userData.orgId  || !userData.roles  || !userData.email || !userData.roles.length)
-      throw new Meteor.Error(401, "Missing Parameter")
-
     //Permission
     if (!UserAccount.isOrgAdmin(currentUser, userData.orgId))
       throw new Meteor.Error(403, "You need to be an admin");
 
+    //arguments checking
+    if (!UserAccount.validateUserData(userData, "user"))
+      throw new Meteor.Error(401, "Missing Parameter")
+
     //Argument Checking
+
+    //Check Password
 
     //Check Email
 
@@ -71,11 +73,43 @@ Meteor.methods({
 
     userId = Accounts.createUser(userData)
 
-    Roles.addUsersToRoles(userId, userData.roles, UserAccount.getOrgGroup(userData.orgId))
+    Roles.addUsersToRoles(userId, ["user"], UserAccount.getOrgGroup(userData.orgId))
 
     Accounts.sendEnrollmentEmail(userId, userData.email);
 
-    console.log("[User] User created successfully: ", userData.email, userId)
+    console.log("[User] User invited successfully: ", userData.email, userId)
     return { result:"success", userId: userId, email: userData.email };
+  },
+  //Setup a new Org with Admin
+  buildOrg: function(orgData, adminData){
+    var orgId = "";
+    var userData = adminData;
+    var userId = "";
+
+    // Create new org
+    /// Some lazy checking here.
+    if (!orgData || !orgData.name) 
+      throw new Meteor.Error(401, "Missing Org Name")
+
+    orgId = Organizations.insert({ name: orgData.name });
+
+    // Create admin
+    /// Assign admin an new org *
+    userData.orgId = orgId;
+
+    /// Arguments checking
+    if (!UserAccount.validateUserData(userData, "admin"))
+      throw new Meteor.Error(401, "Missing Parameter")
+
+    userId = Accounts.createUser(userData)
+
+    Roles.addUsersToRoles(userId, ["admin"], UserAccount.getOrgGroup(userData.orgId))
+
+    if (userData.password)
+      Accounts.sendVerificationEmail(userId, userData.email);
+    else
+      Accounts.sendEnrollmentEmail(userId, userData.email);
+
+    return { result:"success", userId: userId, email: userData.email, orgId: orgId };
   }
 })

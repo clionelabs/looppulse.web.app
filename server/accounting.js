@@ -52,8 +52,7 @@ _.extend(UserAccount, {
 
     }
     if (role === "admin") {
-      if (!userData.password)
-        throw new Meteor.Error(401, "Missing Parameter")
+
     }
     return true;
   },
