@@ -41,26 +41,33 @@
                     </tr>
                 </table>
             </div>
-            <div class="modal fade" id="poiSelectionModal" tabindex="-1" role="dialog" aria-labelledby="poiSelectionModelLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="poiSelectionModelLabel">Which {{ ws.poiDescriptors.one }} you want to target?</h4>
-                        </div>
-                        <div class="modal-body">
-                            {{> poiNameSelector }}
-                        </div>
-                        <div class="modal-footer">
-
-                        </div>
-                    </div>
+            {{> poiNameSelector }}
+        </section>
+        <section class="row poi-selection">
+            <div class="col-sm-12">
+                <div class="ps-title">
+                    <div>FACEBOOK RETARGETING</div>
                 </div>
             </div>
-        </section>
-
-        <section class="row poi-selection">
-
+            <div class="col-sm-12 fb-form">
+                <table class="table-responsive ec-fb-form-table">
+                    <tr>
+                        <td>
+                            Budget:
+                        </td>
+                        <td>
+                            {{> budgetFiller }}
+                        </td>
+                        <td><div class="help-text">Per day or lifetime budget
+                            <!-- TODO help page
+                            <a href="/helps/budgeting">Help on budgeting.</a> -->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
+            </div>
         </section>
         <section class="row retargeting">
 

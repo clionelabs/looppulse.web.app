@@ -1,10 +1,22 @@
 <template name="poiNameSelector">
-    <div class="form-group">
-        <input id="pois-selection-input" class="form-control typeahead" name="pois" type="text"
-               placeholder="{{ ws.poiDescriptors.one }} name"
-               autocomplete="off" spellcheck="off"
-               data-source="get"
-               data-selected="selected"
-                />
+    <div class="modal fade" id="poiSelectionModal" tabindex="-1" role="dialog" aria-labelledby="poiSelectionModelLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="poiSelectionModelLabel">Which {{ ws.poiDescriptors.one }} you want to target?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input id="pois-selection-input" class="form-control typeahead" name="pois" type="text"
+                               placeholder="{{ ws.poiDescriptors.one }} name"
+                               autocomplete="off" spellcheck="off"
+                               data-source="get"
+                               data-selected="selected"
+                                />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

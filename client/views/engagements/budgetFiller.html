@@ -1,0 +1,18 @@
+<template name="budgetFiller">
+    <div class="budget-display"><a class="toggle-edit">{{ printBudget }}</a></div>
+    <div class="budget-edit">
+        <span class="currency">HKD</span>
+        <input id="amount" class="amount" type="number" value="{{ getBudgetAmount }}"/>
+        <div class="btn-group">
+            <button class="btn select-budget-type-per-day btn-lp-r
+                            {{ printActiveIf isBudgetTypePerDay }}">
+                Per Day
+            </button>
+            <button class="btn select-budget-type-lifetime btn-lp-r
+                            {{ printActiveIf isBudgetTypeLifetime }}">
+                Lifetime
+            </button>
+        </div>
+        <span class="glyphicon glyphicon-ok pull-right"></span>
+    </div>
+</template>
