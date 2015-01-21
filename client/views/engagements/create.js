@@ -1,9 +1,7 @@
 Template.engageCreate.selectedPoiSessionKey = "-engageCreate-selectedPoi";
-Template.engageCreate.selectedVisitorGroupKey = "-engageCreate-selectedVisitorGroup";
 var selectedPoiSessionKey = Template.engageCreate.selectedPoiSessionKey;
-var selectedVisitorGroupKey = Template.engageCreate.selectedVisitorGroupKey;
-var VG_INTERESTED = "interested";
-var VG_VISITED = "visited";
+
+var selectedVisitorGroupKey = Template.visitorGroupSelector.selectedVisitorGroupKey;
 
 Template.engageCreate.helpers({
    getSelectedPoi : function() {
@@ -26,27 +24,6 @@ Template.engageCreate.helpers({
     isVisitorGroupSelectedInterested : function() {
         return Session.get(selectedVisitorGroupKey).indexOf(VG_INTERESTED) === 0;
 
-    },
-    isVisitorGroupSelectedVisited : function() {
-        return Session.get(selectedVisitorGroupKey).indexOf(VG_VISITED) === 0;
-    },
-    printScheduleHelpText : function() {
-        if (Session.get(Template.budgetFiller.typeSessionKey)
-                .match(Template.budgetFiller.type.lifetime)) {
-
-            return "";
-
-        } else {
-            var s = "\Max\.spending will be: \<b>";
-            var sDate = moment(Session.get(Template.scheduleFiller.startDateSessionKey));
-            var eDate = moment(Session.get(Template.scheduleFiller.endDateSessionKey));
-            var amount = Session.get(Template.budgetFiller.amountSessionKey);
-            s = s + "HKD " + _.numberFormat(+amount * eDate.diff(sDate, "day")) + "\</b>";
-
-            return s;
-
-        }
-    }
 });
 
 Template.engageCreate.events({
