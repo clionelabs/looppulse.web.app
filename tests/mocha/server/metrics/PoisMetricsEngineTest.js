@@ -94,6 +94,53 @@ if (!(typeof MochaWeb === 'undefined')) {
         chai.assert.equal(engine.computeCurrentVisitorsCnt(), 2);
         chai.assert.equal(engine.computeAvgDwellTime(), Math.floor(((10 + 20) + (msSinceBase) + (msSinceBase - 10) + 20)/4));
       });
+
+      it("peak visitors count - single visitor - single encounter", function() {
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '1', encounters: [getEncounter(10, 20)]});
+        var engine = new PoisMetricEngine([pois[0]], current);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 0), getBaseDate().add( 9)), 0);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 9), getBaseDate().add(11)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(11), getBaseDate().add(19)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(19), getBaseDate().add(21)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(21), getBaseDate().add(30)), 0);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 0), getBaseDate().add(30)), 1);
+      });
+
+      it("peak visitors count - single visitor - two encounters", function() {
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '1', encounters: [getEncounter(10, 20), getEncounter(30, 40)]});
+        var engine = new PoisMetricEngine([pois[0]], current);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 0), getBaseDate().add(35)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(21), getBaseDate().add(29)), 0);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(15), getBaseDate().add(35)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(25), getBaseDate().add(35)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(25), getBaseDate().add(45)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 5), getBaseDate().add(55)), 1);
+      });
+
+      it("peak visitors count - two pois - single visitor - overlapped encounter", function() {
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '1', encounters: [getEncounter(20, 40)]});
+        Journeys.insert({poiId: pois[1]._id, visitorUUID: '1', encounters: [getEncounter(10, 30)]});
+        var engine = new PoisMetricEngine([pois[0], pois[1]], current);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 0), getBaseDate().add(35)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(15), getBaseDate().add(45)), 1);
+      });
+
+      it("peak visitors count - single poi - two visitors - overlapped encounter", function() {
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '1', encounters: [getEncounter(20, 40)]});
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '2', encounters: [getEncounter(10, 30)]});
+        var engine = new PoisMetricEngine([pois[0]], current);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 0), getBaseDate().add(15)), 1);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(15), getBaseDate().add(35)), 2);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add(35), getBaseDate().add(45)), 1);
+      });
+
+      it("peak visitors count - multiple visitors - no overlap", function() {
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '1', encounters: [getEncounter(10, 19), getEncounter(30, 39), getEncounter(50, 59)]});
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '2', encounters: [getEncounter(20, 24), getEncounter(40, 44)]});
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '3', encounters: [getEncounter(0, 9), getEncounter(25, 29), getEncounter(45, 49)]});
+        var engine = new PoisMetricEngine(pois, current);
+        chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 0), getBaseDate().add(100)), 1);
+      });
     });
   });
 }
