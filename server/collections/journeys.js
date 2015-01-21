@@ -35,8 +35,7 @@ Journeys._popEncounter = function(poiId, visitorUUID) {
 Journeys._pushEncounter = function(poiId, visitorUUID, enteredAt, exitedAt) {
   var newEncounter = {
     enteredAt: enteredAt,
-    exitedAt: exitedAt,
-    duration: (exitedAt? moment(exitedAt).diff(moment(enteredAt), 's'): null)
+    exitedAt: exitedAt
   }
 
   var selector = {poiId: poiId, visitorUUID: visitorUUID};
@@ -132,6 +131,10 @@ Journeys.handleNewBeaconEvent = function(beaconEvent) {
     }
   }
 };
+
+/**
+ * Compute number of visitors on a list of POIs
+ */
 
 Meteor.startup(function() {
   BeaconEvents.find().observe({
