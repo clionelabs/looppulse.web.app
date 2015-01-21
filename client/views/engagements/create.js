@@ -14,7 +14,6 @@ Template.engageCreate.helpers({
             var str = "Currently targeting ";
             if (Session.get(selectedVisitorGroupKey).indexOf(VG_INTERESTED) === 0) {
                 str = str + "\<br>\<b>" + Session.get(selectedPoiSessionKey).interestedVisitors + "\</b> " + "interested ";
-
             } else {
                 str = str + "\<br>\<b>" + Session.get(selectedPoiSessionKey).totalVisitors + "\</b> ";
             }
