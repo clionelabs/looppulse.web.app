@@ -30,8 +30,24 @@ Template.engageCreate.helpers({
     },
     isVisitorGroupSelectedVisited : function() {
         return Session.get(selectedVisitorGroupKey).indexOf(VG_VISITED) === 0;
-    }
+    },
+    printScheduleHelpText : function() {
+        if (Session.get(Template.budgetFiller.typeSessionKey)
+                .match(Template.budgetFiller.type.lifetime)) {
 
+            return "";
+
+        } else {
+            var s = "\Max\.spending will be: \<b>";
+            var sDate = moment(Session.get(Template.scheduleFiller.startDateSessionKey));
+            var eDate = moment(Session.get(Template.scheduleFiller.endDateSessionKey));
+            var amount = Session.get(Template.budgetFiller.amountSessionKey);
+            s = s + "HKD " + _.numberFormat(+amount * eDate.diff(sDate, "day")) + "\</b>";
+
+            return s;
+
+        }
+    }
 });
 
 Template.engageCreate.events({
