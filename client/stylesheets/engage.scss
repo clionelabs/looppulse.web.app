@@ -1,6 +1,33 @@
 @import 'variable';
 
 .engage-create {
+  .ec-form-table {
+    width: 100%;
+    td:first-child {
+      width:60%;
+      border-right:1px solid $lp-light-grey;
+      text-align: center;
+      .toggle-i-v {
+        width:300px;
+        margin: 0 auto;
+        button {
+          font-size: $dimen-h4-size;
+          width:50%;
+        }
+      }
+    }
+    td {
+      width:40%;
+      padding-bottom:20px;
+      font-size: $dimen-h4-size;
+      vertical-align: middle;
+      .help-text {
+        margin: 0 15px;
+
+      }
+    }
+
+  }
   .name-input {
     margin-top:30px;
     .create-btn-container {
@@ -18,16 +45,15 @@
     border-color: transparent;
     border-bottom: 1px solid $lp-light-grey;
     border-radius: 0;
-
     font-size: $dimen-h1-size;
     background: none;
     margin-right: 25px;
     padding: 0;
     height: auto;
+    width: 75%;
   }
   .btn-lp {
-    width: auto;
-    height: auto;
+    margin:10px 0;
   }
 
   .poi-selection {
@@ -36,7 +62,44 @@
 
   .ps-title {
     div {
+      font-size: $dimen-h3-size;
       border-bottom: 1px solid $lp-light-grey;
     }
+  }
+
+  .ps-selected {
+    margin:45px 0px;
+    .ps-poi-name {
+      text-align: center;
+      font-size: $dimen-h1-size;
+      color: $lp-blue;
+    }
+    .ps-poi-num-targeted {
+      text-align: center;
+      font-size: $dimen-h2-size;
+    }
+  }
+
+  #poiSelectionModal {
+    .form-group {
+      width:100%;
+      .twitter-typeahead {
+        width: 100%;
+        .pois-selection-input {
+          width: 100%
+        }
+        .tt-dropdown-menu {
+          width: 100%;
+          background-color: $lp-white;
+          border-radius: 3px;
+          color: $lp-dark-grey;
+          .tt-suggestion {
+            padding:5px;
+          }
+
+        }
+      }
+    }
+
   }
 }
