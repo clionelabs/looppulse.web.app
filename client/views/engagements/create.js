@@ -1,9 +1,7 @@
 Template.engageCreate.selectedPoiSessionKey = "-engageCreate-selectedPoi";
-Template.engageCreate.selectedVisitorGroupKey = "-engageCreate-selectedVisitorGroup";
 var selectedPoiSessionKey = Template.engageCreate.selectedPoiSessionKey;
-var selectedVisitorGroupKey = Template.engageCreate.selectedVisitorGroupKey;
-var VG_INTERESTED = "interested";
-var VG_VISITED = "visited";
+
+var selectedVisitorGroupKey = Template.visitorGroupSelector.selectedVisitorGroupKey;
 
 Template.engageCreate.helpers({
    getSelectedPoi : function() {
@@ -24,13 +22,6 @@ Template.engageCreate.helpers({
             return "None selected.";
         }
     },
-    isVisitorGroupSelectedInterested : function() {
-        return Session.get(selectedVisitorGroupKey).indexOf(VG_INTERESTED) === 0;
-
-    },
-    isVisitorGroupSelectedVisited : function() {
-        return Session.get(selectedVisitorGroupKey).indexOf(VG_VISITED) === 0;
-    }
 
 });
 

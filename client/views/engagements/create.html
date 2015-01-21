@@ -18,16 +18,7 @@
                 <table class="table-responsive ec-form-table">
                     <tr>
                         <td>
-                            <div class="btn-group toggle-i-v" role="group">
-                                <button id="interested"
-                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedInterested}}">
-                                    INTERESTED
-                                </button>
-                                <button id="visited"
-                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedVisited}}">
-                                    VISITED
-                                </button>
-                            </div>
+                            {{> visitorGroupSelector }}
                         </td>
                         <td>
                             <div class="help-text">
