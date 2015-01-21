@@ -40,7 +40,7 @@ Template.initSession = function(sessionMap) {
         if (!Session.get(i)) {
             Session.set(i, sessionMap[i]);
         } else {
-            console.warn(sessionMap[i] + " is initialized.");
+            console.warn(sessionMap[i] + " is initialized before.");
         }
     });
 };

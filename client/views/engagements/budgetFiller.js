@@ -14,7 +14,6 @@ Template.budgetFiller.helpers({
             (_.contains([Template.budgetFiller.type.perDay], Session.get(typeSKey))
                 ? " per day" : " lifetime");
     },
-
     isBudgetTypePerDay : function() {
         return _.contains([Template.budgetFiller.type.perDay], Session.get(typeSKey));
     },
