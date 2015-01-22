@@ -13,7 +13,6 @@ Fixtures.clear = function() {
   var fixtureSelector = {"name": {$regex: "^"+Fixtures.prefix}};
   console.log("[Fixtures] Clearing Up...");
   Workspaces.remove(fixtureSelector);
-  Organizations.remove(fixtureSelector);
 }
 
 /**
@@ -49,13 +48,4 @@ Fixtures.load = function() {
     });
   }
 
-  if (orgFixture) {
-    console.log("[Fixture] Importing Organizations...");
-    orgFixture.forEach(function(org){
-      var name = Fixtures.prefix + " " + org.name;
-      var res = Organizations.upsert({name: name}, {name: name});
-      var orgId = (res.insertedId) ? res.insertedId : Organizations.findOne({name:name})._id;
-      console.log("[Fixture] Imported org", orgId,  res)
-    })
-  }
 }
