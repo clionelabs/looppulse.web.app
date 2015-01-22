@@ -11,11 +11,6 @@ if (Settings.firstRun) { // Currently we are using a flag to triggers...any bett
 // Start background processing
 Processing.start();
 
-// Account settings
-Meteor.startup(function() {
-  UserAccount.startup();
-})
-
 // Reload fixtures
 if (Settings.fixtures) {
   Meteor.startup(function() {
