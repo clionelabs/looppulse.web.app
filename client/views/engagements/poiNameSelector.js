@@ -1,19 +1,23 @@
-var selectedPoiSessionKey = Template.engageCreate.selectedPoiSessionKey;
 
 Template.poiNameSelector.helpers({
     get : function() {
         return PoisMetric.get().pois.map(function(item) {
-            console.log(item);
             return { id : item._id, value : item.name, numInterested : item.interestedVisitors }
         });
     },
     selected: function(e, suggestion, dataset) {
-        Session.setTemp(selectedPoiSessionKey, suggestion);
+        var sessionKey = Template.engageCreate.SessionKey;
+        Session.setForm(sessionKey, "selectedPoi", suggestion);
         $("#poiSelectionModal").modal('hide');
     }
 });
 
 Template.poiNameSelector.rendered = function() {
+
     Meteor.typeahead.inject();
+
+    $("#poiSelectionModal").on('shown.bs.modal', function() {
+        $("#pois-selection-input").focus();
+    });
 };
 
