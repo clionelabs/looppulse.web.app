@@ -8,29 +8,31 @@ Processing = {};
  */
 Processing.start = function() {
   Processing._authenticateFirebase();
-}
+};
 
 /**
  * @private
  */
 Processing._authenticateFirebase = function() {
-  //some checking
-  if (!Settings.firebase.root) 
-    throw new Error("[Settings] Missing firebase URL setting")
-  //if everything alright
+  if (!Settings.firebase.root) {
+    throw new Error("missing-firebase-root",
+    "[Processing] Missing firebase URL setting");
+  }
+
   var firebaseRef = new Firebase(Settings.firebase.root);
   firebaseRef.auth(Settings.firebase.secret, Meteor.bindEnvironment(function(error, authData) {
     if (error) {
-      console.error("[Processing] failed to authenticate firebase. Error: ", error);
-    } else {
-      Workspaces.find().observe({
-        "added": function(workspace) {
-          Processing._observeWorkspaceEvents(workspace);
-        }
-      });
+      throw new Error("firebase-authentication-failed",
+                      "[Processing] failed to authenticate Firebase",
+                      error);
     }
+    Workspaces.find().observe({
+      "added": function(workspace) {
+        Processing._observeWorkspaceEvents(workspace);
+      }
+    });
   }));
-}
+};
 
 Processing._observeWorkspaceEvents = function(workspace) {
   var firebasePaths = workspace.getFirebaseEventPaths();
@@ -42,4 +44,4 @@ Processing._observeWorkspaceEvents = function(workspace) {
       snapshot.ref().remove();
     }
   }));
-}
+};
