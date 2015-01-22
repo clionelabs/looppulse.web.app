@@ -40,7 +40,21 @@ Template.initSession = function(sessionMap) {
         if (!Session.get(i)) {
             Session.set(i, sessionMap[i]);
         } else {
-            console.warn(sessionMap[i] + " is initialized.");
+            console.warn(sessionMap + " has been already initialized.");
         }
     });
 };
+
+Session.setForm = function(formName, varName, value) {
+    var form = Session.get(formName);
+    form[varName] = value;
+    Session.set(formName, form);
+};
+
+Session.getForm = function(formName, varName) {
+    if (varName) {
+        return Session.get(formName)[varName];
+    } else {
+        return Session.get(formName);
+    }
+}

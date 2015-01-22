@@ -1,46 +1,38 @@
-Template.engageCreate.selectedPoiSessionKey = "-engageCreate-selectedPoi";
-var selectedPoiSessionKey = Template.engageCreate.selectedPoiSessionKey;
+Template.engageCreate.SessionKey = "EngageCreateForm";
 
-var selectedVisitorGroupKey = Template.visitorGroupSelector.selectedVisitorGroupKey;
 
 Template.engageCreate.helpers({
    getSelectedPoi : function() {
-       return Session.get(selectedPoiSessionKey);
+       var sessionKey = Template.engageCreate.SessionKey;
+       return Session.getForm(sessionKey, "selectedPoi");
    },
     getSelectedVisitorGroupHelpText : function () {
-        if (Session.get(selectedPoiSessionKey)) {
+        var sessionKey = Template.engageCreate.SessionKey;
+        if (Session.getForm(sessionKey).selectedPoi) {
             var str = "Currently targeting ";
-            if (Session.get(selectedVisitorGroupKey).indexOf(VG_INTERESTED) === 0) {
-                str = str + "\<br>\<b>" + Session.get(selectedPoiSessionKey).interestedVisitors + "\</b> " + "interested ";
+            var vg_interested = Template.visitorGroupSelector.visitorGroup.INTERESTED;
+            if (Session.getForm(sessionKey, "visitorGroup").match(vg_interested)) {
+                str = str + "\<br>\<b>" + Session.getForm(sessionKey, "selectedPoi").interestedVisitors + "\</b> " + "interested ";
 
             } else {
-                str = str + "\<br>\<b>" + Session.get(selectedPoiSessionKey).totalVisitors + "\</b> ";
+                str = str + "\<br>\<b>" + Session.getForm(sessionKey, "selectedPoi").totalVisitors + "\</b> ";
             }
             str = str + "visitors.";
             return str;
         } else {
             return "None selected.";
         }
-    },
-
-});
-
-Template.engageCreate.events({
-    "click #interested" : function() {
-        Session.set(selectedVisitorGroupKey, VG_INTERESTED);
-    },
-    "click #visited" : function() {
-        Session.set(selectedVisitorGroupKey, VG_VISITED);
     }
+
 });
 
 Template.engageCreate.created = function() {
-    if (!Session.get(selectedVisitorGroupKey)) {
-       Session.set(selectedVisitorGroupKey, "interested");
-    }
-};
-
-Template.engageCreate.destroyed = function() {
-    Session.clear(selectedPoiSessionKey);
-    Session.clear(selectedVisitorGroupKey);
+    var sessionKey = Template.engageCreate.SessionKey;
+    var s = {};
+    s[sessionKey] = {
+        visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED,
+        amount : 200,
+        type : Template.budgetFiller.type.perDay
+    };
+    Template.initSession(s);
 };
