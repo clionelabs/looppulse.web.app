@@ -1,6 +1,3 @@
-/**
- * Created by g on 12/1/15.
- */
 Template.pois.rendered = function() {
     $(".container").slick({
         infinite: false,

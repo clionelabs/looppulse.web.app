@@ -39,6 +39,7 @@ launch-screen@1.0.1
 less@1.0.12
 livedata@1.0.12
 localstorage@1.0.2
+loftsteinn:bootstrap3-daterangepicker@0.3.1
 logging@1.0.6
 meteor@1.1.4
 meteor-platform@1.2.1

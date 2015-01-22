@@ -14,6 +14,11 @@ Template.poiNameSelector.helpers({
 });
 
 Template.poiNameSelector.rendered = function() {
+
     Meteor.typeahead.inject();
+
+    $("#poiSelectionModal").on('shown.bs.modal', function() {
+        $("#pois-selection-input").focus();
+    });
 };
 
