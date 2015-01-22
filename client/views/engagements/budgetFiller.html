@@ -5,11 +5,11 @@
         <input id="amount" class="amount input-lp" type="number" value="{{ getBudgetAmount }}"/>
         <div class="btn-group">
             <button class="btn select-budget-type-per-day btn-lp-r
-                            {{ printActiveIf isBudgetTypePerDay }}">
+                            {{ printActiveIf isPerDay }}">
                 Per Day
             </button>
             <button class="btn select-budget-type-lifetime btn-lp-r
-                            {{ printActiveIf isBudgetTypeLifetime }}">
+                            {{ printActiveIf isLifetime }}">
                 Lifetime
             </button>
         </div>

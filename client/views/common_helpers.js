@@ -34,13 +34,19 @@ Template.registerHelper("printActiveIf", function(funcOrBoolean) {
  *   ...
  * }
  */
-Template.initSession = function(sessionMap) {
+Session.init = function(sessionMap) {
     var keys = Object.keys(sessionMap);
     _.each(keys, function (i) {
         if (!Session.get(i)) {
             Session.set(i, sessionMap[i]);
         } else {
-            console.warn(sessionMap[i] + " is initialized before.");
+            console.warn(sessionMap + " has been already initialized.");
         }
     });
+};
+
+Session.pushTo = function(key, obj) {
+    var form = Session.get(key);
+    form = _.extend({}, form, obj);
+    Session.set(key, form);
 };

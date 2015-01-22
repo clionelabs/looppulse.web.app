@@ -1,19 +1,21 @@
-Template.engageCreate.selectedPoiSessionKey = "-engageCreate-selectedPoi";
-var selectedPoiSessionKey = Template.engageCreate.selectedPoiSessionKey;
+Template.engageCreate.FormSessionKey = "engageCreateForm";
 
-var selectedVisitorGroupKey = Template.visitorGroupSelector.selectedVisitorGroupKey;
 
 Template.engageCreate.helpers({
    getSelectedPoi : function() {
-       return Session.get(selectedPoiSessionKey);
+       var sessionKey = Template.engageCreate.FormSessionKey;
+       return Session.get(sessionKey).selectedPoi;
    },
     getSelectedVisitorGroupHelpText : function () {
-        if (Session.get(selectedPoiSessionKey)) {
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        if (Session.get(sessionKey).selectedPoi) {
             var str = "Currently targeting ";
-            if (Session.get(selectedVisitorGroupKey).indexOf(VG_INTERESTED) === 0) {
-                str = str + "\<br>\<b>" + Session.get(selectedPoiSessionKey).interestedVisitors + "\</b> " + "interested ";
+            var vg_interested = Template.visitorGroupSelector.visitorGroup.INTERESTED;
+            if (Session.get(sessionKey).visitorGroup.match(vg_interested)) {
+                str = str + "\<br>\<b>" + Session.get(sessionKey).selectedPoi.interestedVisitors + "\</b> " + "interested ";
+
             } else {
-                str = str + "\<br>\<b>" + Session.get(selectedPoiSessionKey).totalVisitors + "\</b> ";
+                str = str + "\<br>\<b>" + Session.get(sessionKey).selectedPoi.totalVisitors + "\</b> ";
             }
             str = str + "visitors.";
             return str;
@@ -21,27 +23,39 @@ Template.engageCreate.helpers({
             return "None selected.";
         }
     },
-    isVisitorGroupSelectedInterested : function() {
-        return Session.get(selectedVisitorGroupKey).indexOf(VG_INTERESTED) === 0;
+    getScheduleHelpText : function() {
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        var formData = Session.get(sessionKey);
 
-});
+        if (Session.get(sessionKey).type
+                .match(Template.budgetFiller.type.lifetime)) {
 
-Template.engageCreate.events({
-    "click #interested" : function() {
-        Session.set(selectedVisitorGroupKey, VG_INTERESTED);
-    },
-    "click #visited" : function() {
-        Session.set(selectedVisitorGroupKey, VG_VISITED);
+            return "";
+
+        } else {
+            var s = "\Max\.spending will be: \<b>";
+            var sDate = moment(Session.get(sessionKey).startDate);
+            var eDate = moment(Session.get(sessionKey).endDate);
+            var amount = Session.get(sessionKey).amount;
+            s = s + "HKD " + _.numberFormat(+amount * eDate.diff(sDate, "day")) + "\</b>";
+
+            return s;
+
+        }
     }
+
+
 });
 
 Template.engageCreate.created = function() {
-    if (!Session.get(selectedVisitorGroupKey)) {
-       Session.set(selectedVisitorGroupKey, "interested");
-    }
-};
-
-Template.engageCreate.destroyed = function() {
-    Session.clear(selectedPoiSessionKey);
-    Session.clear(selectedVisitorGroupKey);
+    var sessionKey = Template.engageCreate.FormSessionKey;
+    var s = {};
+    s[sessionKey] = {
+        startDate : moment().format("YYYY-MM-DD"),
+        selectedPoi : null,
+        visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED,
+        amount : 200,
+        type : Template.budgetFiller.type.perDay
+    };
+    Session.init(s);
 };

@@ -1,16 +1,28 @@
-Template.visitorGroupSelector.selectedVisitorGroupKey = "-engageCreate-selectedVisitorGroup";
+Template.visitorGroupSelector.visitorGroup = {
+    "INTERESTED" : "interested",
+    "VISITED" : "visited"
+};
 
-var selectedVisitorGroupKey = Template.visitorGroupSelector.selectedVisitorGroupKey;
-
-var VG_INTERESTED = "interested";
-var VG_VISITED = "visited";
 
 Template.visitorGroupSelector.helpers({
     isInterested : function() {
-        return Session.get(selectedVisitorGroupKey).indexOf(VG_INTERESTED) === 0;
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        return Session.get(sessionKey).visitorGroup.match(Template.visitorGroupSelector.visitorGroup.INTERESTED);
 
     },
     isVisited : function() {
-        return Session.get(selectedVisitorGroupKey).indexOf(VG_VISITED) === 0;
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        return Session.get(sessionKey).visitorGroup.match(Template.visitorGroupSelector.visitorGroup.VISITED);
+    }
+});
+
+Template.visitorGroupSelector.events({
+    "click #interested" : function() {
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        Session.pushTo(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED });
+    },
+    "click #visited" : function() {
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        Session.pushTo(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.VISITED });
     }
 });
