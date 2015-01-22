@@ -27,8 +27,7 @@ Meteor.publish('getCurrentWorkspace', function(/*wsId*/) {
  */
 Meteor.publish(null, function () {
   var userId = this.userId;
-  var fields = {organizationIds:1};
-  return Meteor.users.find({_id:userId}, {fields: fields});
+  return Meteor.users.find({_id:userId});
 });
 
 Meteor.publish('organizations', function (userId) {
