@@ -30,6 +30,13 @@
   .ec-fb-form-table {
     margin: 15px 0px;
     width: 100%;
+
+    tr.row-align-top {
+      td {
+        vertical-align: top;
+      }
+    }
+
     td:first-child {
       text-align: right;
       padding-right:15px;
@@ -55,17 +62,12 @@
     }
 
     .budget-edit {
-      .amount {
-        border-shadow : none;
-        border: none;
-        border-bottom: 1px solid $lp-light-grey;
-      }
       .btn-group {
         button {
           font-size: $dimen-h4-size;
         }
       }
-      .glyphicon-ok {
+      .btn-ok {
         display: inline-block;
         margin: 5px 0px;
       }
@@ -145,6 +147,9 @@
         }
       }
     }
+  }
 
+  .placement-item {
+    margin-bottom: 15px;
   }
 }

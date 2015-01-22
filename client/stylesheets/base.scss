@@ -51,4 +51,32 @@ body {
       color: $lp-white;
     }
   }
+
+  .input-lp {
+    border-shadow : none;
+    border: none;
+    border-bottom: 1px solid $lp-light-grey;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+    & + label span {
+      display: inline-block;
+      width: 40px;
+      height: 25px;
+      background: url("images/off.png") left top no-repeat;
+      background-size: contain;
+      margin-right:45px;
+    }
+  }
+
+  input[type="checkbox"]:checked + label span {
+    display:inline-block;
+    width: 40px;
+    height: 25px;
+    background: url("images/on.png") left top no-repeat;
+    background-size: contain;
+    margin-right:45px;
+  }
+
 }
