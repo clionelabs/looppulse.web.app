@@ -10,6 +10,8 @@ iron:router
 
 gfk:notifications
 twbs:bootstrap
+useraccounts:bootstrap
+accounts-password
 d3js:d3
 mrt:firebase-token-generator
 wizonesolutions:underscore-string

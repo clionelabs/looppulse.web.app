@@ -10,5 +10,13 @@
 
   "clearFirebaseEvents": false,
 
-  "loadFixtures": true
+  "accounts": {
+    "forbidClientAccountCreation": true
+  },
+  
+
+  "fixtures":{ 
+    "load": true, 
+    "clear": false
+  }
 }

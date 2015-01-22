@@ -10,8 +10,9 @@ Fixtures.prefix = "==FIXTURE=="; // To append workspace name with prefix, so we 
  * Clear all existing fixtures
  */
 Fixtures.clear = function() {
-  var wsSelector = {"name": {$regex: "^"+Fixtures.prefix}};
-  Workspaces.remove(wsSelector);
+  var fixtureSelector = {"name": {$regex: "^"+Fixtures.prefix}};
+  console.log("[Fixtures] Clearing Up...");
+  Workspaces.remove(fixtureSelector);
 }
 
 /**
@@ -19,30 +20,32 @@ Fixtures.clear = function() {
  */
 Fixtures.load = function() {
   var fixture = JSON.parse(Assets.getText("fixtures.json"));
-  var workspacesFixture = fixture.workspaces;
+  var wsFixture = fixture.workspaces;
+  var orgFixture = fixture.organizations;
 
-  _.each(workspacesFixture, function(workspaceFixture) {
-    var wsId = Workspaces.insert({name: Fixtures.prefix + workspaceFixture.name, poiDescriptors: workspaceFixture.poiDescriptors});
-    console.log("[Fixtures] Importing wsId: ", wsId);
+  if (wsFixture) {
+    console.log("[Fixture] Importing Workspaces...");
+    wsFixture.forEach(function(ws) {
+      var name = Fixtures.prefix + " " + ws.name;
+      var res = Workspaces.upsert({name: name}, {name: name, poiDescriptors: ws.poiDescriptors});
+      var wsId = (res.insertedId) ? res.insertedId : Workspaces.findOne({name: name})._id;
+      console.log("[Fixture] Imported Workspace: ", wsId , res);
 
-    _.each(workspaceFixture.applications, function(appFixture) {
-      Applications.insert({wsId: wsId, name: appFixture.name, token: appFixture.token});
+      if (ws.applications)
+        ws.applications.forEach(function(appFixture) {
+          Applications.upsert({wsId: wsId},{wsId: wsId, name: appFixture.name, token: appFixture.token});
+        });
+
+      if (ws.pois)
+        ws.pois.forEach(function(poiFixture) {
+          Pois.upsert({wsId: wsId},{wsId: wsId, name: poiFixture.name, beacon: poiFixture.beacon});
+        });
+
+      if (ws.geofences)
+        ws.geofences.forEach(function(geofenceFixture) {
+          Geofences.upsert({wsId: wsId},{wsId: wsId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
+        });
     });
+  }
 
-    _.each(workspaceFixture.pois, function(poiFixture) {
-      Pois.insert({wsId: wsId, name: poiFixture.name, beacon: poiFixture.beacon});
-    });
-
-    _.each(workspaceFixture.geofences, function(geofenceFixture) {
-      Geofences.insert({wsId: wsId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
-    });
-  });
-}
-
-/**
- * Wrapper to do clear and load
- */
-Fixtures.reload = function() {
-  Fixtures.clear();
-  Fixtures.load();
 }
