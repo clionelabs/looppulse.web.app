@@ -8,6 +8,5 @@ Installation = {
     userId = Accounts.createUser(userData);
 
     Organizations.addUserById(organizationId, userId);
-    Meteor.users.addOrganizationById(userId, organizationId);
   }
 }
