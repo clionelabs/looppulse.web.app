@@ -59,8 +59,8 @@ PoisMetricEngine.prototype.computePeakVisitorsCnt = function(from, to) {
       var enteredTime = encounter.enteredAt;
       var exitedTime = encounter.exitedAt !== null? encounter.exitedAt: self.current.valueOf();
       if (!(exitedTime < fromTime || enteredTime > toTime)) { // relevant
-        events.push({delta: 1, time: enteredTime, vid: journey.visitorUUID});
-        events.push({delta: -1, time: exitedTime, vid: journey.visitorUUID});
+        events.push({type: 'enter', time: enteredTime, vid: journey.visitorUUID});
+        events.push({type: 'exit', time: exitedTime, vid: journey.visitorUUID});
       }
     });
   });
@@ -74,10 +74,10 @@ PoisMetricEngine.prototype.computePeakVisitorsCnt = function(from, to) {
   var maxCount = 0; // keep track of all-time-maximum of "count"
   _.each(events, function(e) {
     visitorOpenedCounts[e.vid] = visitorOpenedCounts[e.vid] | 0;
-    if (e.delta === 1) {
+    if (e.type === 'enter') {
       visitorOpenedCounts[e.vid]++;
       if (visitorOpenedCounts[e.vid] === 1) count++;
-    } else if (e.delta === -1) {
+    } else if (e.type === 'exit') {
       visitorOpenedCounts[e.vid]--;
       if (visitorOpenedCounts[e.vid] === 0) count--;
     }
