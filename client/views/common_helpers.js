@@ -18,3 +18,29 @@ Template.registerHelper("formatDuration", function(duration) {
     }
 });
 
+Template.registerHelper("printActiveIf", function(funcOrBoolean) {
+    if(_.isFunction(funcOrBoolean)) {
+        return funcOrBoolean() ? "active" : "";
+    } else {
+        return funcOrBoolean ? "active" : "";
+    }
+});
+
+/**
+ * @param sessionMap is in this format
+ * {
+ *   key1 : value1,
+ *   key2 : value2,
+ *   ...
+ * }
+ */
+Template.initSession = function(sessionMap) {
+    var keys = Object.keys(sessionMap);
+    _.each(keys, function (i) {
+        if (!Session.get(i)) {
+            Session.set(i, sessionMap[i]);
+        } else {
+            console.warn(sessionMap[i] + " is initialized before.");
+        }
+    });
+};

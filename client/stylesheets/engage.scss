@@ -1,0 +1,150 @@
+@import 'variable';
+
+.engage-create {
+  .ec-form-table {
+    width: 100%;
+    td:first-child {
+      width:60%;
+      border-right:1px solid $lp-light-grey;
+      text-align: center;
+      .toggle-i-v {
+        width:300px;
+        margin: 0 auto;
+        button {
+          font-size: $dimen-h4-size;
+          width:50%;
+        }
+      }
+    }
+    td {
+      width:40%;
+      padding-bottom:20px;
+      font-size: $dimen-h4-size;
+      vertical-align: middle;
+      .help-text {
+        margin: 0 15px;
+      }
+    }
+  }
+
+  .ec-fb-form-table {
+    margin: 15px 0px;
+    width: 100%;
+    td:first-child {
+      text-align: right;
+      padding-right:15px;
+      width:20%;
+
+      font-size: $dimen-h3-size;
+    }
+    td:nth-child(2) {
+      border-right:1px solid $lp-light-grey;
+      text-align: left;
+      width:40%;
+      font-size: $dimen-h3-size;
+      padding-right:15px;
+    }
+    td {
+      width:40%;
+      padding-bottom:20px;
+      font-size: $dimen-h4-size;
+      vertical-align: middle;
+      .help-text {
+        margin: 0 15px;
+      }
+    }
+
+    .budget-edit {
+      .amount {
+        border-shadow : none;
+        border: none;
+        border-bottom: 1px solid $lp-light-grey;
+      }
+      .btn-group {
+        button {
+          font-size: $dimen-h4-size;
+        }
+      }
+      .glyphicon-ok {
+        display: inline-block;
+        margin: 5px 0px;
+      }
+    }
+  }
+
+  .name-input {
+    margin-top:30px;
+    .create-btn-container {
+      height: 80px;
+      button {
+        margin: 18px 0px;
+        &:hover,&:active {
+          color: darken($lp-white, 10%);
+        }
+      }
+    }
+  }
+  #engage-name {
+    box-shadow: none;
+    border-color: transparent;
+    border-bottom: 1px solid $lp-light-grey;
+    border-radius: 0;
+    font-size: $dimen-h1-size;
+    background: none;
+    margin-right: 25px;
+    padding: 0;
+    height: auto;
+    width: 75%;
+  }
+  .btn-lp {
+    margin:10px 0;
+  }
+
+  .poi-selection {
+    margin-top: 30px;
+  }
+
+  .ps-title {
+    div {
+      font-size: $dimen-h3-size;
+      font-weight: normal;
+      border-bottom: 1px solid $lp-light-grey;
+    }
+  }
+
+  .ps-selected {
+    margin:45px 0px;
+    .ps-poi-name {
+      text-align: center;
+      font-size: $dimen-h1-size;
+      color: $lp-blue;
+    }
+    .ps-poi-num-targeted {
+      text-align: center;
+      font-size: $dimen-h2-size;
+    }
+  }
+
+  #poiSelectionModal {
+    .form-group {
+      width:100%;
+      .twitter-typeahead {
+        width: 100%;
+        .pois-selection-input {
+          width: 100%
+        }
+        .tt-dropdown-menu {
+          width: 100%;
+          background-color: $lp-white;
+          border-radius: 3px;
+          color: $lp-dark-grey;
+          .tt-suggestion {
+            padding:5px;
+          }
+
+        }
+      }
+    }
+
+  }
+}

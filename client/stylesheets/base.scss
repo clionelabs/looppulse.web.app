@@ -4,12 +4,13 @@
 html {
   position: relative;
   min-height: 100%;
+  //to set the root font size for rem
+  font-size: $dimen-font-size;
 }
 body {
   /* Margin bottom by footer height */
   margin-bottom: $dimen-footer-height;
   /* Other Setting */
-  font-size: $dimen-font-size;
   font-weight: $dimen-font-weight-light;
   color:$lp-dark-grey;
 
@@ -22,6 +23,32 @@ body {
     &:hover {
       color:darken($lp-blue, 25%);
       text-decoration: none;
+    }
+  }
+
+  .btn-lp {
+    background-color: $lp-blue;
+    color: $lp-white;
+    font-size: $dimen-h3-size;
+    border-color: $lp-blue;
+    font-weight: $dimen-font-weight-light;
+    vertical-align: middle;
+    &.active,&:hover {
+      background-color: transparent;
+      color: $lp-blue;
+    }
+  }
+
+  .btn-lp-r {
+    background-color: transparent;
+    color: $lp-blue;
+    border-color: $lp-blue;
+    font-size: $dimen-h3-size;
+    font-weight: $dimen-font-weight-light;
+    vertical-align: middle;
+    &.active,&:hover {
+      background-color: $lp-blue;
+      color: $lp-white;
     }
   }
 }

@@ -1,0 +1,89 @@
+<template name="engageCreate">
+    <div class="container-fluid engage-create">
+        <section class="row name-input">
+            <div class="col-sm-12">
+                <input id="engage-name" class="col-sm-9 form-control" type="text" placeholder="Engagement On...">
+                <button class="btn btn-lp pull-right">Create</button>
+            </div>
+        </section>
+        <section class="row poi-selection">
+            <div class="col-sm-12">
+                <div class="ps-title">
+                    <div>VISITORS
+                        <a class="pull-right" data-toggle="modal" data-target="#poiSelectionModal">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 ps-selected">
+                <table class="table-responsive ec-form-table">
+                    <tr>
+                        <td>
+                            <div class="btn-group toggle-i-v" role="group">
+                                <button id="interested"
+                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedInterested}}">
+                                    INTERESTED
+                                </button>
+                                <button id="visited"
+                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedVisited}}">
+                                    VISITED
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="help-text">
+                                Target visitors who are interested in or visited the given restaurant.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><div class="ps-poi-name">&nbsp;{{ getSelectedPoi.value }}</div></td>
+                        <td><div class="help-text">{{{ getSelectedVisitorGroupHelpText }}}</div></td>
+                    </tr>
+                </table>
+            </div>
+            {{> poiNameSelector }}
+        </section>
+        <section class="row poi-selection">
+            <div class="col-sm-12">
+                <div class="ps-title">
+                    <div>FACEBOOK RETARGETING</div>
+                </div>
+            </div>
+            <div class="col-sm-12 fb-form">
+                <table class="table-responsive ec-fb-form-table">
+                    <tr>
+                        <td>
+                            Budget:
+                        </td>
+                        <td>
+                            {{> budgetFiller }}
+                        </td>
+                        <td>
+                            <div class="help-text">Per day or lifetime budget
+                            <!-- TODO help page
+                            <a href="/helps/budgeting">Help on budgeting.</a> -->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Schedule:
+                        </td>
+                        <td>
+                            {{> scheduleFiller }}
+                        </td>
+                        <td>
+                            <div class="help-text">
+                                Hong Kong time zone.<br>
+                                {{{ printScheduleHelpText }}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <section class="row retargeting">
+
+        </section>
+    </div>
+</template>
