@@ -1,11 +1,6 @@
 // Override default settings
 Settings.load(Meteor.settings);
 
-// Run any initialization that need to run before the Normal Flow
-if (Settings.firstRun) { // Currently we are using a flag to triggers...any better choice?
-  Installation.run();
-}
-
 // Normal Server Flow
 
 // Start background processing
