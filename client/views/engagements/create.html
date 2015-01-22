@@ -1,0 +1,69 @@
+<template name="engageCreate">
+    <div class="container-fluid engage-create">
+        <section class="row name-input">
+            <div class="col-sm-12">
+                <input id="engage-name" class="col-sm-9 form-control" type="text" placeholder="Engagement On...">
+                <button class="btn btn-lp pull-right">Create</button>
+            </div>
+        </section>
+        <section class="row poi-selection">
+            <div class="col-sm-12">
+                <div class="ps-title">
+                    <div>VISITORS
+                        <a class="pull-right" data-toggle="modal" data-target="#poiSelectionModal">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 ps-selected">
+                <table class="table-responsive ec-form-table">
+                    <tr>
+                        <td>
+                            <div class="btn-group toggle-i-v" role="group">
+                                <button id="interested"
+                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedInterested}}">
+                                    INTERESTED
+                                </button>
+                                <button id="visited"
+                                        class="btn btn-lp-r {{ printActiveIf isVisitorGroupSelectedVisited}}">
+                                    VISITED
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="help-text">
+                                Target visitors who are interested in or visited the given restaurant.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><div class="ps-poi-name">&nbsp;{{ getSelectedPoi.value }}</div></td>
+                        <td><div class="help-text">{{{ getSelectedVisitorGroupHelpText }}}</div></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal fade" id="poiSelectionModal" tabindex="-1" role="dialog" aria-labelledby="poiSelectionModelLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="poiSelectionModelLabel">Which {{ ws.poiDescriptors.one }} you want to target?</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{> poiNameSelector }}
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row poi-selection">
+
+        </section>
+        <section class="row retargeting">
+
+        </section>
+    </div>
+</template>

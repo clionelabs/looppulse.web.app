@@ -1,5 +1,5 @@
 /**
- * Here are some shim of functions to
+ * Here are some shim of functions
  */
 $.fn.toggleSVGClass = function(value) {
     var currentClass = this.attr("class");

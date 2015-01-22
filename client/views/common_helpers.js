@@ -18,3 +18,10 @@ Template.registerHelper("formatDuration", function(duration) {
     }
 });
 
+Template.registerHelper("printActiveIf", function(funcOrBoolean) {
+    if(_.isFunction(funcOrBoolean)) {
+        return funcOrBoolean() ? "active" : "";
+    } else {
+        return funcOrBoolean ? "active" : "";
+    }
+});
