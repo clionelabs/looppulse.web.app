@@ -23,11 +23,55 @@
       vertical-align: middle;
       .help-text {
         margin: 0 15px;
+      }
+    }
+  }
 
+  .ec-fb-form-table {
+    margin: 15px 0px;
+    width: 100%;
+    td:first-child {
+      text-align: right;
+      padding-right:15px;
+      width:20%;
+
+      font-size: $dimen-h3-size;
+    }
+    td:nth-child(2) {
+      border-right:1px solid $lp-light-grey;
+      text-align: left;
+      width:40%;
+      font-size: $dimen-h3-size;
+      padding-right:15px;
+    }
+    td {
+      width:40%;
+      padding-bottom:20px;
+      font-size: $dimen-h4-size;
+      vertical-align: middle;
+      .help-text {
+        margin: 0 15px;
       }
     }
 
+    .budget-edit {
+      .amount {
+        border-shadow : none;
+        border: none;
+        border-bottom: 1px solid $lp-light-grey;
+      }
+      .btn-group {
+        button {
+          font-size: $dimen-h4-size;
+        }
+      }
+      .glyphicon-ok {
+        display: inline-block;
+        margin: 5px 0px;
+      }
+    }
   }
+
   .name-input {
     margin-top:30px;
     .create-btn-container {
@@ -63,6 +107,7 @@
   .ps-title {
     div {
       font-size: $dimen-h3-size;
+      font-weight: normal;
       border-bottom: 1px solid $lp-light-grey;
     }
   }
