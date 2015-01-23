@@ -13,8 +13,6 @@ Template.atCreatePwdForm.events({
 
     AccountsTemplates.setDisabled(true);
 
-
-
     var parentData = Template.currentData();
     var state = "signUp";
     var preValidation = (state !== "signIn");
@@ -26,7 +24,6 @@ Template.atCreatePwdForm.events({
     var errList = [];
     _.each(AccountsTemplates.getFields(), function(field){
         // Considers only visible fields...
-        console.log("Queue", field, state)
         if (!_.contains(field.visible, state))
             return;
 
@@ -35,7 +32,6 @@ Template.atCreatePwdForm.events({
         var rawValue = field.getValue(tmpl);
         var value = field.fixValue(rawValue);
         // Possibly updates the input value
-        console.log(field, value)
         if (value !== rawValue)
             field.setValue(tmpl, value);
         if (value !== undefined && value !== "")
@@ -71,7 +67,6 @@ Template.atCreatePwdForm.events({
         return;
     }
 
-    console.log("form Data: ", formData)
 
     // Extracts username, email, and pwds
     var current_password = formData.current_password;
@@ -104,8 +99,6 @@ Template.atCreatePwdForm.events({
     }
 
     var hash = AccountsTemplates.hashPassword(password);
-    return false;
-    console.log("Ready, calling remote.", { name: organizationName })
 
     Meteor.call("createOrganizationAndUser",
       { name: organizationName } ,

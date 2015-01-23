@@ -1,30 +1,41 @@
 <template name="organizationInvite">
   <div class="container">
+    {{> atInviteForm state='inviteNew' id=_id name=name}}
+  </div>
+</template>
+
+<template name="atInviteForm">
+  {{#unless hide}}
     <div class="at-form">
-      <div class="at-pwd-form">
-        <form role="form" id="at-pwd-form" novalidate action="#" method="POST">
-        <div class="at-title">
-          <h3>Send Invitation</h3>
-        </div>
-        <fieldset>
-          {{#with emailField}}
-          <div class="at-input form-group {{#if isValidating}}validating{{/if}} {{#if hasError}}has-error{{/if}} {{#if hasSuccess}}has-success{{/if}} {{#if feedback}}has-feedback{{/if}}">
-            <label class="control-label sr-only" for="at-field-{{_id}}">
-              {{displayName}}
-            </label>
-            <input type="{{type}}" class="form-control" id="at-field-{{_id}}" name="at-field-{{_id}}" placeholder="{{placeholder}}" autocapitalize="none" autocorrect="off">
-            {{#if hasIcon}}
-              <span class="{{iconClass}} form-control-feedback"></span>
-            {{/if}}
-            <span class="help-block {{#unless hasError}}hide{{/unless}}">{{errorText}}</span>
-          </div>
-          {{/with}}
-          <button type="submit" class="at-btn submit btn btn-lg btn-block btn-default" id="at-btn">
-             {{buttonText}}
-          </button>
-        </fieldset>
-        </form>
-      </div>
+      {{#if showTitle}}
+        {{> atTitle }}
+      {{/if}}
+      {{#if showError}}
+        {{> atError}}
+      {{/if}}
+      {{#if showResult}}
+        {{> atResult}}
+      {{/if}}
+      {{#if showPwdForm}}
+        {{> atInvitePwdForm}}
+      {{/if}}
     </div>
+  {{/unless}}
+</template>
+
+
+<template name="atInvitePwdForm">
+  <div class="at-pwd-form">
+    <form role="form" id="at-pwd-form" novalidate action="#" method="POST">
+      <fieldset {{disabled}}>
+        {{#each fields}}
+          {{> atInput}}
+        {{/each}}
+        {{#if showForgotPasswordLink}}
+          {{> atPwdLink}}
+        {{/if}}
+        {{> atPwdFormBtn}}
+      </fieldset>
+    </form>
   </div>
 </template>
