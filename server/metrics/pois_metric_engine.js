@@ -46,8 +46,44 @@ PoisMetricEngine.prototype.computeCurrentVisitorsCnt = function() {
  * @returns {Number} peak count
  */
 PoisMetricEngine.prototype.computePeakVisitorsCnt = function(from, to) {
-  // TODO: implement
-  return 0;
+  var self = this;
+  var fromTime = from.valueOf();
+  var toTime = to.valueOf();
+
+  // Build an event list (each event contains i) ENTER/EXIT, ii) time, iii) visitor, with all journeys
+  // and sort them by time
+  var events = [];
+  _.each(self.journeys, function(journey) {
+    // TODO: Binary search to locate the relevant encounters directly instead of sequential search
+    _.each(journey.encounters, function(encounter) {
+      var enteredTime = encounter.enteredAt;
+      var exitedTime = encounter.exitedAt !== null? encounter.exitedAt: self.current.valueOf();
+      if (!(exitedTime < fromTime || enteredTime > toTime)) { // relevant
+        events.push({type: 'enter', time: enteredTime, vid: journey.visitorUUID});
+        events.push({type: 'exit', time: exitedTime, vid: journey.visitorUUID});
+      }
+    });
+  });
+  events.sort(function(a, b) {
+    return a.time < b.time? -1: 1;
+  });
+
+  // Loop through the events, and keep a rolling maximum
+  var visitorOpenedCounts = {}; // keep track of the number of non-closed encounters for each individual visitors
+  var count = 0;  // keep track of the number of visitors having non-closed encounters
+  var maxCount = 0; // keep track of all-time-maximum of "count"
+  _.each(events, function(e) {
+    visitorOpenedCounts[e.vid] = visitorOpenedCounts[e.vid] | 0;
+    if (e.type === 'enter') {
+      visitorOpenedCounts[e.vid]++;
+      if (visitorOpenedCounts[e.vid] === 1) count++;
+    } else if (e.type === 'exit') {
+      visitorOpenedCounts[e.vid]--;
+      if (visitorOpenedCounts[e.vid] === 0) count--;
+    }
+    maxCount = Math.max(maxCount, count);
+  });
+  return maxCount;
 };
 
 /**
