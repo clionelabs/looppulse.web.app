@@ -34,15 +34,15 @@ Template.budgetFiller.events({
     "click .glyphicon-ok, blur .amount" : function(e) {
         var sessionKey = Template.engageCreate.FormSessionKey;
         $.toggleView(".budget-display", ".budget-edit");
-        Session.pushTo(sessionKey, { "amount" : $(".amount")[0].value });
+        Session.extend(sessionKey, { "amount" : $(".amount")[0].value });
     },
     "click .select-budget-type-per-day" : function(e) {
        var sessionKey = Template.engageCreate.FormSessionKey;
-       Session.pushTo(sessionKey, { "type" : Template.budgetFiller.type.perDay });
+       Session.extend(sessionKey, { "type" : Template.budgetFiller.type.perDay });
     },
     "click .select-budget-type-lifetime" : function(e) {
         var sessionKey = Template.engageCreate.FormSessionKey;
-        Session.pushTo(sessionKey, { "type" : Template.budgetFiller.type.lifetime });
+        Session.extend(sessionKey, { "type" : Template.budgetFiller.type.lifetime });
     }
 });
 

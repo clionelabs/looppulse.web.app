@@ -49,13 +49,12 @@ Template.engageCreate.helpers({
 
 Template.engageCreate.created = function() {
     var sessionKey = Template.engageCreate.FormSessionKey;
-    var s = {};
-    s[sessionKey] = {
+    var s = {
         startDate : moment().format("YYYY-MM-DD"),
         selectedPoi : null,
         visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED,
         amount : 200,
         type : Template.budgetFiller.type.perDay
     };
-    Session.init(s);
+    Session.setDefault(sessionKey, s);
 };

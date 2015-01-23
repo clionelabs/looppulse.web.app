@@ -19,10 +19,10 @@ Template.visitorGroupSelector.helpers({
 Template.visitorGroupSelector.events({
     "click #interested" : function() {
         var sessionKey = Template.engageCreate.FormSessionKey;
-        Session.pushTo(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED });
+        Session.extend(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED });
     },
     "click #visited" : function() {
         var sessionKey = Template.engageCreate.FormSessionKey;
-        Session.pushTo(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.VISITED });
+        Session.extend(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.VISITED });
     }
 });

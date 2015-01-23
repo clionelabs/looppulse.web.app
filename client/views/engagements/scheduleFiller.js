@@ -29,11 +29,11 @@ Template.scheduleFiller.rendered = function() {
     function(start, end) {
         //Handle isBefore case in case of people working in midnight
         if (moment().isSame(start, "day") || moment().isAfter(start, "day")) {
-            Session.pushTo(sessionKey, { startDate : moment().format("YYYY-MM-DD") });
+            Session.extend(sessionKey, { startDate : moment().format("YYYY-MM-DD") });
         } else {
-            Session.pushTo(sessionKey, { startDate : start.format("YYYY-MM-DD") });
+            Session.extend(sessionKey, { startDate : start.format("YYYY-MM-DD") });
         }
-        Session.pushTo(sessionKey, { endDate : end.format("YYYY-MM-DD") });
+        Session.extend(sessionKey, { endDate : end.format("YYYY-MM-DD") });
         $(".schedule-range-selector").data("daterangepicker").setStartDate(start);
         $(".schedule-range-selector").data("daterangepicker").setEndDate(end);
     });
