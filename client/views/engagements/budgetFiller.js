@@ -32,24 +32,24 @@ Template.budgetFiller.events({
         $.toggleView(".budget-edit", ".budget-display");
     },
     "click .glyphicon-ok, blur .amount" : function(e) {
+        var sessionKey = Template.engageCreate.FormSessionKey;
         $.toggleView(".budget-display", ".budget-edit");
-        var s = new FormSession(Template.engageCreate.FormSessionKey);
-        s.set({ "amount" : $(".amount")[0].value });
+        Session.pushTo(sessionKey, { "amount" : $(".amount")[0].value });
     },
     "click .select-budget-type-per-day" : function(e) {
-       var s = new FormSession(Template.engageCreate.FormSessionKey);
-       s.set({ "type" : Template.budgetFiller.type.perDay });
+       var sessionKey = Template.engageCreate.FormSessionKey;
+       Session.pushTo(sessionKey, { "type" : Template.budgetFiller.type.perDay });
     },
     "click .select-budget-type-lifetime" : function(e) {
-        var s = new FormSession(Template.engageCreate.FormSessionKey);
-        s.set({ "type" : Template.budgetFiller.type.lifetime });
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        Session.pushTo(sessionKey, { "type" : Template.budgetFiller.type.lifetime });
     }
 });
 
 Template.budgetFiller.rendered = function() {
     $(".budget-edit").hide();
-    var s = new FormSession(Template.engageCreate.FormSessionKey);
-    $(".amount")[0].value = s.amount;
+    var sessionKey = Template.engageCreate.FormSessionKey;
+    $(".amount")[0].value = Session.get(sessionKey).amount;
 
 };
 

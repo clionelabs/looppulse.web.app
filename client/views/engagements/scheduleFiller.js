@@ -17,24 +17,25 @@ Template.scheduleFiller.helpers({
 });
 
 Template.scheduleFiller.rendered = function() {
-    var s = new FormSession(Template.engageCreate.FormSessionKey);
+    var sessionKey = Template.engageCreate.FormSessionKey;
     $(".schedule-range-selector").daterangepicker({
         format: "YYYY-MM-DD",
         opens: 'center',
         timeZone: "+08:00",
         minDate: moment(),
-        startDate: s.startDate,
-        endDate: s.endDate
+        startDate: Session.get(sessionKey).startDate,
+        endDate: Session.get(sessionKey).endDate
     },
     function(start, end) {
         //Handle isBefore case in case of people working in midnight
         if (moment().isSame(start, "day") || moment().isAfter(start, "day")) {
-            s.set({ startDate : moment().format("YYYY-MM-DD") });
+            Session.pushTo(sessionKey, { startDate : moment().format("YYYY-MM-DD") });
         } else {
-            s.set({ startDate : start.format("YYYY-MM-DD") });
+            Session.pushTo(sessionKey, { startDate : start.format("YYYY-MM-DD") });
         }
-        s.set({ endDate : end.format("YYYY-MM-DD") });
+        Session.pushTo(sessionKey, { endDate : end.format("YYYY-MM-DD") });
         $(".schedule-range-selector").data("daterangepicker").setStartDate(start);
         $(".schedule-range-selector").data("daterangepicker").setEndDate(end);
     });
 };
+

@@ -7,15 +7,15 @@ Template.engageCreate.helpers({
        return Session.get(sessionKey).selectedPoi;
    },
     getSelectedVisitorGroupHelpText : function () {
-        var s = new FormSession(Template.engageCreate.FormSessionKey);
-        if (s.selectedPoi) {
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        if (Session.get(sessionKey).selectedPoi) {
             var str = "Currently targeting ";
             var vg_interested = Template.visitorGroupSelector.visitorGroup.INTERESTED;
-            if (s.visitorGroup.match(vg_interested)) {
-                str = str + "\<br>\<b>" + s.selectedPoi.interestedVisitors + "\</b> " + "interested ";
+            if (Session.get(sessionKey).visitorGroup.match(vg_interested)) {
+                str = str + "\<br>\<b>" + Session.get(sessionKey).selectedPoi.interestedVisitors + "\</b> " + "interested ";
 
             } else {
-                str = str + "\<br>\<b>" + s.selectedPoi.totalVisitors + "\</b> ";
+                str = str + "\<br>\<b>" + Session.get(sessionKey).selectedPoi.totalVisitors + "\</b> ";
             }
             str = str + "visitors.";
             return str;
@@ -24,20 +24,22 @@ Template.engageCreate.helpers({
         }
     },
     getScheduleHelpText : function() {
-        var s = new FormSession(Template.engageCreate.FormSessionKey);
+        var sessionKey = Template.engageCreate.FormSessionKey;
+        var formData = Session.get(sessionKey);
 
-        if (s.type.match(Template.budgetFiller.type.lifetime)) {
+        if (Session.get(sessionKey).type
+                .match(Template.budgetFiller.type.lifetime)) {
 
             return "";
 
         } else {
-            var str = "\Max\.spending will be: \<b>";
-            var sDate = moment(s.startDate);
-            var eDate = moment(s.endDate);
-            var amount = s.amount;
-            str = str + "HKD " + _.numberFormat(+amount * eDate.diff(sDate, "day")) + "\</b>";
+            var s = "\Max\.spending will be: \<b>";
+            var sDate = moment(Session.get(sessionKey).startDate);
+            var eDate = moment(Session.get(sessionKey).endDate);
+            var amount = Session.get(sessionKey).amount;
+            s = s + "HKD " + _.numberFormat(+amount * eDate.diff(sDate, "day")) + "\</b>";
 
-            return str;
+            return s;
 
         }
     }
@@ -46,12 +48,14 @@ Template.engageCreate.helpers({
 });
 
 Template.engageCreate.created = function() {
-    var s = {
+    var sessionKey = Template.engageCreate.FormSessionKey;
+    var s = {};
+    s[sessionKey] = {
         startDate : moment().format("YYYY-MM-DD"),
         selectedPoi : null,
         visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED,
         amount : 200,
         type : Template.budgetFiller.type.perDay
     };
-    FormSession(Template.engageCreate.FormSessionKey, s);
+    Session.init(s);
 };
