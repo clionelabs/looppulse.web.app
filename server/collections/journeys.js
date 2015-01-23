@@ -25,7 +25,7 @@ Journeys._popEncounter = function(poiId, visitorUUID) {
   var modifier = {
     $pop: {encounters: 1}
   }
-  Journeys.update(selector, modifier);
+  Journeys.set(selector, modifier);
 };
 
 /**
