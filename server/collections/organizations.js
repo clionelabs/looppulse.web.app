@@ -30,6 +30,13 @@ Organizations.findById = function(organizationId, userId, options){
   return Organizations.find({ _id: organizationId, userIds: {$in: [userId]} }, options);
 }
 
+Organizations.create = function(data){
+  if (_.isEmpty(data) || _.isEmpty(data.name))
+    throw new Error("Missing data")
+
+  return Organizations.insert(data);
+}
+
 Meteor.startup(function() {
   Meteor.users.find().observe({
     "removed": function (oldUser) {
