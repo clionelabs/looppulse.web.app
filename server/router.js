@@ -1,16 +1,15 @@
-Router.map(function() {
-  var isPostRequest = function(request, response) {
-    var requestMethod = request.method;
-    if (requestMethod !== "POST") {
-      console.warn("[API] Unsupported method: " + requestMethod);
-      response.writeHead(405, {'Content-Type': 'text/html'});
-      response.end('<html><body>Unsupported method: ' + requestMethod + '</body></html>');
-      return false;
-    }
-    return true;
-  };
+var isPostRequest = function(request, response) {
+var requestMethod = request.method;
+if (requestMethod !== "POST") {
+  console.warn("[API] Unsupported method: " + requestMethod);
+  response.writeHead(405, {'Content-Type': 'text/html'});
+  response.end('<html><body>Unsupported method: ' + requestMethod + '</body></html>');
+  return false;
+}
+return true;
+};
 
-  this.route('authenticate', {
+Router.route('authenticate', {
     path: '/api/authenticate/applications/:applicationId',
     where: 'server',
     action: function() {
@@ -31,5 +30,4 @@ Router.map(function() {
         {'Content-Type': 'application/json'});
       this.response.end(JSON.stringify(authenticatedResponse));
     }
-  });
 });
