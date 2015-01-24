@@ -1,6 +1,6 @@
 Template.scheduleFiller.helpers({
     getStartDate : function() {
-        var sessionKey = Template.engageCreate.FormSessionKey;
+        var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
         var sDate = Session.get(sessionKey).startDate;
         //Handle isBefore case in case of people working in midnight
         if (moment().isSame(sDate, "day") || moment().isAfter(sDate, "day")) {
@@ -10,14 +10,14 @@ Template.scheduleFiller.helpers({
         }
     },
     getEndDate : function() {
-        var sessionKey = Template.engageCreate.FormSessionKey;
+        var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
         var eDate = Session.get(sessionKey).endDate;
         return eDate ? eDate : "End date";
     }
 });
 
 Template.scheduleFiller.rendered = function() {
-    var sessionKey = Template.engageCreate.FormSessionKey;
+    var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
     $(".schedule-range-selector").daterangepicker({
         format: "YYYY-MM-DD",
         opens: 'center',

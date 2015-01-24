@@ -6,7 +6,7 @@ Template.poiNameSelector.helpers({
         });
     },
     selected: function(e, suggestion, dataset) {
-        var sessionKey = Template.engageCreate.FormSessionKey;
+        var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
         Session.setForm(sessionKey, "selectedPoi", suggestion);
         $("#poiSelectionModal").modal('hide');
     }

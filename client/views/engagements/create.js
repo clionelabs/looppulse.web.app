@@ -1,13 +1,13 @@
-Template.engageCreate.FormSessionKey = "engageCreateForm";
+Template.engageCreate.FORM_SESSION_KEY = "engageCreateForm";
 
 
 Template.engageCreate.helpers({
    getSelectedPoi : function() {
-       var sessionKey = Template.engageCreate.FormSessionKey;
+       var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
        return Session.get(sessionKey).selectedPoi;
    },
     getSelectedVisitorGroupHelpText : function () {
-        var sessionKey = Template.engageCreate.FormSessionKey;
+        var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
         if (Session.get(sessionKey).selectedPoi) {
             var str = "Currently targeting ";
             var vg_interested = Template.visitorGroupSelector.visitorGroup.INTERESTED;
@@ -24,7 +24,7 @@ Template.engageCreate.helpers({
         }
     },
     getScheduleHelpText : function() {
-        var sessionKey = Template.engageCreate.FormSessionKey;
+        var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
         var formData = Session.get(sessionKey);
 
         if (Session.get(sessionKey).type
@@ -48,7 +48,7 @@ Template.engageCreate.helpers({
 });
 
 Template.engageCreate.created = function() {
-    var sessionKey = Template.engageCreate.FormSessionKey;
+    var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
     var s = {
         startDate : moment().format("YYYY-MM-DD"),
         selectedPoi : null,
