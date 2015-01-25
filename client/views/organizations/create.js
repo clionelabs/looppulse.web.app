@@ -108,10 +108,12 @@ Template.atCreatePwdForm.events({
         AccountsTemplates.submitCallback(error, undefined, function(){
           if (AccountsTemplates.options.sendVerificationEmail && AccountsTemplates.options.enforceEmailVerification){
               AccountsTemplates.state.form.set("result", AccountsTemplates.texts.info.signUpVerifyEmail);
-              // Cleans up input fields' content
-              $("#at-pwd-form").remove()
-              return;
+          } else {
+              AccountsTemplates.state.form.set("result", "Account created");
           }
+          $("#at-pwd-form").hide()
+          $("#at-pwd-form").remove()
+          return;
       });
     })
 

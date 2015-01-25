@@ -74,11 +74,16 @@ Template.atInvitePwdForm.events({
 
     console.log("Data", email, organizationId)
 
-    // var userEmail = $("#at-field-email").val()
-    // var organizationId = data._id
-
-    // return Meteor.call("inviteOrganizationUser", organizationId, userEmail, function(error, result){
-
-    // })
+    return Meteor.call("inviteOrganizationUser",
+      organizationId, email,
+      function(error, result){
+        console.log(error, result)
+        AccountsTemplates.submitCallback(error, undefined, function(){
+              AccountsTemplates.state.form.set("result", "Invitation sent");
+              // Cleans up input fields' content
+              $("#at-pwd-form").hide()
+              return;
+        });
+      });
   }
 })
