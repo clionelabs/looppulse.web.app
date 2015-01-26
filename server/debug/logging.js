@@ -1,4 +1,4 @@
-if (Meteor.settings.DEBUG) {
+if (Meteor.settings.DEBUG.logging) {
   Debug = {
     observeBeaconEvents: function () {
       BeaconEvents.find().observe({
