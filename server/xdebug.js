@@ -2,6 +2,7 @@ if (Meteor.settings.DEBUG) {
   Debug = {
     observeBeaconEvents: function () {
       BeaconEvents.find().observe({
+        _suppress_initial: true,
         "added": function(event) {
           console.log("[DEBUG] [BeaconEvent] created ", event);
         }
