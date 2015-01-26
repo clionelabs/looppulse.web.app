@@ -1,9 +1,9 @@
-if (Settings.DEBUG) {
+if (Meteor.settings.DEBUG) {
   Debug = {
     observeBeaconEvents: function () {
       BeaconEvents.find().observe({
         "added": function(event) {
-          console.debug("[BeaconEvent] created ", event);
+          console.log("[DEBUG] [BeaconEvent] created ", event);
         }
       });
     }
