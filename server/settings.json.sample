@@ -5,18 +5,19 @@
     "paths": {
       "beaconEvents": "beacon_events",
       "visitorEvents": "visitor_events"
-    }
+    },
+    "clearFirebaseEvents": true
   },
-
-  "clearFirebaseEvents": false,
 
   "accounts": {
     "forbidClientAccountCreation": true
   },
-  
 
-  "fixtures":{ 
-    "load": true, 
-    "clear": false
+  "DEBUG": {
+    "logging": true,
+    "fixtures":{
+      "load": true,
+      "clear": false
+    }
   }
 }
