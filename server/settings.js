@@ -10,7 +10,9 @@ Settings = {
     }
   },
   clearFirebaseEvents: true,
-  loadFixtures: false
+  loadFixtures: false,
+
+  DEBUG: false
 };
 
 Settings.load = function(customSettings) {
