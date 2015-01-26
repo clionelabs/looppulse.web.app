@@ -14,13 +14,13 @@ Processing.start = function() {
  * @private
  */
 Processing._authenticateFirebase = function() {
-  if (!Settings.firebase.root) {
+  if (!Meteor.settings.firebase.root) {
     throw new Error("missing-firebase-root",
     "[Processing] Missing firebase URL setting");
   }
 
-  var firebaseRef = new Firebase(Settings.firebase.root);
-  firebaseRef.auth(Settings.firebase.secret, Meteor.bindEnvironment(function(error, authData) {
+  var firebaseRef = new Firebase(Meteor.settings.firebase.root);
+  firebaseRef.auth(Meteor.settings.firebase.secret, Meteor.bindEnvironment(function(error, authData) {
     if (error) {
       throw new Error("firebase-authentication-failed",
                       "[Processing] failed to authenticate Firebase",
@@ -40,7 +40,7 @@ Processing._observeWorkspaceEvents = function(workspace) {
   console.log("[Processing] observing", firebasePaths.beaconEvents);
   beaconEventsRef.on("child_added", Meteor.bindEnvironment(function(snapshot) {
     BeaconEvents.insertFromFBSnapshot(snapshot);
-    if (Settings.clearFirebaseEvents) {
+    if (Meteor.settings.clearFirebaseEvents) {
       snapshot.ref().remove();
     }
   }));

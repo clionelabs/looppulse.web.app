@@ -1,5 +1,4 @@
-// Override default settings
-Settings.load(Meteor.settings);
+Settings.check(Meteor.settings);
 
 // Normal Server Flow
 
@@ -7,11 +6,11 @@ Settings.load(Meteor.settings);
 Processing.start();
 
 // Reload fixtures
-if (Settings.fixtures) {
+if (Meteor.settings.fixtures) {
   Meteor.startup(function() {
-    if (Settings.fixtures.clear)
+    if (Meteor.settings.fixtures.clear)
       Fixtures.clear();
-    if (Settings.fixtures.load)
+    if (Meteor.settings.fixtures.load)
       Fixtures.load();
   });
 }
