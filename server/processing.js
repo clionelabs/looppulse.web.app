@@ -40,7 +40,7 @@ Processing._observeWorkspaceEvents = function(workspace) {
   console.log("[Processing] observing", firebasePaths.beaconEvents);
   beaconEventsRef.on("child_added", Meteor.bindEnvironment(function(snapshot) {
     BeaconEvents.insertFromFBSnapshot(snapshot);
-    if (Meteor.settings.clearFirebaseEvents) {
+    if (Meteor.settings.firebase.clearFirebaseEvents) {
       snapshot.ref().remove();
     }
   }));

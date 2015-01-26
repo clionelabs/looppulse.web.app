@@ -6,11 +6,11 @@ Settings.check(Meteor.settings);
 Processing.start();
 
 // Reload fixtures
-if (Meteor.settings.fixtures) {
+if (Meteor.settings.DEBUG && Meteor.settings.DEBUG.fixtures) {
   Meteor.startup(function() {
-    if (Meteor.settings.fixtures.clear)
+    if (Meteor.settings.DEBUG.fixtures.clear)
       Fixtures.clear();
-    if (Meteor.settings.fixtures.load)
+    if (Meteor.settings.DEBUG.fixtures.load)
       Fixtures.load();
   });
 }
