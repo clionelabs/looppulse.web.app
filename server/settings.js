@@ -1,23 +1,11 @@
 /**
- * Server (default) settings
+ * Check for required server settings
  */
 Settings = {
-  firebase: {
-    root: null,
-    secret: null,
-    paths: {
-      beaconEvents: null
+  check: function(settings) {
+    // Required fields:
+    if (settings.firebase.root === null) {
+      console.error("[Settings] Missing firebase settings");
     }
-  },
-  clearFirebaseEvents: true,
-  loadFixtures: false
-};
-
-Settings.load = function(customSettings) {
-  _.extend(Settings, customSettings);
-
-  // Required fields:
-  if (Settings.firebase.root === null) {
-    console.error("[Settings] Missing firebase settings");
   }
-}
+};

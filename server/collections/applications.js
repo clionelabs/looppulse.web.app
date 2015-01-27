@@ -11,7 +11,7 @@ Applications.authenticate = function(appId, appToken, captureInfo) {
   var workspace = application.getWorkspace();
 
   // Generate firebase access token
-  var tokenGenerator = new FirebaseTokenGenerator(Settings.firebase.secret);
+  var tokenGenerator = new FirebaseTokenGenerator(Meteor.settings.firebase.secret);
   var firebaseToken = tokenGenerator.createToken({wsId: workspace._id});
 
   // Build firebase paths

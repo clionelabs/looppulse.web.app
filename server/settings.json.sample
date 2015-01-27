@@ -5,10 +5,9 @@
     "paths": {
       "beaconEvents": "beacon_events",
       "visitorEvents": "visitor_events"
-    }
+    },
+    "clearFirebaseEvents": true
   },
-
-  "clearFirebaseEvents": false,
 
   "accounts": {
     "forbidClientAccountCreation": true
