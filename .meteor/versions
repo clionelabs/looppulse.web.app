@@ -12,8 +12,10 @@ callback-hook@1.0.2
 check@1.0.3
 coffeescript@1.0.5
 d3js:d3@3.4.13
+dbarrett:dropzonejs@3.10.3
 ddp@1.0.13
 deps@1.0.6
+edgee:slingshot@0.4.1
 ejson@1.0.5
 email@1.0.5
 fastclick@1.0.2
@@ -62,8 +64,8 @@ reactive-var@1.0.4
 reload@1.1.2
 retry@1.0.2
 routepolicy@1.0.3
-service-configuration@1.0.3
 sergeyt:typeahead@0.10.5_9
+service-configuration@1.0.3
 session@1.0.5
 sha@1.0.2
 softwarerero:accounts-t9n@1.0.5
