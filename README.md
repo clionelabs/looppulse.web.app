@@ -29,8 +29,8 @@ Organization and Account Creation
 ======================================
 
 1. Launch app.
-2. Launch `meteor shell` in another terminal.
-3. In the shell, run 
+2. Open the console on the browser ([Bug](https://github.com/meteor-velocity/velocity/issues/227) in Velocity prevents us doing the following in `meteor shell`)
+3. Run 
 
    `Meteor.call('createOrganizationAndUser', {name: 'org name'}, {email: 'email', password: 'pwd')`
 
