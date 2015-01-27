@@ -11,7 +11,7 @@
               <a class="navbar-brand" href="/"></a>
           </div>
           <div id="looppulse-navbar-collapse" class="collapse navbar-collapse">
-              {{!if currentUser}}
+              {{#if currentUser}}
               <ul class="nav navbar-nav">
                   <li class="active">
                       <a href="{{pathFor route="pois"}}">{{_.str.capitalize poiDescriptors.many }}</a>
@@ -24,7 +24,7 @@
                   <a class="navbar-settings" href="/settings"></a>
               </div>
 
-              {{!else
+              {{else}}
               <div class="navbar-right">
                 <ul class="nav navbar-nav">
                   <li>
@@ -32,7 +32,7 @@
                   </li>
                 </ul>
               </div>
-              !if}}
+              {{/if}}
           </div>
       </div>
   </nav>
