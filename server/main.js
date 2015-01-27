@@ -1,6 +1,5 @@
-Settings.check(Meteor.settings);
-
-// Normal Server Flow
+// System wide configuration
+System.configure();
 
 // Start background processing
 Processing.start();
