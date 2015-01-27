@@ -32,7 +32,7 @@ Organization and Account Creation
 2. Open the console on the browser ([Bug](https://github.com/meteor-velocity/velocity/issues/227) in Velocity prevents us doing the following in `meteor shell`)
 3. Run 
 
-   `Meteor.call('createOrganizationAndUser', {name: 'org name'}, {email: 'email', password: 'pwd')`
+   `Meteor.call('createOrganizationAndUser', {name: 'org name'}, {email: 'email', password: 'pwd'})`
 
 
 Signing In and Logging Out
