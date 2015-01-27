@@ -9,7 +9,20 @@ System = {
     }
   },
 
+  'shouldSendRealEmail': function () {
+    var onProduction = (process.env.NODE_ENV === 'production');
+    var enableInNonProduction = Meteor.settings.email.enableInNonProduction;
+
+    return (onProduction || enableInNonProduction);
+  },
+
   'configureEmail': function () {
+    var self = this;
+    if (!self.shouldSendRealEmail()) {
+      console.info('[System] Not in production mode. Sending all email to console.');
+      return;
+    }
+
     var emailSettings = Meteor.settings.email;
     var username = emailSettings.username;
     var password = emailSettings.password;
