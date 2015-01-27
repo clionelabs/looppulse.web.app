@@ -1,7 +1,5 @@
 Slingshot.createDirective("engageCreateGraphic", Slingshot.S3Storage, {
 
-    bucket: "looppulse-app-dev",
-
     acl: "public-read",
 
     authorize: function () {
