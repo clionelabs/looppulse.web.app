@@ -28,6 +28,5 @@ Setup and run
 Technical Note
 =================
 
-- Script: coffeescript
 - CSS: SCSS
 - HTML: spacebars (aka. handlebars)
