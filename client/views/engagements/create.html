@@ -3,7 +3,7 @@
         <section class="row name-input">
             <div class="col-sm-12">
                 <input id="engage-name" class="col-sm-9 form-control" type="text" placeholder="Engagement On...">
-                <button class="btn btn-lp pull-right">Create</button>
+                <button class="create btn btn-lp pull-right">Create</button>
             </div>
         </section>
         <section class="row poi-selection">
@@ -93,6 +93,20 @@
                     </tr>
                     <tr class="row-align-top">
                         <td>
+                           Graphics:
+                        </td>
+                        <td>
+                            {{> graphicsUploader url='images_upload' id='upload-ad-banner' maxFiles=1 }}
+                        </td>
+                        <td>
+                            <div class="help-text">
+                                Recommended Image Size:<br/>
+                                1200 x 444 pixels
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="row-align-top">
+                        <td>
                             Placement:
                         </td>
                         <td>
@@ -120,6 +134,17 @@
                                 </a>
                                 for details.
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            <button class="create btn btn-lp pull-left">Create</button>
+                        </td>
+                        <td>
+
                         </td>
                     </tr>
                 </table>

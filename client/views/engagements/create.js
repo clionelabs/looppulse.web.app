@@ -1,5 +1,15 @@
 Template.engageCreate.FORM_SESSION_KEY = "engageCreateForm";
 
+Template.engageCreate.events({
+    "click .create" : function() {
+        var uploader = new Slingshot.Upload("engageCreateGraphic");
+        _.each(Dropzone.instances[0].files, function(f) {
+                uploader.send(f, function (error, downloadUrl) {
+                console.log(downloadUrl);
+            });
+        });
+    }
+});
 
 Template.engageCreate.helpers({
    getSelectedPoi : function() {

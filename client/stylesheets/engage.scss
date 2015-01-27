@@ -149,6 +149,50 @@
     }
   }
 
+  #upload-ad-banner {
+    border: 1px solid $lp-blue;
+    background: transparent;
+    width: 250px;
+    height: 150px;
+    min-height: 150px;
+    border-radius:  0px;
+    .dz-default.dz-message {
+      width: 250px - 46px;
+      height: 150px - 46px;
+      position: relative;
+      margin-left:0px;
+      margin-top:0px;
+      top:0px;
+      left:0px;
+      background-image: url('images/plus.png');
+      background-repeat: no-repeat;
+      background-size: 20px 20px;
+      background-position: ((250px - 46px) / 2 - 10px) ((150px - 46px) / 2 - 10px);
+    }
+    .dz-preview {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      margin:23px;
+      width: 250px - 46px;
+      height: 150px - 46px;
+      box-shadow: none;
+      border: none;
+      .dz-details {
+        width: 250px - 46px - 10px;
+        height: 150px - 46px - 10px;
+        img {
+          width: 250px - 46px - 10px;
+          height: 150px - 46px - 10px;
+        }
+
+        .dz-size {
+          display: none;
+        }
+      }
+    }
+  }
+
   .placement-item {
     margin-bottom: 15px;
   }
