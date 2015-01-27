@@ -14,7 +14,11 @@
     "username": "From mailgun.com. Substitute @ with %40",
     "password": "From https://mailgun.com/app/domains",
     "SMTP": "smtp.mailgun.org",
-    "port": 587
+    "port": 587,
+    "templates": {
+      "siteName": "http://looppulse.com",
+      "from": "valid email address"
+    }
   },
 
   "accounts": {

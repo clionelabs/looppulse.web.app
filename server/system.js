@@ -18,18 +18,19 @@ System = {
 
   'configureEmail': function () {
     var self = this;
-    if (!self.shouldSendRealEmail()) {
-      console.info('[System] Not in production mode. Sending all email to console.');
-      return;
-    }
 
-    var emailSettings = Meteor.settings.email;
-    var username = emailSettings.username;
-    var password = emailSettings.password;
-    var smtpHost = emailSettings.SMTP;
-    var port = emailSettings.port;
-    process.env.MAIL_URL = 'smtp://' + username + ':' + password +
-                           '@' + smtpHost + ':' + port;
+    Accounts.configureEmailTemplates();
+    if (self.shouldSendRealEmail()) {
+      var emailSettings = Meteor.settings.email;
+      var username = emailSettings.username;
+      var password = emailSettings.password;
+      var smtpHost = emailSettings.SMTP;
+      var port = emailSettings.port;
+      process.env.MAIL_URL = 'smtp://' + username + ':' + password +
+      '@' + smtpHost + ':' + port;
+    } else {
+      console.info('[System] Not in production mode. Sending all email to console.');
+    }
 
     console.info('[System] Email configured');
   },
