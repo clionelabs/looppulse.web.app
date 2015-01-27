@@ -30,8 +30,11 @@
   "AWSAccessKeyId" : "YOUR_ACCESS_KEY_ID",
   "AWSSecretAccessKey" : "YOUR_SECRET_ACCESS_KEY",
 
-  "fixtures":{ 
-    "load": true, 
-    "clear": false
-  }
+ "DEBUG": {
+   "logging": true,
+   "fixtures":{
+     "load": true,
+     "clear": false
+   }
+ }
 }
