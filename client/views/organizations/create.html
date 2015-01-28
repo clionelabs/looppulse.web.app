@@ -1,0 +1,53 @@
+<template name="organizationCreate">
+  <div class="container">
+    {{> atCreateForm state='signUp'}}
+  </div>
+</template>
+
+<template name="atCreateForm">
+  {{#unless hide}}
+    <div class="at-form">
+      {{#if showTitle}}
+        {{> atTitle}}
+      {{/if}}
+      {{#if showOauthServices}}
+        {{> atOauth}}
+      {{/if}}
+      {{#if showServicesSeparator}}
+        {{> atSep}}
+      {{/if}}
+      {{#if showError}}
+        {{> atError}}
+      {{/if}}
+      {{#if showResult}}
+        {{> atResult}}
+      {{/if}}
+      {{#if showPwdForm}}
+        {{> atCreatePwdForm}}
+      {{/if}}
+      {{#if showSignInLink}}
+        {{> atSigninLink}}
+      {{/if}}
+      {{#if showTermsLink}}
+        {{> atTermsLink}}
+      {{/if}}
+    </div>
+  {{/unless}}
+</template>
+
+
+<template name="atCreatePwdForm">
+  <div class="at-pwd-form">
+    <form role="form" id="at-pwd-form" novalidate action="#" method="POST">
+      <fieldset {{disabled}}>
+        {{#each fields}}
+          {{> atInput}}
+        {{/each}}
+        {{#if showForgotPasswordLink}}
+          {{> atPwdLink}}
+        {{/if}}
+        {{> atPwdFormBtn}}
+      </fieldset>
+    </form>
+  </div>
+</template>

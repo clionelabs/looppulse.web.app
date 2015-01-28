@@ -1,0 +1,41 @@
+<template name="organizationInvite">
+  <div class="container">
+    {{> atInviteForm state='inviteNew' id=_id name=name}}
+  </div>
+</template>
+
+<template name="atInviteForm">
+  {{#unless hide}}
+    <div class="at-form">
+      {{#if showTitle}}
+        {{> atTitle }}
+      {{/if}}
+      {{#if showError}}
+        {{> atError}}
+      {{/if}}
+      {{#if showResult}}
+        {{> atResult}}
+      {{/if}}
+      {{#if showPwdForm}}
+        {{> atInvitePwdForm}}
+      {{/if}}
+    </div>
+  {{/unless}}
+</template>
+
+
+<template name="atInvitePwdForm">
+  <div class="at-pwd-form">
+    <form role="form" id="at-pwd-form" novalidate action="#" method="POST">
+      <fieldset {{disabled}}>
+        {{#each fields}}
+          {{> atInput}}
+        {{/each}}
+        {{#if showForgotPasswordLink}}
+          {{> atPwdLink}}
+        {{/if}}
+        {{> atPwdFormBtn}}
+      </fieldset>
+    </form>
+  </div>
+</template>

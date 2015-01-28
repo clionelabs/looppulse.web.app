@@ -30,6 +30,16 @@ Meteor.publish(null, function () {
   return Meteor.users.find({_id:userId});
 });
 
-Meteor.publish('organizations', function (userId) {
-  return Organizations.findByUserId(userId);
+
+
+// List all the organization that current user can access (minimum data)
+Meteor.publish('accessible-organizations', function () {
+  var userId = this.userId;
+  return Organizations.findByUserId(userId, {fields: { _id:1, name:1 }});
+});
+
+// Provide organization users list when only needed (Demo of Org Access)
+Meteor.publish('organizations-users', function (organizationId) {
+  var userId = this.userId;
+  return Organizations.findById(organizationId, userId, {fields: { _id:1, name:1, userIds:1 }});
 });
