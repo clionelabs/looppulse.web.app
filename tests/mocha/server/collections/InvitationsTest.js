@@ -4,6 +4,21 @@ if (!(typeof MochaWeb === 'undefined')) {
       Meteor.users.remove({});
       Organizations.remove({});
       Invitations.remove({});
+      chai.should();
+    });
+
+    describe('Invitations.pending', function () {
+      it('returns the pending invitations on given invitee email', function () {
+        var inviteeEmail = 'invited@example.com';
+        var organizationId = Organizations.insert({name: 'Test Org'});
+        var requestorId = Accounts.createUser({email:'u@example.com'});
+        Organizations.addUserById(organizationId, requestorId);
+
+        Invitations.create({organizationId: organizationId,
+                            requestorId: requestorId,
+                            inviteeEmail: inviteeEmail});
+        Invitations.pending(inviteeEmail).should.have.length(1);
+      });
     });
 
     describe('Invitations#isRequestorAuthorized', function () {
@@ -14,7 +29,7 @@ if (!(typeof MochaWeb === 'undefined')) {
 
         var invitation = new Invitation({organizationId: orgId,
                                          requestorId: userId});
-        chai.assert.equal(invitation.isRequestorAuthorized(), true);
+        invitation.isRequestorAuthorized().should.equal(true);
       });
 
       it('returns false otherwise', function () {
@@ -23,38 +38,35 @@ if (!(typeof MochaWeb === 'undefined')) {
 
         var invitation = new Invitation({organizationId: orgId,
                                          requestorId: userId});
-        chai.assert.equal(invitation.isRequestorAuthorized(), false);
+        invitation.isRequestorAuthorized().should.equal(false);
       });
     });
 
-    describe('Invitations#process', function () {
-      it('creates user from email', function () {
+    describe('Invitations.create', function () {
+      it('creates user from invitee email', function () {
         var organizationId = Organizations.insert({name: 'org'});
-        var requestorId= Accounts.createUser({email:'u@example.com'});
+        var requestorId = Accounts.createUser({email:'u@example.com'});
         Organizations.addUserById(organizationId, requestorId);
 
-        var email = 'test@example.com';
-        var invitation = new Invitation({organizationId: organizationId,
-                                         requestorId: requestorId,
-                                         inviteeEmail: email});
-        invitation.process();
-        chai.assert(Meteor.users.find().count(), 1);
+        Invitations.create({organizationId: organizationId,
+                            requestorId: requestorId,
+                            inviteeEmail: 'test@example.com'});
+        Meteor.users.find().count().should.equal(2); // requestor + invitee
       });
 
       it('gives organization access to newly created invitee account', function () {
         var organizationId = Organizations.insert({name: 'org'});
-        var requestorId= Accounts.createUser({email:'u@example.com'});
+        var requestorId = Accounts.createUser({email:'u@example.com'});
         Organizations.addUserById(organizationId, requestorId);
 
-        var email = 'test@example.com';
-        var invitation = new Invitation({organizationId: organizationId,
-                                         requestorId: requestorId,
-                                         inviteeEmail: email});
-        invitation.process();
+        var inviteeEmail = 'test@example.com';
+        Invitations.create({organizationId: organizationId,
+                            requestorId: requestorId,
+                            inviteeEmail: inviteeEmail});
 
         var organization = Organizations.findOne({_id: organizationId});
-        var invitee = Meteor.users.findOne({'emails.address': email});
-        chai.assert(organization.isAccessibleByUserId(invitee._id), true);
+        var invitee = Meteor.users.findOne({'emails.address': inviteeEmail});
+        organization.isAccessibleByUserId(invitee._id).should.equal(true);
       });
     });
   });

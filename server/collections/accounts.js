@@ -15,11 +15,22 @@ _.extend(Accounts, {
   'emailSignature': 'Team Loop Pulse\nhttp://twitter.com/looppulse',
 
   'configureEnrollAccountTemplates': function () {
+    var organizationName = function (user) {
+      var orgName = 'our Beta program';
+      var pending = Invitations.pending(user.emails[0].address);
+      if (pending.length > 0) {
+        // TODO: should grab the latest invitation
+        var invitedOrganization = Organizations.findOne({_id: pending[0].organizationId});
+        orgName = invitedOrganization.name;
+      }
+      return orgName;
+    }
+
     Accounts.emailTemplates.enrollAccount.subject = function (user) {
-      return '[Loop Pulse] Invitation to Beta';
+      return '[Loop Pulse] Invitation to ' + organizationName(user);
     };
     Accounts.emailTemplates.enrollAccount.text = function (user, url) {
-      return 'You have been invited to our Beta program.\n'+
+      return 'You have been invited to ' + organizationName(user) + ' on Loop Pulse.\n'+
              'Please activate your account using the link below:\n\n'+
              url + '\n\n' +
              Accounts.emailSignature;

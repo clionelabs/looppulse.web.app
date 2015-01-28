@@ -12,6 +12,23 @@ Invitations = new Meteor.Collection('invitations', {
   }
 });
 
+// TODO: better if we could put the logic in User#pendingInvitations
+Invitations.pending = function (inviteeEmail) {
+  return Invitations.find({inviteeEmail: inviteeEmail}).fetch();
+}
+
+/**
+  * TODO: Normally, we would observe 'added' invitation in order to
+  * start the processing. However, due to limitation by testing (
+  * Mongo collections get removed in 'beforeEach()'), we need to ensure
+  * required work is done synchronously.
+  */
+Invitations.create = function (doc) {
+  var id = Invitations.insert(doc);
+  var invitation = Invitations.findOne({_id: id});
+  invitation.process();
+}
+
 Invitation = function (doc) {
   _.extend(this, doc);
 };
@@ -34,13 +51,6 @@ _.extend(Invitation.prototype, {
     // TODO: add invitation details so we can customize enrollment email
     var inviteeId = Accounts.createUser({email: self.inviteeEmail});
     Organizations.addUserById(self.organizationId, inviteeId);
+    Accounts.sendEnrollmentEmail(inviteeId);
   }
-});
-
-Meteor.startup(function () {
-  Invitations.find().observe({
-    'added': function (newInvitation) {
-      newInvitation.process();
-    }
-  });
 });
