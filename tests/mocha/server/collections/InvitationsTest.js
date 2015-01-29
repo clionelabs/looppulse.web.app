@@ -21,24 +21,36 @@ if (!(typeof MochaWeb === 'undefined')) {
       });
     });
 
-    describe('Invitations#isRequestorAuthorized', function () {
-      it('returns true if requestor also has access to given organization', function () {
-        var orgId = Organizations.insert({name: 'org'});
-        var userId= Accounts.createUser({email:'u@example.com'});
-        Organizations.addUserById(orgId, userId);
+    // TODO: can't get pending tests to work.
+    // https://github.com/mad-eye/meteor-mocha-web/issues/43
+    describe('Invitations.validate', function () {
+      it('checks for unauthroized requestor')
+      it('checks for invitee who already has an account')
+    });
 
-        var invitation = new Invitation({organizationId: orgId,
-                                         requestorId: userId});
-        invitation.isRequestorAuthorized().should.equal(true);
+    describe('Invitations.validateExistingInvitee', function () {
+      it('throws when sending invitation to existing user', function () {
+        var email = 'invited@example.com';
+        var userId = Accounts.createUser({email: email});
+
+        var organizationId = Organizations.insert({name: 'org'});
+        var requestorId = Accounts.createUser({email:'u@example.com'});
+        Organizations.addUserById(organizationId, requestorId);
+
+        chai.expect(function () {
+          Invitations.rejectExitingInvitee(email);
+        }).to.throw();
       });
+    });
 
-      it('returns false otherwise', function () {
-        var orgId = Organizations.insert({name: 'org'});
-        var userId= Accounts.createUser({email:'u@example.com'});
+    describe('Invitations.rejectUnauthorizedRequestor', function () {
+      it('throws when requestor does not have authroixation', function () {
+        var organizationId = Organizations.insert({name: 'org'});
+        var requestorId = Accounts.createUser({email:'u@example.com'});
 
-        var invitation = new Invitation({organizationId: orgId,
-                                         requestorId: userId});
-        invitation.isRequestorAuthorized().should.equal(false);
+        chai.expect(function () {
+          Invitations.rejectUnauthorizedRequestor(organizationId, requestorId);
+        }).to.throw();
       });
     });
 

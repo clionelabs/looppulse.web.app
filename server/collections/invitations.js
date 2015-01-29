@@ -23,34 +23,36 @@ Invitations.pending = function (inviteeEmail) {
   * Mongo collections get removed in 'beforeEach()'), we need to ensure
   * required work is done synchronously.
   */
-Invitations.create = function (doc) {
-  var id = Invitations.insert(doc);
-  var invitation = Invitations.findOne({_id: id});
-  invitation.process();
+Invitations.create = function (options) {
+  // TODO: we could run the validation at insert time.
+  Invitations.validate(options);
+  Invitations.insert(options);
+
+  // TODO: add invitation details so we can customize enrollment email
+  var inviteeId = Accounts.createUser({email: options.inviteeEmail});
+  Organizations.addUserById(options.organizationId, inviteeId);
+  Accounts.sendEnrollmentEmail(inviteeId);
+}
+
+Invitations.validate = function (options) {
+  Invitations.rejectUnauthorizedRequestor(options.organizationId, options.requestorId);
+  Invitations.rejectExitingInvitee(options.inviteeEmail);
+}
+
+Invitations.rejectUnauthorizedRequestor = function (organizationId, requestorId) {
+  var organization = Organizations.findOne({_id: organizationId});
+  if(!organization || !organization.isAccessibleByUserId(requestorId)) {
+    throw new Meteor.Error('invitation-not-authorized', 'Requestor does not have permission.');
+  }
+}
+
+Invitations.rejectExitingInvitee = function (inviteeEmail) {
+  if (Meteor.users.findOne({'emails.address': inviteeEmail})) {
+    throw new Meteor.Error('invitation-to-existing-user',
+                           'Currently we only support invitation to new user account');
+  }
 }
 
 Invitation = function (doc) {
   _.extend(this, doc);
 };
-
-_.extend(Invitation.prototype, {
-  'isRequestorAuthorized': function () {
-    var self = this;
-    var organization = Organizations.findOne({_id: self.organizationId});
-    return organization.isAccessibleByUserId(self.requestorId);
-  },
-
-  'process': function () {
-    var self = this;
-
-    // TODO: handle case when requestor is not authorized
-    if (!self.isRequestorAuthorized()) {
-      throw new Meteor.Error('invitation-not-authorized', 'Requestor does not have permission.');
-    }
-
-    // TODO: add invitation details so we can customize enrollment email
-    var inviteeId = Accounts.createUser({email: self.inviteeEmail});
-    Organizations.addUserById(self.organizationId, inviteeId);
-    Accounts.sendEnrollmentEmail(inviteeId);
-  }
-});
