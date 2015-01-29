@@ -6,6 +6,13 @@ Organizations.findByUserId = function (userId) {
   return Organizations.find({userIds: {$in: [userId]}});
 };
 
+_.extend(Organization.prototype, {
+  'isAccessibleByUserId': function (userId) {
+    var self = this;
+    return _.indexOf(self.userIds, userId) != -1;
+  }
+});
+
 Meteor.startup(function() {
   Meteor.users.find().observe({
     "removed": function (oldUser) {
