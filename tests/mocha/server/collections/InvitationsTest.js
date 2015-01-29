@@ -23,10 +23,10 @@ if (!(typeof MochaWeb === 'undefined')) {
 
     // TODO: can't get pending tests to work.
     // https://github.com/mad-eye/meteor-mocha-web/issues/43
-    describe('Invitations.validate', function () {
-      it('checks for unauthroized requestor')
-      it('checks for invitee who already has an account')
-    });
+    // describe('Invitations.validate', function () {
+    //   it('checks for unauthroized requestor')
+    //   it('checks for invitee who already has an account')
+    // });
 
     describe('Invitations.validateExistingInvitee', function () {
       it('throws when sending invitation to existing user', function () {
