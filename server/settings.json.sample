@@ -25,11 +25,16 @@
     "forbidClientAccountCreation": true
   },
 
-  "DEBUG": {
-    "logging": true,
-    "fixtures":{
-      "load": true,
-      "clear": false
-    }
-  }
+  "S3Bucket" : "looppulse-app-dev",
+  "AWSRegion" : "ap-southeast-1",
+  "AWSAccessKeyId" : "YOUR_ACCESS_KEY_ID",
+  "AWSSecretAccessKey" : "YOUR_SECRET_ACCESS_KEY",
+
+ "DEBUG": {
+   "logging": true,
+   "fixtures":{
+     "load": true,
+     "clear": false
+   }
+ }
 }
