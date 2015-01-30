@@ -11,6 +11,7 @@ Meteor.methods({
     workspaceData = _.extend({}, {organizationId : organizationId}, workspaceData);
     var workspaceId = Workspaces.insert(workspaceData);
     var userId = Accounts.createUser(userData);
+    Accounts.sendVerificationEmail(userId);
 
     Organizations.addUserById(organizationId, userId);
     return userId;
