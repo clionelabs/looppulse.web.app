@@ -30,7 +30,6 @@ if (!(typeof MochaWeb === 'undefined')) {
         options = { organizationId: organizationId,
                     requestorId: requestorId,
                     inviteeEmail: 'invited@example.com' };
-
       });
 
       it('checks for unauthroized requestor', function () {
@@ -75,29 +74,26 @@ if (!(typeof MochaWeb === 'undefined')) {
     });
 
     describe('Invitations.create', function () {
-      it('creates user from invitee email', function () {
+      beforeEach(function () {
         var organizationId = Organizations.insert({name: 'org'});
         var requestorId = Accounts.createUser({email:'u@example.com'});
         Organizations.addUserById(organizationId, requestorId);
+        options = { organizationId: organizationId,
+                    requestorId: requestorId,
+                    inviteeEmail: 'invited@example.com' };
+      });
 
-        Invitations.create({organizationId: organizationId,
-                            requestorId: requestorId,
-                            inviteeEmail: 'test@example.com'});
+      it('creates user from invitee email', function () {
+        Invitations.create(options);
+
         Meteor.users.find().count().should.equal(2); // requestor + invitee
       });
 
       it('gives organization access to newly created invitee account', function () {
-        var organizationId = Organizations.insert({name: 'org'});
-        var requestorId = Accounts.createUser({email:'u@example.com'});
-        Organizations.addUserById(organizationId, requestorId);
+        Invitations.create(options);
 
-        var inviteeEmail = 'test@example.com';
-        Invitations.create({organizationId: organizationId,
-                            requestorId: requestorId,
-                            inviteeEmail: inviteeEmail});
-
-        var organization = Organizations.findOne({_id: organizationId});
-        var invitee = Meteor.users.findOne({'emails.address': inviteeEmail});
+        var organization = Organizations.findOne({_id: options.organizationId});
+        var invitee = Meteor.users.findOne({'emails.address': options.inviteeEmail});
         organization.isAccessibleByUserId(invitee._id).should.equal(true);
       });
     });
