@@ -34,13 +34,45 @@
     width: $dimen-logo-size;
     height: $dimen-logo-size;
   }
-  .navbar-right .navbar-settings {
-    background-image: url("/images/setting.png");
-    background-size: contain;
-    margin: 22px 0;
-    width: $dimen-icon-size;
-    height: $dimen-icon-size;
-    display: block;
+  ul.navbar-nav+.navbar-right {
+    .navbar-settings {
+      &:focus {
+        background-image: url("/images/header_link_active.png");
+        background-repeat: repeat-x;
+        background-position: center bottom;
+      }
+      width: $dimen-icon-size;
+      height: $dimen-header-height;
+      color: $lp-white;
+      min-width: 50px;
+      padding:15px 0px;
+      line-height: 43px;
+      text-align: center;
+      display: block;
+    }
+
+    .dropdown-menu {
+      margin: 0;
+      border-right : 5px solid $lp-blue;
+      border-bottom : 5px solid $lp-blue;
+      border-left : 5px solid $lp-blue;
+      border-radius: 0px;
+      width: 300px;
+      background-color: $lp-white;
+      li {
+        padding: 5px 25px;
+        a {
+          min-width: 200px;
+          &:hover{
+            background-color: $lp-white;
+          }
+          color: $lp-blue;
+          display:inline-block;
+        }
+        font-size: $dimen-h3-size;
+
+      }
+    }
   }
 }
 
