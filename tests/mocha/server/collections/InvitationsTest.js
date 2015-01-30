@@ -5,6 +5,7 @@ if (!(typeof MochaWeb === 'undefined')) {
       Organizations.remove({});
       Invitations.remove({});
       chai.should();
+      chai.use(sinonChai);
     });
 
     describe('Invitations.pending', function () {
@@ -21,12 +22,31 @@ if (!(typeof MochaWeb === 'undefined')) {
       });
     });
 
-    // TODO: can't get pending tests to work.
-    // https://github.com/mad-eye/meteor-mocha-web/issues/43
-    // describe('Invitations.validate', function () {
-    //   it('checks for unauthroized requestor')
-    //   it('checks for invitee who already has an account')
-    // });
+    describe('Invitations.validate', function () {
+      beforeEach(function () {
+        var organizationId = Organizations.insert({name: 'org'});
+        var requestorId = Accounts.createUser({email:'u@example.com'});
+        Organizations.addUserById(organizationId, requestorId);
+        options = { organizationId: organizationId,
+                    requestorId: requestorId,
+                    inviteeEmail: 'invited@example.com' };
+
+      });
+
+      it('checks for unauthroized requestor', function () {
+        var spy = sinon.spy(Invitations, 'rejectUnauthorizedRequestor');
+
+        Invitations.validate(options);
+        spy.called.should.be.true;
+      });
+
+      it('checks for invitee who already has an account', function () {
+        var spy = sinon.spy(Invitations, 'rejectExitingInvitee');
+
+        Invitations.validate(options);
+        spy.called.should.be.true;
+      });
+    });
 
     describe('Invitations.validateExistingInvitee', function () {
       it('throws when sending invitation to existing user', function () {
