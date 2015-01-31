@@ -8,36 +8,55 @@ Template.gauge.rendered = function() {
 };
 
 GaugeData = function(data) {
-    return _.extend({}, data, {
-        tmplToGauge: function () {
-            /*TODO remove Demo Data*/
-            var demoData = {
-                current: {
-                    "total": 3268,
-                    "title": "CURRENT",
-                    "leftContent": "5,691",
-                    "leftTitle": "max. daily",
-                    "rightContent": "+10%",
-                    "rightTitle": "since last week",
-                    percentage: [0.29]//array because need to cater "related top 3" in detail view
-                },
-                interested: {
-                    "total": 674,
-                    "title": "INTERESTED",
-                    "leftContent": "5,691",
-                    "leftTitle": "total unique",
-                    "rightContent": "-23%",
-                    "rightTitle": "since last week",
-                    percentage: [0.14, 0.12, 0.05, 0.08]//array because need to cater "related top 3" in detail view
+  return _.extend({}, data, {
+    tmplToGauge: function () {
+      var pm = this.data.pm;
+      return {
+        current: {
+          "total": pm.totalCurrentVisitors,
+          "title": "CURRENT",
+          "arm" : pm.maxDailyVisitors / pm.max7daysVisitors, //TODO display logic
+          "subContent": pm.max7daysVisitors,
+          "subTitle": "max of last 7 days",
+          //array because need to cater "related top 3" in detail view
+          percentage: [pm.totalCurrentVisitors / pm.max7daysVisitors]
+        },
+        interested: {
+          "total": pm.interestedVisitors,
+          "title": "INTERESTED",
+          "subContent": pm.totalVisitors,
+          "subTitle": "total unique",
+          percentage: Template.gauge.poisInterestedData(pm)
 
-                }
-            };
-            /*TODO remove END DemoData*/
-            var model = demoData;
-            return model;
         }
-    });
+      };
+    }
+  });
 
+}
+
+/**
+ *
+ * @param poismetric
+ */
+Template.gauge.poisInterestedData = function(poismetric) {
+
+  var pois = _.sortBy(poismetric.pois, function(poi) { return -poi.interestedVisitors; });
+
+  var result = [];
+  if (pois.length > 1) {
+    var top3Pois = _.first(pois, 3);
+    result = _.map(top3Pois, function (p) {
+      return p.interestedVisitors / poismetric.totalVisitors
+    });
+    var totalInterestedVisitorsOftheRest =
+      _.reduce(_.rest(pois, 3), function (memo, p) {
+        return memo + p.interestedVisitors
+      }, 0);
+    result.push(totalInterestedVisitorsOftheRest / poismetric.totalVisitors);
+  }
+
+  return result;
 }
 
 /**
@@ -125,40 +144,23 @@ Template.gauge.updateGauge = function(data) {
     titleText.exit().transition().duration(1000).remove();
 
 
-    var rightContentText = gaugeInfo
-        .selectAll("div.pull-right.sub-content")
-        .data([data.rightContent]); //convert to array because of d3 convention
+    var subContentText = gaugeInfo
+        .selectAll("div.sub-content")
+        .data([data.subContent]); //convert to array because of d3 convention
 
-    rightContentText
+    subContentText
         .classed("plus", function (d) { return d[0] === '+'; })
         .classed("minus", function(d) { return d[0] === '-'; })
         .text(function (d) {
             return d;
         });
 
-    var leftContentText = gaugeInfo
-        .selectAll("div.pull-left.sub-content")
-        .data([data.leftContent]); //convert to array because of d3 convention
+    var subTitleText = gaugeInfo
+        .selectAll("div.sub-title")
+        .data([data.subTitle]); //convert to array because of d3 convention
 
-    leftContentText
-        .classed("plus", function (d) { return d[0] === '+'; })
-        .classed("minus", function(d) { return d[0] === '-'; })
-        .text(function (d) {
-            return d;
-        });
-
-    var rightTitleText = gaugeInfo
-        .selectAll("div.pull-right.sub-title")
-        .data([data.rightTitle]); //convert to array because of d3 convention
-    rightTitleText
-        .text(function (d) { return d; });
-
-    var leftTitleText = gaugeInfo
-        .selectAll("div.pull-left.sub-title")
-        .data([data.leftTitle]); //convert to array because of d3 convention
-
-    leftTitleText
-        .text(function (d) { return d; });
+    subTitleText
+        .text(function (d) { return d; })
 }
 
 Template.gauge.events({
