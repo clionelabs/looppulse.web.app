@@ -16,9 +16,9 @@ Setup and run
   {
     "rules": {
       "workspaces": {
-        "$wsId": {
+        "$workspaceId": {
           ".read": false,
-          ".write": "auth != null && auth.wsId == $wsId"
+          ".write": "auth != null && auth.workspaceId == $workspaceId"
         }
       }
     }
@@ -41,12 +41,23 @@ Organization and Account Creation
 
   `Invitations.create({organizationId: YOUR_ORGANIZATION_ID, requestorId: REQUESTOR_ID, inviteeEmail: INVITEE_EMAIL})`
 
+ Create Application
+ ==================
 
-Signing In and Logging Out
-==========================
+ To create an application, such as simulator and SDKs for authenticate API, you could call this in browser console.
 
-1. To sign in: `hostname/sign-in`
-2. To log out: run `Meteor.logout()` in the browser console.
+ `Meteor.call("addApplication" { "name" : "mandatory", workspaceId : "mandatory", token : "optional" }, function(e,r) { console.log(r); });`
+
+ Create Point of Interest(POI)
+ ==================
+
+ Same same la,
+
+ `Meteor.call("addPois",
+   { workspaceId : "must",
+                    name : "must",
+                    beacon : { uuid : "must", major : "must", minor : "must" }
+                  }, function(e,r) { console.log(r); });
 
 Technical Note
 =================
