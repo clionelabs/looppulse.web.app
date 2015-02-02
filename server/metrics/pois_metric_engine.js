@@ -12,7 +12,7 @@
 PoisMetricEngine = function(pois, current) {
   var poiIds = _.pluck(pois, '_id');
   this.journeys = Journeys.find({poiId: {$in: poiIds}}).fetch();
-  this.current = current;
+  this.current = moment(current);
 };
 
 /**

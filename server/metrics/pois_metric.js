@@ -35,6 +35,7 @@ PoisMetric.prototype._publishCursor = function (sub) {
 
 PoisMetric.prototype._createAggregate = function () {
   var self = this;
+  self.pois = Pois.find().fetch();
   var current = moment();
   var engine = new PoisMetricEngine(self.pois, current);
 
@@ -43,16 +44,19 @@ PoisMetric.prototype._createAggregate = function () {
   subObj.count = self.pois.length;
   subObj.totalVisitors = engine.computeTotalVisitorsCnt();
   subObj.totalCurrentVisitors = engine.computeCurrentVisitorsCnt();
-  var aWeekAgo = current.subtract(7, 'days').startOf('day');
+  var aWeekAgo = moment(current).subtract(7, 'days').startOf('day');
   subObj.max7daysVisitors = engine.computePeakVisitorsCnt(aWeekAgo, current);
-  var startOfToday = current.startOf('day');
+  var startOfToday = moment(current).startOf('day');
   subObj.maxDailyVisitors = engine.computePeakVisitorsCnt(startOfToday, current);
   subObj.interestedVisitors = engine.computeInterestedCnt();
   subObj.averageDwellTime = engine.computeAvgDwellTime();
 
   subObj.pois = _.map(self.pois, function (poi) {
     var poiEngine = new PoisMetricEngine([poi], current);
-    var additionalInfo = { interestedVisitors : poiEngine.computeInterestedCnt() };
+    var additionalInfo = {
+      "interestedVisitors" : poiEngine.computeInterestedCnt(),
+      "totalVisitors" : poiEngine.computeTotalVisitorsCnt()
+    };
 
     return _.extend({}, additionalInfo, poi);
 
