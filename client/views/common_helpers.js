@@ -26,15 +26,24 @@ Template.registerHelper("printActiveIf", function(funcOrBoolean) {
     }
 });
 
-Template.pois.getShortenedPois = function(pois, reduceFunc, key) {
+/**
+ * To reduce a list of pois to a list of 4 pois, with the common structure of {name : "", key : poi[key]}
+ * @param pois
+ * @param reduceFunc
+ * @param key
+ * @param limit
+ * @returns {*}
+ */
+Template.pois.getShortenedPois = function(pois, reduceFunc, key, limit) {
 
-  var shortenedPois = _.first(pois, 3);
+  if (limit === undefined) { limit = 3; }
+  var shortenedPois = _.first(pois, limit);
 
-  if (pois.length > 1) {
+  if (pois.length > limit) {
     var totalOfTheRest =
-      _.reduce(_.rest(pois, 3), reduceFunc, 0);
+      _.reduce(_.rest(pois, limit), reduceFunc, 0);
 
-    var otherObj = {name : "Other"};
+    var otherObj = {name : "Others"};
     otherObj[key] = totalOfTheRest;
     shortenedPois.push(otherObj);
   }

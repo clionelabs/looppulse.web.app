@@ -20,29 +20,29 @@ Fixtures.clear = function() {
  */
 Fixtures.load = function() {
   var fixture = JSON.parse(Assets.getText("fixtures.json"));
-  var wsFixture = fixture.workspaces;
+  var workspaceFixture = fixture.workspaces;
   var orgFixture = fixture.organizations;
 
-  if (wsFixture) {
+  if (workspaceFixture) {
     console.log("[Fixture] Importing Workspaces...");
-    wsFixture.forEach(function(ws) {
-      var name = Fixtures.prefix + " " + ws.name;
-      var res = Workspaces.upsert({name: name}, {name: name, poiDescriptors: ws.poiDescriptors});
+    workspaceFixture.forEach(function(workspace) {
+      var name = Fixtures.prefix + " " + workspace.name;
+      var res = Workspaces.upsert({name: name}, {name: name, poiDescriptors: workspace.poiDescriptors});
       var workspaceId = (res.insertedId) ? res.insertedId : Workspaces.findOne({name: name})._id;
       console.log("[Fixture] Imported Workspace: ", workspaceId , res);
 
-      if (ws.applications)
-        ws.applications.forEach(function(appFixture) {
+      if (workspace.applications)
+        workspace.applications.forEach(function(appFixture) {
           Applications.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, name: appFixture.name, token: appFixture.token});
         });
 
-      if (ws.pois)
-        ws.pois.forEach(function(poiFixture) {
+      if (workspace.pois)
+        workspace.pois.forEach(function(poiFixture) {
           Pois.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, name: poiFixture.name, beacon: poiFixture.beacon});
         });
 
-      if (ws.geofences)
-        ws.geofences.forEach(function(geofenceFixture) {
+      if (workspace.geofences)
+        workspace.geofences.forEach(function(geofenceFixture) {
           Geofences.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
         });
     });

@@ -29,8 +29,7 @@ PoisMetricEngine.prototype.computeTotalVisitorsCnt = function() {
 
 /**
  * Compute the current number of visitors still inside any of the poi regions
- * @returns {String[]} visitors' UUID
- */
+ * @returns {Number} current number of visitors */
 PoisMetricEngine.prototype.computeCurrentVisitorsCnt = function() {
   var users = _.reduce(this.journeys, function(memo, journey) {
     if (journey.isVisiting()) memo[journey.visitorUUID] = true;

@@ -12,23 +12,23 @@ Template.gauge.rendered = function() {
 GaugeData = function(data) {
   return _.extend({}, data, {
     tmplToGauge: function () {
-      var pm = this.data.pm;
+      var poisMetric = this.data.poisMetric;
       return {
         current: {
-          "total": pm.totalCurrentVisitors,
+          "total": poisMetric.totalCurrentVisitors,
           "title": "CURRENT",
-          "arm" : pm.maxDailyVisitors / pm.max7daysVisitors, //TODO display logic
-          "subContent": pm.max7daysVisitors,
+          "arm" : poisMetric.maxDailyVisitors / poisMetric.max7daysVisitors, //TODO display logic
+          "subContent": poisMetric.max7daysVisitors,
           "subTitle": "max of last 7 days",
           //array because need to cater "related top 3" in detail view
-          percentage: [pm.totalCurrentVisitors / pm.max7daysVisitors]
+          percentage: [poisMetric.totalCurrentVisitors / poisMetric.max7daysVisitors]
         },
         interested: {
-          "total": pm.interestedVisitors,
+          "total": poisMetric.interestedVisitors,
           "title": "INTERESTED",
-          "subContent": pm.totalVisitors,
+          "subContent": poisMetric.totalVisitors,
           "subTitle": "total unique",
-          percentage: Template.gauge.poisInterestedData(pm)
+          percentage: Template.gauge.poisInterestedData(poisMetric)
 
         }
       };

@@ -10,6 +10,7 @@ Template.pois.rendered = function() {
     });
 };
 
+
 Template.pois.events({
     "click #pois-goto-create-engage" : function() {
         Router.go("/engagement/create");
@@ -17,8 +18,8 @@ Template.pois.events({
 });
 
 Template.pois.helpers({
-  "getShortenedPois" : function() {
-    return Template.pois.getShortenedPois(this.pm.pois,
+  "getTop3PoisByTotalVisitors" : function() {
+    return Template.pois.getShortenedPois(this.poisMetric.pois,
                      function (memo, p) {
                         return memo + p.totalVisitors;
                      }, "totalVisitors");
