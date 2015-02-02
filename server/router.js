@@ -32,7 +32,4 @@ Router.route('/api/authenticate/applications/:applicationId',
       this.response.writeHead(authenticatedResponse.statusCode,
                                 {'Content-Type': 'application/json'});
       this.response.end(JSON.stringify(authenticatedResponse));
-    })
-  .get(unauthorized)
-  .put(unauthorized)
-  .delete(unauthorized);
+    });
