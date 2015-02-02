@@ -12,7 +12,7 @@ Applications.authenticate = function(appId, appToken, captureInfo) {
 
   // Generate firebase access token
   var tokenGenerator = new FirebaseTokenGenerator(Meteor.settings.firebase.secret);
-  var firebaseToken = tokenGenerator.createToken({wsId: workspace._id});
+  var firebaseToken = tokenGenerator.createToken({workspaceId: workspace._id});
 
   // Build firebase paths
   var firebaseRoot = workspace.getFirebaseRoot();
@@ -49,7 +49,7 @@ Applications.authenticate = function(appId, appToken, captureInfo) {
 Meteor.startup(function() {
   Workspaces.find().observe({
     "removed": function(workspace) {
-      Applications.remove({wsId: workspace._id});
+      Applications.remove({workspaceId: workspace._id});
     }
   });
 });

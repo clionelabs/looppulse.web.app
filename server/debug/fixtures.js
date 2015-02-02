@@ -28,22 +28,22 @@ Fixtures.load = function() {
     wsFixture.forEach(function(ws) {
       var name = Fixtures.prefix + " " + ws.name;
       var res = Workspaces.upsert({name: name}, {name: name, poiDescriptors: ws.poiDescriptors});
-      var wsId = (res.insertedId) ? res.insertedId : Workspaces.findOne({name: name})._id;
-      console.log("[Fixture] Imported Workspace: ", wsId , res);
+      var workspaceId = (res.insertedId) ? res.insertedId : Workspaces.findOne({name: name})._id;
+      console.log("[Fixture] Imported Workspace: ", workspaceId , res);
 
       if (ws.applications)
         ws.applications.forEach(function(appFixture) {
-          Applications.upsert({wsId: wsId},{wsId: wsId, name: appFixture.name, token: appFixture.token});
+          Applications.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, name: appFixture.name, token: appFixture.token});
         });
 
       if (ws.pois)
         ws.pois.forEach(function(poiFixture) {
-          Pois.upsert({wsId: wsId},{wsId: wsId, name: poiFixture.name, beacon: poiFixture.beacon});
+          Pois.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, name: poiFixture.name, beacon: poiFixture.beacon});
         });
 
       if (ws.geofences)
         ws.geofences.forEach(function(geofenceFixture) {
-          Geofences.upsert({wsId: wsId},{wsId: wsId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
+          Geofences.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
         });
     });
   }
