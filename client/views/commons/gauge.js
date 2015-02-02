@@ -4,7 +4,9 @@
 Template.gauge.rendered = function() {
 
     var self = new GaugeData(this);
-    Template.gauge.updateGauge(self.tmplToGauge().current);
+    this.autorun(function() {
+      Template.gauge.updateGauge(self.tmplToGauge().current);
+    });
 };
 
 GaugeData = function(data) {
@@ -44,19 +46,14 @@ Template.gauge.poisInterestedData = function(poismetric) {
   var pois = _.sortBy(poismetric.pois, function(poi) { return -poi.interestedVisitors; });
 
   var result = [];
-  if (pois.length > 1) {
-    var top3Pois = _.first(pois, 3);
-    result = _.map(top3Pois, function (p) {
-      return p.interestedVisitors / poismetric.totalVisitors
-    });
-    var totalInterestedVisitorsOftheRest =
-      _.reduce(_.rest(pois, 3), function (memo, p) {
-        return memo + p.interestedVisitors
-      }, 0);
-    result.push(totalInterestedVisitorsOftheRest / poismetric.totalVisitors);
-  }
 
-  return result;
+  result = Template.pois.getShortenedPois(pois, function (memo, p) {
+        return memo + p.interestedVisitors
+      }, "interestedVisitors");
+
+  return _.map(result, function(r) {
+    return r.interestedVisitors / poismetric.totalVisitors;
+  });
 }
 
 /**
@@ -164,16 +161,16 @@ Template.gauge.updateGauge = function(data) {
 }
 
 Template.gauge.events({
-    "click #gauge-heart": function(e, tmpl) {
-        var heart = $(e.currentTarget);
-        Template.pois.swipe(heart.hasSVGClass("active"));
-        Session.set("isHeartActive", heart.hasSVGClass("active"));
-        var isHeartActive = Session.get("isHeartActive");
-        var selectedData = isHeartActive ? "interested" : "current";
-        var gaugeData = new GaugeData(tmpl.data);
-        Template.gauge.updateGauge(gaugeData.tmplToGauge()[selectedData]);
+    "click #gauge-heart": function (e, tmpl) {
+      var heart = $(e.currentTarget);
+      Template.pois.swipe(heart.hasSVGClass("active"));
+      Session.set("isHeartActive", heart.hasSVGClass("active"));
+      var isHeartActive = Session.get("isHeartActive");
+      var selectedData = isHeartActive ? "interested" : "current";
+      var gaugeData = new GaugeData(tmpl);
+      Template.gauge.updateGauge(gaugeData.tmplToGauge()[selectedData]);
     }
-});
+  });
 
 /**
  * @param elem JQuery Object of a SVG element

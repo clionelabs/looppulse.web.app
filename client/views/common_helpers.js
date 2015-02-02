@@ -25,3 +25,19 @@ Template.registerHelper("printActiveIf", function(funcOrBoolean) {
         return funcOrBoolean ? "active" : "";
     }
 });
+
+Template.pois.getShortenedPois = function(pois, reduceFunc, key) {
+
+  var shortenedPois = _.first(pois, 3);
+
+  if (pois.length > 1) {
+    var totalOfTheRest =
+      _.reduce(_.rest(pois, 3), reduceFunc, 0);
+
+    var otherObj = {name : "Other"};
+    otherObj[key] = totalOfTheRest;
+    shortenedPois.push(otherObj);
+  }
+
+  return shortenedPois;
+};

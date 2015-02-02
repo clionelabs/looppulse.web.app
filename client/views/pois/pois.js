@@ -16,6 +16,15 @@ Template.pois.events({
     }
 });
 
+Template.pois.helpers({
+  "getShortenedPois" : function() {
+    return Template.pois.getShortenedPois(this.pm.pois,
+                     function (memo, p) {
+                        return memo + p.totalVisitors;
+                     }, "totalVisitors");
+  }
+});
+
 /**
  * A helper for other template to swipe
  * @param isActive

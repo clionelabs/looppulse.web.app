@@ -2,7 +2,8 @@
     <div class="container-fluid pois">
         <div class="row page-top-bar">
             <div class="col-md-12 name"><h1>{{ ws.name }}</h1><sup class="activity {{ pm.activity }}">&#8226;</sup>
-                <button id="pois-goto-create-engage" class="btn btn-lp pull-right">Engage Visitors</button></div>
+                <button id="pois-goto-create-engage" class="btn btn-lp pull-right">Engage Visitors</button>
+            </div>
         </div>
         <div class="row main-slider">
             <div class="col-md-12 container">
@@ -36,16 +37,20 @@
                     </div>
                 </div>
                 <div class="content">
-                    {{> gauge }}{{! TODO add data }}
+                  {{> gauge }}
                 </div>
                 <div class="content">
                     <table class="highlighted-list table-responsive">
-                       <tr>
-                           <th>Top Interested</th><th>number</th>
-                       </tr>
                         <tr>
-                            <td>ddd</td><td>123</td>
+                            <th>Top Interested</th>
+                            <th>number</th>
                         </tr>
+                      {{#each getShortenedPois }}
+                          <tr>
+                              <td>{{_.capitalize name}}</td>
+                              <td>{{ totalVisitors }}</td>
+                          </tr>
+                      {{/each }}
                     </table>
                 </div>
             </div>
@@ -54,18 +59,19 @@
             <div class="col-md-12 table-responsive">
                 <table class="table">
                     <tr>
-                        <th>{{ pm.pois.length }} {{_.swapCase ws.poiDescriptors.many }}<span class="glyphicon glyphicon-filter"></span></th>
+                        <th>{{ pm.pois.length }} {{_.swapCase ws.poiDescriptors.many }}<span
+                                class="glyphicon glyphicon-filter"></span></th>
                         <th>Interested</th>
                         <th>Total</th>
                     </tr>
-                    {{#each pm.pois}}
-                    <tr>
-                        <td><a href="{{pathFor route='poi' id=this._id }}">{{_.capitalize name }}</a></td>
-                        <td>{{ interested }}</td>
-                        <td>{{ total }}</td>
+                  {{#each pm.pois}}
+                      <tr>
+                          <td><a href="{{pathFor route='poi' id=this._id }}">{{_.capitalize name }}</a></td>
+                          <td>{{ interestedVisitors }}</td>
+                          <td>{{ totalVisitors }}</td>
 
-                    </tr>
-                    {{/each }}
+                      </tr>
+                  {{/each }}
                 </table>
             </div>
         </div>
