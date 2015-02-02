@@ -14,6 +14,8 @@ Router.route('/api/authenticate/applications/:applicationId',
     onBeforeAction: function() {
       if (this.request.method !== 'POST') {
         unauthorized(this);
+      } else {
+        this.next();
       }
     }
   })
