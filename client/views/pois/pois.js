@@ -18,11 +18,13 @@ Template.pois.events({
 });
 
 Template.pois.helpers({
-  "getTop3PoisByTotalVisitors" : function() {
-    return Template.pois.getShortenedPois(this.poisMetric.pois,
+  "getTop3PoisByInterestedVisitors" : function() {
+    console.log(this.poisMetric.pois);
+    var pois = _.sortBy(this.poisMetric.pois, function(p) { return -p.interestedVisitors; } );
+    return Template.pois.getShortenedPois(pois,
                      function (memo, p) {
-                        return memo + p.totalVisitors;
-                     }, "totalVisitors");
+                        return memo + p.interestedVisitors;
+                     }, "interestedVisitors");
   }
 });
 

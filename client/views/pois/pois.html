@@ -45,10 +45,10 @@
                             <th>Top Interested</th>
                             <th>number</th>
                         </tr>
-                      {{#each getTop3PoisByTotalVisitors }}
+                      {{#each getTop3PoisByInterestedVisitors }}
                           <tr>
                               <td>{{_.capitalize name}}</td>
-                              <td>{{ totalVisitors }}</td>
+                              <td>{{ interestedVisitors }}</td>
                           </tr>
                       {{/each }}
                     </table>
