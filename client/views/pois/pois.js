@@ -19,7 +19,7 @@ Template.pois.events({
 
 Template.pois.helpers({
   "getTop3PoisByInterestedVisitors" : function() {
-    return this.poisMetric.top3Interested;
+    return this.poisMetric.topInterested;
   }
 });
 
