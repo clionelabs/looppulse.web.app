@@ -18,7 +18,6 @@ wizonesolutions:underscore-string
 mrt:moment
 udondan:slick
 u2622:persistent-session
-mike:mocha
 sergeyt:typeahead
 loftsteinn:bootstrap3-daterangepicker
 practicalmeteor:sinon
@@ -26,3 +25,5 @@ edgee:slingshot
 dbarrett:dropzonejs
 random
 meteorhacks:subs-manager
+meteoric:ionic-sass
+mike:mocha
