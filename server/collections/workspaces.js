@@ -18,3 +18,11 @@ Workspace.prototype.getFirebaseEventPaths = function() {
 Workspace.prototype.getGeofences = function() {
   return Geofences.find({workspaceId: this._id}).fetch();
 }
+
+Meteor.startup(function() {
+  Organizations.find().observe({
+    "removed": function(organization) {
+      Organizations.remove({organizationId: organization._id});
+    }
+  });
+});
