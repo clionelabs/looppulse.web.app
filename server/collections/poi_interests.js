@@ -4,7 +4,7 @@
   *
   * Document property
   * @property {String} poiId {@link POI}
-  * @property {SET<String>} visitorUUIDs A set of visitor UUID
+  * @property {String[]} visitorUUIDs A set of visitor UUID
   */
 PoiInterests = new Meteor.Collection('poi_interests');
 
