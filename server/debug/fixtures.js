@@ -12,7 +12,13 @@ Fixtures.prefix = "==FIXTURE=="; // To append workspace name with prefix, so we 
 Fixtures.clear = function() {
   var fixtureSelector = {"name": {$regex: "^"+Fixtures.prefix}};
   console.log("[Fixtures] Clearing Up...");
-  Workspaces.remove(fixtureSelector);
+  _.each(Organizations.find(fixtureSelector).fetch(), function(organization) {
+    console.log("[Fixtures] Clearing Up organzation: ", organization);
+    _.each(organization.userIds, function(userId) {
+      Meteor.users.remove(userId);
+    });
+  });
+  Organizations.remove(fixtureSelector);
 };
 
 /**
@@ -20,31 +26,44 @@ Fixtures.clear = function() {
  */
 Fixtures.load = function() {
   var fixture = JSON.parse(Assets.getText("fixtures.json"));
-  var workspaceFixture = fixture.workspaces;
-  var orgFixture = fixture.organizations;
+  var orgsFixture = fixture.organizations;
 
-  if (workspaceFixture) {
-    console.log("[Fixture] Importing Workspaces...");
-    workspaceFixture.forEach(function(workspace) {
-      var name = Fixtures.prefix + " " + workspace.name;
-      var res = Workspaces.upsert({name: name}, {name: name, poiDescriptors: workspace.poiDescriptors});
-      var workspaceId = (res.insertedId) ? res.insertedId : Workspaces.findOne({name: name})._id;
-      console.log("[Fixture] Imported Workspace: ", workspaceId , res);
+  if (orgsFixture) {
+    console.log("[Fixture] Importing Organizations...");
+    orgsFixture.forEach(function(orgFixture) {
+      var name = Fixtures.prefix + " " + orgFixture.name;
 
-      if (workspace.applications)
-        workspace.applications.forEach(function(appFixture) {
-          Applications.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, name: appFixture.name, token: appFixture.token});
+      // Simply ignore the fixture if it has been imported before
+      // We do not support updating the fixtures at the moment - but you can always clear the old one first
+      if (Organizations.findOne({name: name})) {
+        console.log("[Fixture] Skipping Organization: ", orgFixture.name);
+        return;
+      }
+
+      console.log("[Fixture] Importing Organization: ", orgFixture.name);
+
+      var organizationId = Organizations.insert({name: name});
+
+      orgFixture.workspaces.forEach(function(wsFixture) {
+        var workspaceId = Workspaces.insert({organizationId: organizationId, name: wsFixture.name, poiDescriptors: wsFixture.poiDescriptors});
+
+        wsFixture.applications.forEach(function(appFixture) {
+          Applications.insert({workspaceId: workspaceId, name: appFixture.name, token: appFixture.token});
         });
 
-      if (workspace.pois)
-        workspace.pois.forEach(function(poiFixture) {
-          Pois.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, name: poiFixture.name, beacon: poiFixture.beacon});
+        wsFixture.pois.forEach(function(poiFixture) {
+          Pois.insert({workspaceId: workspaceId, name: poiFixture.name, beacon: poiFixture.beacon});
         });
 
-      if (workspace.geofences)
-        workspace.geofences.forEach(function(geofenceFixture) {
-          Geofences.upsert({workspaceId: workspaceId},{workspaceId: workspaceId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
+        wsFixture.geofences.forEach(function(geofenceFixture) {
+          Geofences.insert({workspaceId: workspaceId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
         });
+      });
+
+      orgFixture.users.forEach(function(userFixture) {
+        var userId = Accounts.createUser(userFixture);
+        Organizations.addUserById(organizationId, userId);
+      });
     });
   }
 };
