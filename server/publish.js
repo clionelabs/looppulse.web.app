@@ -2,23 +2,28 @@
  * Here defines every publication.
  */
 
+Meteor.publish("getPois", function () {
+  var workspace = Workspaces.findOne();
+  return Pois.find({ workspaceId : workspace._id });
+});
+
 /**
  * Poi Metrics is return a self defined collection
  */
-Meteor.publish('getPoisMetric', function (/*wsId*/) {
-  //var workspace = Workspaces.findOne({_id : wsId});
-  //TODO integrate with accounts related impl
+Meteor.publish('getPoisMetric', function () {
   var workspace = Workspaces.findOne();
-  return new PoisMetric({ "pois" : workspace.getPois(), "name" : workspace.poiDescriptors});
+  var pois = workspace.getPois();
+  var poiDescriptors = workspace.poiDescriptors;
+  return new PoisMetric({ "pois" : pois, "name" : poiDescriptors});
 });
 
 /**
  * Workspace of the User
  */
-Meteor.publish('getCurrentWorkspace', function(/*wsId*/) {
-  //var workspace = Workspaces.findOne({_id : wsId});
+Meteor.publish('getCurrentWorkspace', function(/*workspaceId*/) {
+  //var workspace = Workspaces.findOne({_id : workspaceId});
   //TODO integrate with accounts related impl
-  var workspace = Workspaces.find(/*{ _id : wsId }*/);
+  var workspace = Workspaces.find(/*{ _id : workspaceId }*/);
   return workspace;
 });
 

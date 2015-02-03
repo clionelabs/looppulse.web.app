@@ -116,7 +116,9 @@
     }
     td {
       padding: 15px 0px;
+      text-align: right;
       &:first-child {
+        text-align: left;
         width: 70%;
       }
     }

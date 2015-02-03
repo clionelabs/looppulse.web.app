@@ -12,7 +12,7 @@
 PoisMetricEngine = function(pois, current) {
   var poiIds = _.pluck(pois, '_id');
   this.journeys = Journeys.find({poiId: {$in: poiIds}}).fetch();
-  this.current = current;
+  this.current = moment(current);
 };
 
 /**
@@ -29,8 +29,7 @@ PoisMetricEngine.prototype.computeTotalVisitorsCnt = function() {
 
 /**
  * Compute the current number of visitors still inside any of the poi regions
- * @returns {Number}
- */
+ * @returns {Number} current number of visitors */
 PoisMetricEngine.prototype.computeCurrentVisitorsCnt = function() {
   var users = _.reduce(this.journeys, function(memo, journey) {
     if (journey.isVisiting()) memo[journey.visitorUUID] = true;

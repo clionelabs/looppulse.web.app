@@ -16,7 +16,7 @@ Visitors.findOneOrInsert = function(doc) {
 Meteor.startup(function() {
   Workspaces.find().observe({
     "removed": function(workspace) {
-      Visitors.remove({wsId: workspace._id});
+      Visitors.remove({workspaceId: workspace._id});
     }
   });
 });

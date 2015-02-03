@@ -4,9 +4,9 @@
 Meteor.startup(function() {
   Workspaces.find().observe({
     "removed": function(workspace) {
-      Pois.remove({wsId: workspace._id});
+      Pois.remove({workspaceId: workspace._id});
     }
   });
-  Pois._ensureIndex({wsId: 1});
+  Pois._ensureIndex({workspaceId: 1});
 });
 

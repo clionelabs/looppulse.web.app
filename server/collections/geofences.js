@@ -4,8 +4,8 @@
 Meteor.startup(function() {
   Workspaces.find().observe({
     "removed": function(workspace) {
-      Geofences.remove({wsId: workspace._id});
+      Geofences.remove({workspaceId: workspace._id});
     }
   });
-  Geofences._ensureIndex({wsId: 1});
+  Geofences._ensureIndex({workspaceId: 1});
 });

@@ -4,7 +4,7 @@ if (!(typeof MochaWeb === 'undefined')) {
 
       var demoWorkspace =
         {
-          "name" : "ws",
+          "name" : "workspace",
           "poiDescriptors": {one: "restaurant", "many" : "restaurants" }
         };
       var demoOrganization = {"name" : "Beta"};

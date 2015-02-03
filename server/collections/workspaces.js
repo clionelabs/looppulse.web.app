@@ -15,10 +15,6 @@ Workspace.prototype.getFirebaseEventPaths = function() {
   }
 }
 
-Workspace.prototype.getPois = function() {
-  return Pois.find({wsId: this._id}).fetch();
-}
-
 Workspace.prototype.getGeofences = function() {
-  return Geofences.find({wsId: this._id}).fetch();
+  return Geofences.find({workspaceId: this._id}).fetch();
 }

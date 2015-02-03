@@ -23,5 +23,7 @@ loftsteinn:bootstrap3-daterangepicker
 practicalmeteor:sinon
 edgee:slingshot
 dbarrett:dropzonejs
+random
+meteorhacks:subs-manager
 meteoric:ionic-sass
 mike:mocha
