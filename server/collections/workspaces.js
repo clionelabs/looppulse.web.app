@@ -22,7 +22,7 @@ Workspace.prototype.getGeofences = function() {
 Meteor.startup(function() {
   Organizations.find().observe({
     "removed": function(organization) {
-      Organizations.remove({organizationId: organization._id});
+      Workspaces.remove({organizationId: organization._id});
     }
   });
 });
