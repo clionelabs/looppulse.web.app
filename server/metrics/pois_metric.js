@@ -61,6 +61,22 @@ PoisMetric.prototype._createAggregate = function () {
     return _.extend({}, additionalInfo, poi);
 
   });
+
+  var getTop3Interested = function(pois, limit) {
+    pois = _.sortBy(pois, function(poi) { return -poi.interestedVisitors; });
+    var result = _.first(pois, limit);
+
+    var totalOfTheRest = _.reduce(_.rest(pois, limit), function(memo, p) {
+      return memo + p.interestedVisitors;
+    }, 0);
+    var otherObj = {name : "Others"};
+    otherObj.interestedVisitors = totalOfTheRest;
+    result.push(otherObj);
+
+    return result;
+  };
+
+  subObj.top3Interested = getTop3Interested(subObj.pois, 3);
   return subObj;
 };
 

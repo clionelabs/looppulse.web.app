@@ -19,12 +19,7 @@ Template.pois.events({
 
 Template.pois.helpers({
   "getTop3PoisByInterestedVisitors" : function() {
-    console.log(this.poisMetric.pois);
-    var pois = _.sortBy(this.poisMetric.pois, function(p) { return -p.interestedVisitors; } );
-    return Template.pois.getShortenedPois(pois,
-                     function (memo, p) {
-                        return memo + p.interestedVisitors;
-                     }, "interestedVisitors");
+    return this.poisMetric.top3Interested;
   }
 });
 

@@ -42,16 +42,7 @@ GaugeData = function(data) {
  * @param poismetric
  */
 Template.gauge.poisInterestedData = function(poismetric) {
-
-  var pois = _.sortBy(poismetric.pois, function(poi) { return -poi.interestedVisitors; });
-
-  var result = [];
-
-  result = Template.pois.getShortenedPois(pois, function (memo, p) {
-        return memo + p.interestedVisitors
-      }, "interestedVisitors");
-
-  return _.map(result, function(r) {
+  return _.map(poismetric.top3Interested, function(r) {
     return r.interestedVisitors / poismetric.totalVisitors;
   });
 }
