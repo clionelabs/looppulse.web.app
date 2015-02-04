@@ -34,22 +34,22 @@ Organization and Account Creation
 
    `Meteor.call('createWorkspaceAndOrganizationAndUser',{name: 'workspace name", poiDescriptors: { one : "singular", many: "plural"} }, {name: 'org name'}, {email: 'email', password: 'pwd'})` 
 
- Invitation
- ==========
+Invitation
+==========
 
  If you have already created an organization, you could also create an invitation on `meteor shell` with the following command:
 
   `Invitations.create({organizationId: YOUR_ORGANIZATION_ID, requestorId: REQUESTOR_ID, inviteeEmail: INVITEE_EMAIL})`
 
- Create Application
- ==================
+Create Application
+==================
 
  To create an application, such as simulator and SDKs for authenticate API, you could call this in browser console.
 
  `Meteor.call("addApplication" { "name" : "mandatory", workspaceId : "mandatory", token : "optional" }, function(e,r) { console.log(r); });`
 
- Create Point of Interest(POI)
- ==================
+Create Point of Interest(POI)
+==================
 
  Same same la,
 
