@@ -24,10 +24,10 @@ if (!(typeof MochaWeb === 'undefined')) {
         return getBeaconEvent('didExitRegion', createdAt);
       };
 
-      Pois.insert({name: "demo poi", beacon: beacon});
-
       beforeEach(function() {
         Journeys.remove({});
+        Pois.remove({});
+        Pois.insert({name: "demo poi", beacon: beacon});
       });
 
       it("handleBeaconEvent - poi not found", function() {
