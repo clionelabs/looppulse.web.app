@@ -18,13 +18,14 @@ PoisMetricEngine = function(pois, current) {
 
 /**
  * Compute the total number of visitors who have ever visited any of the pois
- * @param {String[]} poisId (Optional) List of poiIds that being considered. All pois are considered if not specified.
+ * @param {String[]} filterPoiIdList (Optional) List of poiIds that being considered. All pois are considered if not specified.
  * @returns {Number}
  */
-PoisMetricEngine.prototype.computeTotalVisitorsCnt = function(poiIds) {
-  var poiIdSet = poiIds? this._convertListToSet(poiIds): null;
+PoisMetricEngine.prototype.computeTotalVisitorsCnt = function(filterPoiIdList) {
+  var isAllPoi = !filterPoiIdList;
+  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): [];
   var users = _.reduce(this.journeys, function(memo, journey) {
-    if (!poiIdSet || poiIdSet[journey.poiId]) {
+    if (isAllPoi || filterPoiIdSet[journey.poiId]) {
       memo[journey.visitorUUID] = true;
     }
     return memo;
@@ -34,13 +35,14 @@ PoisMetricEngine.prototype.computeTotalVisitorsCnt = function(poiIds) {
 
 /**
  * Compute number of visitors who show interested in any of the pois
- * @param {String[]} poisId (Optional) List of poiIds that being considered. All pois are considered if not specified.
+ * @param {String[]} filterPoiIdList (Optional) List of poiIds that being considered. All pois are considered if not specified.
  * @returns {Number} number of interested visitors
  */
-PoisMetricEngine.prototype.computeInterestedCnt = function(poiIds) {
-  var poiIdSet = poiIds? this._convertListToSet(poiIds): null;
+PoisMetricEngine.prototype.computeInterestedCnt = function(filterPoiIdList) {
+  var isAllPoi = !filterPoiIdList;
+  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): [];
   var visitorList = _.reduce(this.interests, function(memo, interest) {
-    if (!poiIdSet || poiIdSet[interest.poiId]) {
+    if (isAllPoi || filterPoiIdSet[interest.poiId]) {
       memo = _.union(memo, interest.visitorUUIDs);
     }
     return memo;
