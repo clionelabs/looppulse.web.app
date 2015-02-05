@@ -2,29 +2,32 @@
  * Here defines every publication.
  */
 
-Meteor.publish("getPois", function () {
-  var workspace = Workspaces.findOne();
-  return Pois.find({ workspaceId : workspace._id });
+Meteor.publish("pois", function (workspaceId) {
+  return Pois.find({ workspaceId : workspaceId });
 });
 
 /**
  * Poi Metrics is return a self defined collection
  */
-Meteor.publish('getPoisMetric', function () {
-  var workspace = Workspaces.findOne();
+Meteor.publish('poisMetric', function (workspaceId) {
+  var workspace = Workspaces.findOne({ _id : workspaceId });
   var pois = workspace.getPois();
   var poiDescriptors = workspace.poiDescriptors;
   return new PoisMetric({ "pois" : pois, "name" : poiDescriptors});
 });
 
 /**
- * Workspace of the User
+ * Workspace And Organization of the User
  */
-Meteor.publish('getCurrentWorkspace', function(/*workspaceId*/) {
-  //var workspace = Workspaces.findOne({_id : workspaceId});
-  //TODO integrate with accounts related impl
-  var workspace = Workspaces.find(/*{ _id : workspaceId }*/);
-  return workspace;
+Meteor.publish('currentWorkspaceAndOrganization', function() {
+  console.log(this.userId);
+  if (this.userId) {
+    var organization = Organizations.findByUserId(this.userId);
+    var workspace = Workspaces.find({organizationId: organization._id});
+    return [organization, workspace];
+  } else {
+    return [];
+  }
 });
 
 /**
