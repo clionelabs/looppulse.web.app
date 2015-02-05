@@ -10,10 +10,9 @@ Template.pois.rendered = function() {
     });
 };
 
-
 Template.pois.events({
     "click #pois-goto-create-engage" : function() {
-        Router.go("/engagement/create");
+        Router.go("workspaces/"+ Iron.controller().state.get('workspaceId') + "/engagement/create");
     }
 });
 
