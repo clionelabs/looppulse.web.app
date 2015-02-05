@@ -46,14 +46,14 @@ Create Application
 
  To create an application, such as simulator and SDKs for authenticate API, you could call this in browser console.
 
- `Meteor.call("addApplication" { "name" : "mandatory", workspaceId : "mandatory", token : "optional" }, function(e,r) { console.log(r); });`
+ `Meteor.call("addApplication", { "name" : "mandatory", workspaceId : "mandatory", token : "optional" }, function(e,r) { console.log(r); });`
 
 Create Point of Interest(POI)
 ==================
 
  Same same la,
 
- `Meteor.call("addPois",
+ `Meteor.call("addPoi",
    { workspaceId : "must",
                     name : "must",
                     beacon : { uuid : "must", major : "must", minor : "must" }
