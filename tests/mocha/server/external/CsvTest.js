@@ -57,7 +57,7 @@ if (!(typeof MochaWeb === 'undefined')) {
 
       it('sanitize pois for importing', function () {
         sanitized = CSV.sanitizePois(parsed.data);
-        sanitized.length.should.equal(10);
+        sanitized.length.should.equal(parsed.data.length);
         _.each(sanitized, function (poi) {
           chai.expect(function() {
             Pois.validate(poi);
