@@ -1,0 +1,14 @@
+@import "variable";
+
+.centered {
+  width: 80%;
+  margin: 0 auto;
+  .form {
+    width: 50%;
+  }
+}
+
+.intro {
+  text-align: center;
+  font-size: 1.2em;
+}
