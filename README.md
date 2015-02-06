@@ -32,7 +32,7 @@ Organization and Account Creation
 2. Open the console on the browser ([Bug](https://github.com/meteor-velocity/velocity/issues/227) in Velocity prevents us doing the following in `meteor shell`)
 3. Run
 
-   `Meteor.call('createWorkspaceAndOrganizationAndUser',{name: 'workspace name", poiDescriptors: { one : "singular", many: "plural"} }, {name: 'org name'}, {email: 'email', password: 'pwd'})` 
+   `Meteor.call('createWorkspaceAndOrganizationAndUser',{name: 'workspace name', poiDescriptors: { one : 'singular', many: 'plural'} }, {name: 'org name'}, {email: 'email', password: 'pwd'})` 
 
 Invitation
 ==========
@@ -46,14 +46,14 @@ Create Application
 
  To create an application, such as simulator and SDKs for authenticate API, you could call this in browser console.
 
- `Meteor.call("addApplication" { "name" : "mandatory", workspaceId : "mandatory", token : "optional" }, function(e,r) { console.log(r); });`
+ `Meteor.call("addApplication", { "name" : "mandatory", workspaceId : "mandatory", token : "optional" }, function(e,r) { console.log(r); });`
 
 Create Point of Interest(POI)
 ==================
 
  Same same la,
 
- `Meteor.call("addPois",
+ `Meteor.call("addPoi",
    { workspaceId : "must",
                     name : "must",
                     beacon : { uuid : "must", major : "must", minor : "must" }
