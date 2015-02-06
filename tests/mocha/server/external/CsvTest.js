@@ -55,8 +55,18 @@ if (!(typeof MochaWeb === 'undefined')) {
         parsed = Baby.parse(csvString, CSV.parseOptions);
       });
 
-      it('sanitize pois for importing', function () {
-        sanitized = CSV.sanitizePois(parsed.data);
+      it('sanitizes key and value before importing', function () {
+        var keySpy = sinon.spy(CSV, 'sanitizeKey');
+        var valueSpy = sinon.spy(CSV, 'sanitizeValue');
+        var data = [{'key': 'value'}];
+
+        var sanitized = CSV.sanitizePois(data);
+        keySpy.calledWith('key').should.be.true;
+        valueSpy.calledWith('value').should.be.true;
+      });
+
+      it('sanitizes pois for importing', function () {
+        var sanitized = CSV.sanitizePois(parsed.data);
         sanitized.length.should.equal(parsed.data.length);
         _.each(sanitized, function (poi) {
           chai.expect(function() {
@@ -73,6 +83,16 @@ if (!(typeof MochaWeb === 'undefined')) {
 
       it('lower cases', function () {
         CSV.sanitizeKey('KEY').should.equal('key');
+      });
+    });
+
+    describe('CSV.sanitizeValue', function () {
+      it('removes leading and trailing spaces', function () {
+        CSV.sanitizeValue('  testing 1 2 3 ').should.equal('testing 1 2 3');
+      });
+
+      it('does not change cases', function () {
+        CSV.sanitizeValue('Value').should.equal('Value');
       });
     });
   });

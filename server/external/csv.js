@@ -20,7 +20,8 @@ CSV.sanitizePois = function (unsanitizedPois) {
     var poi = {};
     _.each(Object.keys(unsanitized), function (badKey) {
       var key = CSV.sanitizeKey(badKey);
-      poi[key] = unsanitized[badKey];
+      var value = CSV.sanitizeValue(unsanitized[badKey]);
+      poi[key] = value;
     });
     poi.beacon = { uuid: poi.uuid,
                    major: parseInt(poi.major, 16),
@@ -36,4 +37,8 @@ CSV.sanitizePois = function (unsanitizedPois) {
 // CSV parser sometimes returns key with leading spaces
 CSV.sanitizeKey = function (unsanitizedKey) {
   return unsanitizedKey.replace(/\s/g, '').toLowerCase();
+};
+
+CSV.sanitizeValue = function (unsanitizedValue) {
+  return unsanitizedValue.toString().trim();
 };
