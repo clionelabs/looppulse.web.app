@@ -95,5 +95,37 @@ if (!(typeof MochaWeb === 'undefined')) {
         CSV.sanitizeValue('Value').should.equal('Value');
       });
     });
+
+    describe('CSV.export', function () {
+      it('sanitizes input data before exporting', function () {
+        var sanitizeSpy = sinon.spy(CSV, 'sanitizeJSON');
+        sinon.stub(Baby, 'unparse');
+
+        CSV.export("");
+        sanitizeSpy.called.should.be.true;
+
+        Baby.unparse.restore();
+      });
+
+      it('exports to a CSV string', function () {
+        var data = [{a:1,b:2}, {a:3,b:4}];
+        var csvString = 'a,b\r\n1,2\r\n3,4';
+
+        CSV.export(data).should.equal(csvString);
+      });
+    });
+
+    describe('CSV.sanitizeJSON', function () {
+      it('removes prototypes', function () {
+        var object = {
+          key: 10,
+          method: function () {
+            return 20;
+          }
+        };
+
+        JSON.stringify(CSV.sanitizeJSON(object)).should.equal('{"key":10}');
+      });
+    });
   });
 }

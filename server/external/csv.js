@@ -1,5 +1,9 @@
 CSV = {};
 
+/*
+ *  Importing
+ */
+
 CSV.bulkCreatePois = function (workspaceId, csvURL) {
   var csvString = CSV.import(csvURL);
   var results = Baby.parse(csvString, CSV.parseOptions);
@@ -42,3 +46,19 @@ CSV.sanitizeKey = function (unsanitizedKey) {
 CSV.sanitizeValue = function (unsanitizedValue) {
   return unsanitizedValue.toString().trim();
 };
+
+
+/*
+ *  Exporting
+ */
+
+CSV.export = function (data) {
+  // If we don't stripe out input data's prototype,
+  // we could be exporting those methods into the CSV as well.
+  var sanitized = CSV.sanitizeJSON(data);
+  return Baby.unparse(sanitized);
+}
+
+CSV.sanitizeJSON = function (unsanitizedJSON) {
+  return JSON.parse(JSON.stringify(unsanitizedJSON));
+}
