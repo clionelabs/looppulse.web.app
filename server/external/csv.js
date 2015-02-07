@@ -1,7 +1,7 @@
 CSV = {};
 
 CSV.bulkCreatePois = function (workspaceId, csvURL) {
-  var csvString = CSV.read(csvURL);
+  var csvString = CSV.import(csvURL);
   var results = Baby.parse(csvString, CSV.parseOptions);
   var sanitized = CSV.sanitizePois(results.data);
   return Pois.bulkCreate(workspaceId, sanitized);
@@ -9,7 +9,7 @@ CSV.bulkCreatePois = function (workspaceId, csvURL) {
 
 CSV.parseOptions = {header: true, dynamicTyping: true, skipEmptyLines: true};
 
-CSV.read = function (csvURL) {
+CSV.import = function (csvURL) {
   var data = HTTP.get(csvURL);
   return data.content;
 };

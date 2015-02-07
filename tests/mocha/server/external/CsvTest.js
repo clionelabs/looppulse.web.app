@@ -30,7 +30,7 @@ if (!(typeof MochaWeb === 'undefined')) {
       });
 
       it('reads from a CSV, convert content from JSON and bulk create POIs', function () {
-        var readSpy = sinon.spy(CSV, 'read');
+        var readSpy = sinon.spy(CSV, 'import');
         var parseSpry = sinon.spy(Baby, 'parse');
         var createSpy = sinon.spy(Pois, 'bulkCreate');
         var sanitizeSpy = sinon.spy(CSV, 'sanitizePois');
@@ -43,9 +43,9 @@ if (!(typeof MochaWeb === 'undefined')) {
       });
     });
 
-    describe('CSV.read', function () {
+    describe('CSV.import', function () {
       it('reads from a CSV online resource', function () {
-        var content = CSV.read(csvURL);
+        var content = CSV.import(csvURL);
         content.should.equal(csvString);
       });
     });
