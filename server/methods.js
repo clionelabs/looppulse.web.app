@@ -1,5 +1,12 @@
 Meteor.methods({
   /**
+   * @param jsonURL Online JSON file containing organizations to create
+   */
+   importOrganizationsFromUrl: function (jsonURL) {
+     JSON.importOrganizationsFromUrl(jsonURL);
+   },
+
+  /**
    * Don't bother to name / separate them, just a temp solution
    * @param workspaceData { name : "workspaceName", { one : "poiDescSingularForm", many : "poiDescPluralForm" }}
    * @param organizationData { name : "<organization name>" }
