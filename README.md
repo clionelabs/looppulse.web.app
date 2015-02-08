@@ -25,6 +25,14 @@ Setup and run
   }
   ```
 
+Create organization and all related entities
+============================================
+1. Create a json file and upload to a cloud storage [Sample](https://s3-ap-southeast-1.amazonaws.com/looppulse-app-dev/testing.json)
+2. Open the console on the browser ([Bug](https://github.com/meteor-velocity/velocity/issues/227) in Velocity prevents us doing the following in `meteor shell`)
+3. Run
+
+  `Meteor.call('importOrganizationsFromUrl', 'PATH TO JSON')`
+
 Organization and Account Creation
 ======================================
 
@@ -32,7 +40,7 @@ Organization and Account Creation
 2. Open the console on the browser ([Bug](https://github.com/meteor-velocity/velocity/issues/227) in Velocity prevents us doing the following in `meteor shell`)
 3. Run
 
-   `Meteor.call('createWorkspaceAndOrganizationAndUser',{name: 'workspace name', poiDescriptors: { one : 'singular', many: 'plural'} }, {name: 'org name'}, {email: 'email', password: 'pwd'})` 
+   `Meteor.call('createWorkspaceAndOrganizationAndUser',{name: 'workspace name', poiDescriptors: { one : 'singular', many: 'plural'} }, {name: 'org name'}, {email: 'email', password: 'pwd'})`
 
 Invitation
 ==========

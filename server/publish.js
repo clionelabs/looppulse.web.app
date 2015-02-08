@@ -20,7 +20,6 @@ Meteor.publish('poisMetric', function (workspaceId) {
  * Workspace And Organization of the User
  */
 Meteor.publish('currentWorkspaceAndOrganization', function() {
-  console.log(this.userId);
   if (this.userId) {
     var organization = Organizations.findByUserId(this.userId);
     var workspace = Workspaces.find({organizationId: organization._id});
