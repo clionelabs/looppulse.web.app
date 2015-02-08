@@ -2,13 +2,13 @@ if (!(typeof MochaWeb === 'undefined')) {
   MochaWeb.testOnly(function(){
     beforeEach(function () {
       organizationJSON = {
-        "name": "Demo",
+        "name": "Testing Organization",
         "users": [
-          {"email": "testfixtures@looppulse.com", "password": "1234"}
+          {"email": "testing@looppulse.com", "password": "1234"}
         ],
         "workspaces": [
           {
-            "name": "Demo",
+            "name": "Testing Workspace",
             "poiDescriptors": {"one" : "restaurant", "many" :"restaurants"},
             "applications": [
               {

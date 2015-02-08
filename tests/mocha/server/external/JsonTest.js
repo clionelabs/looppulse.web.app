@@ -1,17 +1,17 @@
 if (!(typeof MochaWeb === 'undefined')) {
   MochaWeb.testOnly(function(){
     beforeEach(function () {
-      jsonURL = 'https://s3-ap-southeast-1.amazonaws.com/looppulse-app-dev/fixtures.json';
+      jsonURL = 'https://s3-ap-southeast-1.amazonaws.com/looppulse-app-dev/testing.json';
       json = {
         "organizations": [
           {
-            "name": "Demo",
+            "name": "Testing Organization",
             "users": [
-              {"email": "testfixtures@looppulse.com", "password": "1234"}
+              {"email": "testing@looppulse.com", "password": "1234"}
             ],
             "workspaces": [
               {
-                "name": "Demo",
+                "name": "Testing Workspace",
                 "poiDescriptors": {"one" : "restaurant", "many" :"restaurants"},
                 "applications": [
                   {
