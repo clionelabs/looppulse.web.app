@@ -24,48 +24,47 @@ Fixtures.clear = function() {
 /**
  * Load fixture data from json file
  */
-Fixtures.load = function() {
-  var fixture = JSON.parse(Assets.getText("fixtures.json"));
-  var orgsFixture = fixture.organizations;
+Fixtures.load = function(orgFixture) {
+  var name = Fixtures.prefix + " " + orgFixture.name;
 
-  if (orgsFixture) {
-    console.log("[Fixture] Importing Organizations...");
-    orgsFixture.forEach(function(orgFixture) {
-      var name = Fixtures.prefix + " " + orgFixture.name;
-
-      // Simply ignore the fixture if it has been imported before
-      // We do not support updating the fixtures at the moment - but you can always clear the old one first
-      if (Organizations.findOne({name: name})) {
-        console.log("[Fixture] Skipping Organization: ", orgFixture.name);
-        return;
-      }
-
-      console.log("[Fixture] Importing Organization: ", orgFixture.name);
-
-      var organizationId = Organizations.insert({name: name});
-
-      orgFixture.workspaces.forEach(function(wsFixture) {
-        var workspaceId = Workspaces.insert({organizationId: organizationId, name: wsFixture.name, poiDescriptors: wsFixture.poiDescriptors});
-
-        wsFixture.applications.forEach(function(appFixture) {
-          Applications.insert({workspaceId: workspaceId, name: appFixture.name, token: appFixture.token});
-        });
-
-        wsFixture.pois.forEach(function(poiFixture) {
-          Pois.insert({workspaceId: workspaceId, name: poiFixture.name, beacon: poiFixture.beacon});
-        });
-
-        wsFixture.geofences.forEach(function(geofenceFixture) {
-          Geofences.insert({workspaceId: workspaceId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
-        });
-      });
-
-      orgFixture.users.forEach(function(userFixture) {
-        var userId = Accounts.createUser(userFixture);
-        Organizations.addUserById(organizationId, userId);
-      });
-    });
+  // Simply ignore the fixture if it has been imported before
+  // We do not support updating the fixtures at the moment - but you can always clear the old one first
+  if (Organizations.findOne({name: name})) {
+    console.log("[Fixture] Skipping Organization: ", orgFixture.name);
+    return;
   }
+
+  console.log("[Fixture] Importing Organization: ", orgFixture.name);
+
+  var organizationId = Organizations.insert({name: name});
+
+  orgFixture.workspaces.forEach(function(wsFixture) {
+    var workspaceId = Workspaces.insert({organizationId: organizationId, name: wsFixture.name, poiDescriptors: wsFixture.poiDescriptors});
+
+    wsFixture.applications.forEach(function(appFixture) {
+      Applications.insert({workspaceId: workspaceId, name: appFixture.name, token: appFixture.token});
+    });
+
+    wsFixture.pois.forEach(function(poiFixture) {
+      Pois.insert({workspaceId: workspaceId, name: poiFixture.name, beacon: poiFixture.beacon});
+    });
+
+    wsFixture.geofences.forEach(function(geofenceFixture) {
+      Geofences.insert({workspaceId: workspaceId, lat: geofenceFixture.lat, lng: geofenceFixture.lng, radius: geofenceFixture.radius});
+    });
+  });
+
+  orgFixture.users.forEach(function(userFixture) {
+    var userId = Accounts.createUser(userFixture);
+    Organizations.addUserById(organizationId, userId);
+  });
+};
+
+Fixtures.loadFromDefault = function() {
+  var fixture = JSON.parse(Assets.getText("fixtures.json"));
+  _.each(fixture.organizations, function(orgFixture) {
+    Fixtures.load(orgFixture);
+  });
 };
 
 Fixtures.toLoad = function() {
@@ -91,7 +90,7 @@ if (Fixtures.enabled()) {
         Fixtures.clear();
       }
       if (Fixtures.toLoad()) {
-        Fixtures.load();
+        Fixtures.loadFromDefault();
       }
     }
   );
