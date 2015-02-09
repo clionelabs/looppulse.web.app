@@ -7,12 +7,12 @@ Template.visitorGroupSelector.visitorGroup = {
 Template.visitorGroupSelector.helpers({
     isInterested : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        return Session.get(sessionKey).visitorGroup.match(Template.visitorGroupSelector.visitorGroup.INTERESTED);
+        return Session.get(sessionKey).visitorGroup === Template.visitorGroupSelector.visitorGroup.INTERESTED;
 
     },
     isVisited : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        return Session.get(sessionKey).visitorGroup.match(Template.visitorGroupSelector.visitorGroup.VISITED);
+        return Session.get(sessionKey).visitorGroup === Template.visitorGroupSelector.visitorGroup.VISITED;
     }
 });
 

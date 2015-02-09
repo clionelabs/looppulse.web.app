@@ -41,8 +41,7 @@ Template.engageCreate.helpers({
     var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
     var formData = Session.get(sessionKey);
 
-    if (Session.get(sessionKey).type
-              .match(Template.budgetFiller.type.lifetime)) {
+    if (Session.get(sessionKey).type === Template.budgetFiller.type.lifetime) {
 
       return "";
 

@@ -9,16 +9,16 @@ Template.budgetFiller.helpers({
     printBudget : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
         return "HKD " + Session.get(sessionKey).amount +
-            (Template.budgetFiller.type.perDay.match(Session.get(sessionKey).type)
+            (Template.budgetFiller.type.perDay === Session.get(sessionKey).type
                 ? " per day" : " lifetime");
     },
     isPerDay : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        return Template.budgetFiller.type.perDay.match(Session.get(sessionKey).type);
+        return Template.budgetFiller.type.perDay === Session.get(sessionKey).type;
     },
     isLifetime : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        return Template.budgetFiller.type.lifetime.match(Session.get(sessionKey).type);
+        return Template.budgetFiller.type.lifetime === Session.get(sessionKey).type;
     },
     getBudgetAmount : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
