@@ -12,6 +12,7 @@ PoisMetric = function (doc) {
     _.extend(this, doc);
     this.name = "pois-metric";
     this.interval = 1000 * 10;
+    this.topInterestsLimit = 3;
 };
 
 PoisMetric.prototype._publishCursor = function (sub) {
@@ -52,31 +53,27 @@ PoisMetric.prototype._createAggregate = function () {
   subObj.averageDwellTime = engine.computeAvgDwellTime();
 
   subObj.pois = _.map(self.pois, function (poi) {
-    var poiEngine = new PoisMetricEngine([poi], current);
     var additionalInfo = {
-      "interestedVisitors" : poiEngine.computeInterestedCnt(),
-      "totalVisitors" : poiEngine.computeTotalVisitorsCnt()
+      "interestedVisitors" : engine.computeInterestedCnt([poi._id]),
+      "totalVisitors" : engine.computeTotalVisitorsCnt([poi._id])
     };
-
     return _.extend({}, additionalInfo, poi);
-
   });
 
-  var getTop3Interested = function(pois, limit) {
-    pois = _.sortBy(pois, function(poi) { return -poi.interestedVisitors; });
-    var result = _.first(pois, limit);
+  var sortedPois = _.sortBy(subObj.pois, function(poi) {
+    return -poi.interestedVisitors;
+  });
+  var topInterestedPois = _.first(sortedPois, self.topInterestsLimit);
+  var restPoiIds = _.pluck(_.rest(sortedPois, self.topInterestsLimit), '_id');
 
-    var totalOfTheRest = _.reduce(_.rest(pois, limit), function(memo, p) {
-      return memo + p.interestedVisitors;
-    }, 0);
-    var otherObj = {name : "Others"};
-    otherObj.interestedVisitors = totalOfTheRest;
-    result.push(otherObj);
-
-    return result;
-  };
-
-  subObj.top3Interested = getTop3Interested(subObj.pois, 3);
+  var topInterested = _.reduce(topInterestedPois, function(memo, poi) {
+    memo.push({name: poi.name, interestedVisitors: poi.interestedVisitors});
+    return memo;
+  }, []);
+  if (restPoiIds.length > 0) {
+    topInterested.push({name: "Others", interestedVisitors: engine.computeTotalVisitorsCnt(restPoiIds)});
+  }
+  subObj.topInterested = topInterested;
   return subObj;
 };
 

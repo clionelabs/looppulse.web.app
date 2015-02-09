@@ -12,19 +12,42 @@
 PoisMetricEngine = function(pois, current) {
   var poiIds = _.pluck(pois, '_id');
   this.journeys = Journeys.find({poiId: {$in: poiIds}}).fetch();
+  this.interests = PoiInterests.find({poiId: {$in: poiIds}}).fetch();
   this.current = moment(current);
 };
 
 /**
  * Compute the total number of visitors who have ever visited any of the pois
+ * @param {String[]} filterPoiIdList (Optional) List of poiIds that being considered. All pois are considered if not specified.
  * @returns {Number}
  */
-PoisMetricEngine.prototype.computeTotalVisitorsCnt = function() {
+PoisMetricEngine.prototype.computeTotalVisitorsCnt = function(filterPoiIdList) {
+  var isAllPoi = !filterPoiIdList;
+  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): [];
   var users = _.reduce(this.journeys, function(memo, journey) {
-    memo[journey.visitorUUID] = true;
+    if (isAllPoi || filterPoiIdSet[journey.poiId]) {
+      memo[journey.visitorUUID] = true;
+    }
     return memo;
   }, {});
   return Object.keys(users).length;
+};
+
+/**
+ * Compute number of visitors who show interested in any of the pois
+ * @param {String[]} filterPoiIdList (Optional) List of poiIds that being considered. All pois are considered if not specified.
+ * @returns {Number} number of interested visitors
+ */
+PoisMetricEngine.prototype.computeInterestedCnt = function(filterPoiIdList) {
+  var isAllPoi = !filterPoiIdList;
+  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): [];
+  var visitorList = _.reduce(this.interests, function(memo, interest) {
+    if (isAllPoi || filterPoiIdSet[interest.poiId]) {
+      memo = _.union(memo, interest.visitorUUIDs);
+    }
+    return memo;
+  }, [])
+  return visitorList.length;
 };
 
 /**
@@ -85,14 +108,6 @@ PoisMetricEngine.prototype.computePeakVisitorsCnt = function(from, to) {
   return maxCount;
 };
 
-/**
- * Compute number of visitors who show interested in any of the poiss
- * @returns {Number} number of interested visitors
- */
-PoisMetricEngine.prototype.computeInterestedCnt = function() {
-  // TODO: implement
-  return Math.floor(this.journeys.length * 0.1);
-};
 
 /**
  * Compute average dwell time per journey, with the following logic:
@@ -111,3 +126,15 @@ PoisMetricEngine.prototype.computeAvgDwellTime = function() {
   }, 0);
   return Math.floor(result);
 };
+
+/**
+ * @private
+ * @param {String[]} list List of strings (keys)
+ */
+PoisMetricEngine.prototype._convertListToSet = function(list) {
+  var set = _.reduce(list, function(memo, item) {
+    memo[item] = true;
+    return memo;
+  }, {});
+  return set;
+}

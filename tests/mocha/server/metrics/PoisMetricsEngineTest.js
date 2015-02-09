@@ -30,6 +30,7 @@ if (!(typeof MochaWeb === 'undefined')) {
 
       beforeEach(function() {
         Journeys.remove({});
+        PoiInterests.remove({});
       });
 
       it("single poi - single visitor - no encounters", function() {
@@ -140,6 +141,48 @@ if (!(typeof MochaWeb === 'undefined')) {
         Journeys.insert({poiId: pois[0]._id, visitorUUID: '3', encounters: [getEncounter(0, 9), getEncounter(25, 29), getEncounter(45, 49)]});
         var engine = new PoisMetricEngine(pois, current);
         chai.assert.equal(engine.computePeakVisitorsCnt(getBaseDate().add( 0), getBaseDate().add(100)), 1);
+      });
+
+      it("total visitor counts - poi filter", function() {
+        Journeys.insert({poiId: pois[0]._id, visitorUUID: '1', encounters: [getEncounter(0, 10)]});
+        Journeys.insert({poiId: pois[1]._id, visitorUUID: '2', encounters: [getEncounter(0, 10)]});
+        Journeys.insert({poiId: pois[2]._id, visitorUUID: '3', encounters: [getEncounter(0, 10)]});
+        var engine = new PoisMetricEngine(pois, current);
+        chai.assert.equal(engine.computeTotalVisitorsCnt([pois[0]._id, pois[1]._id]), 2);
+      });
+
+      it("interested count - single poi - empty", function() {
+        PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: []});
+        var engine = new PoisMetricEngine(pois, current);
+        chai.assert.equal(engine.computeInterestedCnt(), 0);
+      });
+
+      it("interested count - single poi - single interest", function() {
+        PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1']});
+        var engine = new PoisMetricEngine(pois, current);
+        chai.assert.equal(engine.computeInterestedCnt(), 1);
+      });
+
+      it("interested count - single poi - multiple interests", function() {
+        PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1', '2']});
+        var engine = new PoisMetricEngine(pois, current);
+        chai.assert.equal(engine.computeInterestedCnt(), 2);
+      });
+
+      it("interested count - multiple poi", function() {
+        PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1', '2']});
+        PoiInterests.insert({poiId: pois[1]._id, visitorUUIDs: ['2', '3']});
+        PoiInterests.insert({poiId: pois[2]._id, visitorUUIDs: ['3', '4']});
+        var engine = new PoisMetricEngine(pois, current);
+        chai.assert.equal(engine.computeInterestedCnt(), 4);
+      });
+
+      it("interested count - filter poi", function() {
+        PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1', '2']});
+        PoiInterests.insert({poiId: pois[1]._id, visitorUUIDs: ['2', '3']});
+        PoiInterests.insert({poiId: pois[2]._id, visitorUUIDs: ['3', '4']});
+        var engine = new PoisMetricEngine(pois, current);
+        chai.assert.equal(engine.computeInterestedCnt([pois[0]._id, pois[1]._id]), 3);
       });
     });
   });

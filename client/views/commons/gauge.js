@@ -42,7 +42,7 @@ GaugeData = function(data) {
  * @param poismetric
  */
 Template.gauge.poisInterestedData = function(poismetric) {
-  return _.map(poismetric.top3Interested, function(r) {
+  return _.map(poismetric.topInterested, function(r) {
     return r.interestedVisitors / poismetric.totalVisitors;
   });
 }
