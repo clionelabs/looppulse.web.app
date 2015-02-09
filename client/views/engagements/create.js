@@ -23,7 +23,7 @@ Template.engageCreate.helpers({
     if (Session.get(sessionKey).selectedPoi) {
       var str = "Currently targeting ";
       var vg_interested = Template.visitorGroupSelector.visitorGroup.INTERESTED;
-      if (Session.get(sessionKey).visitorGroup.match(vg_interested)) {
+      if (Session.get(sessionKey).visitorGroup === vg_interested) {
         str = str + "\<br>\<b>" + Session.get(sessionKey).selectedPoi.interestedVisitors + "\</b> " + "interested ";
       } else {
         str = str + "\<br>\<b>" + Session.get(sessionKey).selectedPoi.totalVisitors + "\</b> ";
@@ -61,13 +61,23 @@ Template.engageCreate.helpers({
 });
 
 Template.engageCreate.created = function () {
+  var self = this;
   var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
   var s = {
     startDate: moment().format("YYYY-MM-DD"),
-    selectedPoi: null,
     visitorGroup: Template.visitorGroupSelector.visitorGroup.INTERESTED,
     amount: 200,
     type: Template.budgetFiller.type.perDay
   };
+  var sp = null;
+  if (Iron.controller().state.get("selectedPoiId")) {
+    sp = _.first(_.filter(PoisMetric.get().pois,
+      function(p) {
+        return p._id === Iron.controller().state.get("selectedPoiId");
+      }
+    ));
+  }
+
+  s = _.extend({}, s, { "selectedPoi" : Template.poiNameSelector.toSelectorObj(sp) });
   Session.setDefault(sessionKey, s);
 };
