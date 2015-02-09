@@ -10,12 +10,6 @@ Template.pois.rendered = function() {
     });
 };
 
-Template.pois.events({
-    "click #pois-goto-create-engage" : function() {
-        Router.go("workspaces/"+ Iron.controller().state.get('workspaceId') + "/engagement/create");
-    }
-});
-
 Template.pois.helpers({
   "getTop3PoisByInterestedVisitors" : function() {
     return this.poisMetric.topInterested;
