@@ -24,8 +24,8 @@ if (!(typeof MochaWeb === 'undefined')) {
               {"name": "poi1",
                 "beacon": {
                   "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
-                  "major": 214,
-                  "minor": 2104
+                  "major": '0xEBC1',
+                  "minor": '0x0A63'
                 }
               },
               {"name": "poi2",
