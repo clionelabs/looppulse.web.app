@@ -22,7 +22,7 @@ Meteor.publish('poisMetric', function (workspaceId) {
 Meteor.publish('currentWorkspaceAndOrganization', function() {
   if (this.userId) {
     var organization = Organizations.findByUserId(this.userId);
-    var workspace = Workspaces.find({organizationId: organization._id});
+    var workspace = Workspaces.find({organizationId: organization.fetch()[0]._id});
     return [organization, workspace];
   } else {
     return [];
