@@ -1,0 +1,9 @@
+<template name="poi">
+  <div class="container-fluid poi">
+    <div class="row page-top-bar">
+      <div class="col-md-12 name"><h1>{{ poiMetric.name }}</h1><sup class="activity {{ poiMetric.activity }}">&#8226;</sup>
+        <a class="btn btn-lp pull-right" href="{{urlFor route='engagement.create' workspaceId=workspace._id poiId=poiMetric.id }}">Engage Visitors</a>
+      </div>
+    </div>
+  </div>
+</template>

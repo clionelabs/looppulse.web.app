@@ -2,8 +2,8 @@
  * Here defines every publication.
  */
 
-Meteor.publish("pois", function (workspaceId) {
-  return Pois.find({ workspaceId : workspaceId });
+Meteor.publish("poiMetric", function (poiId) {
+  return new PoiMetric({ "poiId" : poiId });
 });
 
 /**
