@@ -12,8 +12,7 @@ Meteor.publish("pois", function (workspaceId) {
 Meteor.publish('poisMetric', function (workspaceId) {
   var workspace = Workspaces.findOne({ _id : workspaceId });
   var pois = workspace.getPois();
-  var poiDescriptors = workspace.poiDescriptors;
-  return new PoisMetric({ "pois" : pois, "name" : poiDescriptors});
+  return new PoisMetric({ "pois" : pois });
 });
 
 /**
