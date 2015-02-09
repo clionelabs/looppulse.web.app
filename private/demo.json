@@ -112,6 +112,117 @@
       ]
     },
     {
+      "name": "91mai",
+      "users": [
+        {"email": "91mai@looppulse.com", "password": "91mai"}
+      ],
+      "workspaces": [
+        {
+          "name": "91mai Taipei",
+          "poiDescriptors": {"one" : "shop", "many" :"shops"},
+          "applications": [
+            {
+              "name": "Android SDK",
+              "_id": "wMr6w5prRpYt5A7xQ",
+              "token": "wefijoweifj"
+            },
+            {
+              "name": "iOS SDK",
+              "_id": "DwH9BHGgxrcMzwDTB",
+              "token": "lkdjfklj3eo"
+            },
+            {
+              "name": "Simulator",
+              "_id": "W3qEzMzHknQHT7xEp",
+              "token": "sdlfkjwoeif"
+            }
+          ],
+          "pois": [
+            {
+              "name": "SUPER COLOR",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 1
+              }
+            },
+            {
+              "name": "efashion",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 2
+              }
+            },
+            {
+              "name": "BOBO",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 3
+              }
+            },
+            {
+              "name": "Joanna Shop",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 4
+              }
+            },
+            {
+              "name": "Annshop",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 5
+              }
+            },
+            {
+              "name": "OK TEA",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 6
+              }
+            },
+            {
+              "name": "PUFII",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 7
+              }
+            },
+            {
+              "name": "FM Shoes",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 8
+              }
+            },
+            {
+              "name": "XINWEI",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 9
+              }
+            },
+            {
+              "name": "Beauty pass",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 2,
+                "minor": 10
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "EZTABLE",
       "users": [
         {"email": "eztable@looppulse.com", "password": "eztable"}
