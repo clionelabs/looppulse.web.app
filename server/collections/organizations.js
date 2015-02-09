@@ -19,6 +19,7 @@ Organizations.import = function (json) {
     _.each(workspace.applications, function(application) {
       Applications.insert({ workspaceId: workspaceId,
                             name: application.name,
+                            _id: application.id,
                             token: application.token});
     });
     _.each(workspace.pois, function(poi) {

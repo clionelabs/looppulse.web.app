@@ -12,10 +12,12 @@
           "applications": [
             {
               "name": "Android SDK",
+              "id": "A3TkwtvBNxAC4eq4a",
               "token": "wefijoweifj"
             },
             {
               "name": "Simulator",
+              "id": "KSxRAjBFQZ38n5TFx",
               "token": "sdlfkjwoeif"
             }
           ],

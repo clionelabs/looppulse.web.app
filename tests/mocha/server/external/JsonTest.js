@@ -16,10 +16,12 @@ if (!(typeof MochaWeb === 'undefined')) {
                 "applications": [
                   {
                     "name": "Android SDK",
+                    "id": "KSxRAjBFQZ38n5TFx",
                     "token": "wefijoweifj"
                   },
                   {
                     "name": "Simulator",
+                    "id": "A3TkwtvBNxAC4eq4a",
                     "token": "sdlfkjwoeif"
                   }
                 ],
@@ -82,6 +84,16 @@ if (!(typeof MochaWeb === 'undefined')) {
     });
 
     describe('JSON.read', function () {
+      beforeEach(function () {
+        sinon.stub(HTTP, 'get', function (url) {
+          return { content: JSON.stringify(json) };
+        });
+      });
+
+      afterEach(function () {
+        HTTP.get.restore();
+      })
+
       it('returns a JSON object', function () {
         JSON.stringify(JSON.read(jsonURL)).
           should.equal(JSON.stringify(json));
