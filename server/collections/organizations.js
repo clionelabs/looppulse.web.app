@@ -23,6 +23,10 @@ Organizations.import = function (json) {
                             token: application.token});
     });
     _.each(workspace.pois, function(poi) {
+      // It's common to enter the major and minor as Hex value.
+      poi.beacon.major = parseInt(poi.beacon.major);
+      poi.beacon.minor = parseInt(poi.beacon.minor);
+      Pois.validate(poi);
       Pois.insert({ workspaceId: workspaceId,
                     name: poi.name,
                     beacon: poi.beacon});
