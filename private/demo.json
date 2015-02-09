@@ -140,72 +140,72 @@
           "pois": [
             {"name": "La Rotisserie",
               "beacon": {
-                "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
-                "major": 12321,
-                "minor": 213
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 1,
+                "minor": 1
               }
             },
             {"name": "Silk Road Feast",
               "beacon": {
-                "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
-                "major": 23,
-                "minor": 21235
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 1,
+                "minor": 2
               }
             },
             {"name": "Diamon Tony's 101",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 3
               }
             },
             {"name": "La Farfalla @ Humble House",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 4
               }
             },
             {"name": "Lawry's The Prime Rib",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 5
               }
             },
             {"name": "Soluna",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 6
               }
             },
             {"name": "Cafe @ Grand Hyatt",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 7
               }
             },
             {"name": "Danny's Steakhouse",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 8
               }
             },
             {"name": "The Kitchen Table @ W",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 9
               }
             },
             {"name": "Recipe House @ Fleur Lis Hotel",
               "beacon": {
                 "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
-                "major": 23,
-                "minor": 124
+                "major": 1,
+                "minor": 10
               }
             }
           ]
