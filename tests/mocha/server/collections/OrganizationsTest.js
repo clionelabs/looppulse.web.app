@@ -13,12 +13,12 @@ if (!(typeof MochaWeb === 'undefined')) {
             "applications": [
               {
                 "name": "Android SDK",
-                "id": "KSxRAjBFQZ38n5TFx",
+                "_id": "KSxRAjBFQZ38n5TFx",
                 "token": "wefijoweifj"
               },
               {
                 "name": "Simulator",
-                "id": "A3TkwtvBNxAC4eq4a",
+                "_id": "A3TkwtvBNxAC4eq4a",
                 "token": "sdlfkjwoeif"
               }
             ],

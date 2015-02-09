@@ -18,8 +18,8 @@ Organizations.import = function (json) {
                                           poiDescriptors: workspace.poiDescriptors});
     _.each(workspace.applications, function(application) {
       Applications.insert({ workspaceId: workspaceId,
+                            _id: application._id,
                             name: application.name,
-                            _id: application.id,
                             token: application.token});
     });
     _.each(workspace.pois, function(poi) {
