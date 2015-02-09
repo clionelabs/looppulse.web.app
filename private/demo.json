@@ -1,0 +1,216 @@
+{
+  "organizations": [
+    {
+      "name": "K11 Concept",
+      "users": [
+        {"email": "k11@looppulse.com", "password": "k11"}
+      ],
+      "workspaces": [
+        {
+          "name": "K11 Hong Kong",
+          "poiDescriptors": {"one" : "shop", "many" :"shops"},
+          "applications": [
+            {
+              "name": "Android SDK",
+              "_id": "eMPM2qdqPe4bdcjeA",
+              "token": "ldjlfjaoweurj"
+            },
+            {
+              "name": "iOS SDK",
+              "_id": "R2aC4RKKpY2WXjfxi",
+              "token": "3ourioj34kljm"
+            },
+            {
+              "name": "Simulator",
+              "_id": "bpBTRNQtJuSnPG3Lw",
+              "token": "32jl3fldjiouf"
+            }
+          ],
+          "pois": [
+            {
+              "name": "K11 Select inside",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0xDAF9",
+                "minor": "0xF14A"
+              }
+            },
+            {
+              "name": "B2N4 Entrance",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0x644D",
+                "minor": "0xF934"
+              }
+            },
+            {
+              "name": "B207 Entrance",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0xA07F",
+                "minor": "0x6C3D"
+              }
+            },
+            {
+              "name": "L3 CS Counter",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0x409B",
+                "minor": "0x2006"
+              }
+            },
+            {
+              "name": "L3 Tin Cheung",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0xB94E",
+                "minor": "0xA2D9"
+              }
+            },
+            {
+              "name": "K11 DesignStore",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0x8B69",
+                "minor": "0xAFE2"
+              }
+            },
+            {
+              "name": "G/F CS Counter",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0x840B",
+                "minor": "0x7DBB"
+              }
+            },
+            {
+              "name": "B207 Inside",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0xEBC1",
+                "minor": "0x0A63"
+              }
+            },
+            {
+              "name": "L2 East Ocean",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0xC428",
+                "minor": "0x6BAC"
+              }
+            },
+            {
+              "name": "B3 CarPark",
+              "beacon": {
+                "uuid": "23a01af0-232a-4518-9c0e-0117c5315864",
+                "major": "0x15B3",
+                "minor": "0xD9BA"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EZTABLE",
+      "users": [
+        {"email": "eztable@looppulse.com", "password": "eztable"}
+      ],
+      "workspaces": [
+        {
+          "name": "EZTABLE Taiwan",
+          "poiDescriptors": {"one" : "restaurant", "many" :"restaurants"},
+          "applications": [
+            {
+              "name": "Android SDK",
+              "_id": "QcYS8yh2bmL92hSZH",
+              "token": "wefijoweifj"
+            },
+            {
+              "name": "iOS SDK",
+              "_id": "N8e5qhjSfikWYZXHK",
+              "token": "lkdjfklj3eo"
+            },
+            {
+              "name": "Simulator",
+              "_id": "LWm6YwqaZewkNzTkW",
+              "token": "sdlfkjwoeif"
+            }
+          ],
+          "pois": [
+            {"name": "La Rotisserie",
+              "beacon": {
+                "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
+                "major": 12321,
+                "minor": 213
+              }
+            },
+            {"name": "Silk Road Feast",
+              "beacon": {
+                "uuid": "a2dca1e4-0607-4f37-9ff1-825237b278fe",
+                "major": 23,
+                "minor": 21235
+              }
+            },
+            {"name": "Diamon Tony's 101",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            },
+            {"name": "La Farfalla @ Humble House",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            },
+            {"name": "Lawry's The Prime Rib",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            },
+            {"name": "Soluna",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            },
+            {"name": "Cafe @ Grand Hyatt",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            },
+            {"name": "Danny's Steakhouse",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            },
+            {"name": "The Kitchen Table @ W",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            },
+            {"name": "Recipe House @ Fleur Lis Hotel",
+              "beacon": {
+                "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+                "major": 23,
+                "minor": 124
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
