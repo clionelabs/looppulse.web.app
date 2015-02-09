@@ -1,5 +1,5 @@
 <template name="pois">
-    <div class="container-fluid pois">
+    <div class="container-fluid poi">
         <div class="row page-top-bar">
             <div class="col-md-12 name"><h1>{{ workspace.name }}</h1><sup class="activity {{ poisMetric.activity }}">&#8226;</sup>
                 <button id="pois-goto-create-engage" class="btn btn-lp pull-right">Engage Visitors</button>
@@ -69,7 +69,6 @@
                           <td><a href="{{pathFor route='poi' id=this._id }}">{{_.capitalize name }}</a></td>
                           <td>{{ interestedVisitors }}</td>
                           <td>{{ totalVisitors }}</td>
-
                       </tr>
                   {{/each }}
                 </table>
