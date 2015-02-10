@@ -68,15 +68,14 @@ Template.engageCreate.created = function () {
     amount: 200,
     type: Template.budgetFiller.type.perDay
   };
-  var sp = null;
   if (Iron.controller().state.get("selectedPoiId")) {
-    sp = _.first(_.filter(PoisMetric.get().pois,
+    var sp = _.first(_.filter(PoisMetric.get().pois,
       function(p) {
         return p._id === Iron.controller().state.get("selectedPoiId");
       }
     ));
+    s = _.extend({}, s, { "selectedPoi" : Template.poiNameSelector.toSelectorObj(sp) });
   }
 
-  s = _.extend({}, s, { "selectedPoi" : Template.poiNameSelector.toSelectorObj(sp) });
   Session.setDefault(sessionKey, s);
 };
