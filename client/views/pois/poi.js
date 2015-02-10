@@ -11,8 +11,8 @@ Template.poi.rendered = function() {
   });
 };
 
-Template.pois.helpers({
-  "getTop3PoisByInterestedVisitors" : function() {
+Template.poi.helpers({
+  "getTopPoisByInterestedVisitors" : function() {
     return this.poiMetric.topInterested;
   }
 });
