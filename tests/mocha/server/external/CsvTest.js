@@ -30,7 +30,7 @@ if (!(typeof MochaWeb === 'undefined')) {
       });
 
       it('reads from a CSV, convert content from JSON and bulk create POIs', function () {
-        var readSpy = sinon.spy(CSV, 'read');
+        var readSpy = sinon.spy(CSV, 'import');
         var parseSpry = sinon.spy(Baby, 'parse');
         var createSpy = sinon.spy(Pois, 'bulkCreate');
         var sanitizeSpy = sinon.spy(CSV, 'sanitizePois');
@@ -43,9 +43,9 @@ if (!(typeof MochaWeb === 'undefined')) {
       });
     });
 
-    describe('CSV.read', function () {
+    describe('CSV.import', function () {
       it('reads from a CSV online resource', function () {
-        var content = CSV.read(csvURL);
+        var content = CSV.import(csvURL);
         content.should.equal(csvString);
       });
     });
@@ -93,6 +93,38 @@ if (!(typeof MochaWeb === 'undefined')) {
 
       it('does not change cases', function () {
         CSV.sanitizeValue('Value').should.equal('Value');
+      });
+    });
+
+    describe('CSV.export', function () {
+      it('sanitizes input data before exporting', function () {
+        var sanitizeSpy = sinon.spy(CSV, 'sanitizeJSON');
+        sinon.stub(Baby, 'unparse');
+
+        CSV.export("");
+        sanitizeSpy.called.should.be.true;
+
+        Baby.unparse.restore();
+      });
+
+      it('exports to a CSV string', function () {
+        var data = [{a:1,b:2}, {a:3,b:4}];
+        var csvString = 'a,b\r\n1,2\r\n3,4';
+
+        CSV.export(data).should.equal(csvString);
+      });
+    });
+
+    describe('CSV.sanitizeJSON', function () {
+      it('removes prototypes', function () {
+        var object = {
+          key: 10,
+          method: function () {
+            return 20;
+          }
+        };
+
+        JSON.stringify(CSV.sanitizeJSON(object)).should.equal('{"key":10}');
       });
     });
   });

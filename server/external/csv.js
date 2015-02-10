@@ -1,7 +1,11 @@
 CSV = {};
 
+/*
+ *  Importing
+ */
+
 CSV.bulkCreatePois = function (workspaceId, csvURL) {
-  var csvString = CSV.read(csvURL);
+  var csvString = CSV.import(csvURL);
   var results = Baby.parse(csvString, CSV.parseOptions);
   var sanitized = CSV.sanitizePois(results.data);
   return Pois.bulkCreate(workspaceId, sanitized);
@@ -9,7 +13,7 @@ CSV.bulkCreatePois = function (workspaceId, csvURL) {
 
 CSV.parseOptions = {header: true, dynamicTyping: true, skipEmptyLines: true};
 
-CSV.read = function (csvURL) {
+CSV.import = function (csvURL) {
   var data = HTTP.get(csvURL);
   return data.content;
 };
@@ -42,3 +46,19 @@ CSV.sanitizeKey = function (unsanitizedKey) {
 CSV.sanitizeValue = function (unsanitizedValue) {
   return unsanitizedValue.toString().trim();
 };
+
+
+/*
+ *  Exporting
+ */
+
+CSV.export = function (data) {
+  // If we don't stripe out input data's prototype,
+  // we could be exporting those methods into the CSV as well.
+  var sanitized = CSV.sanitizeJSON(data);
+  return Baby.unparse(sanitized);
+}
+
+CSV.sanitizeJSON = function (unsanitizedJSON) {
+  return JSON.parse(JSON.stringify(unsanitizedJSON));
+}
