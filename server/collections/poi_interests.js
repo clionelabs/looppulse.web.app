@@ -8,18 +8,33 @@
   */
 PoiInterests = new Meteor.Collection('poi_interests');
 
+PoiInterests.handleChangedJourney = function (journey, oldJourney) {
+  var poiId = journey.poiId;
+  var visitorUUID = journey.visitorUUID;
+  if (PoiInterests.isInterested(journey)) {
+    PoiInterests.markInterested(poiId, visitorUUID);
+  } else {
+    PoiInterests.markNotInterested(poiId, visitorUUID);
+  }
+};
+
+PoiInterests.isInterested = function (journey) {
+  // HACK: interested if it's the second time there
+  return (journey.encounters.length > 1);
+};
+
+PoiInterests.markInterested = function (poiId, visitorUUID) {
+  PoiInterests.upsert({poiId: poiId}, {$addToSet: {visitorUUIDs: visitorUUID}});
+};
+
+PoiInterests.markNotInterested = function (poiId, visitorUUID) {
+  PoiInterests.upsert({poiId: poiId}, {$pull: {visitorUUIDs: visitorUUID}});
+};
+
 Meteor.startup(function() {
   Journeys.find().observe({
     _suppress_initial: true,
-    "changed": function(newJourney, oldJourney) {
-      var poiId = newJourney.poiId;
-      var visitorUUID = newJourney.visitorUUID;
-      if (Math.random() <= 0.2) {
-        PoiInterests.upsert({poiId: poiId}, {$addToSet: {visitorUUIDs: visitorUUID}});
-      } else {
-        PoiInterests.upsert({poiId: poiId}, {$pull: {visitorUUIDs: visitorUUID}});
-      }
-    }
+    "changed": PoiInterests.handleChangedJourney
   });
 
   Pois.find().observe({
