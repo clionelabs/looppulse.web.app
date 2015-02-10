@@ -1,3 +1,30 @@
+Template.poi.rendered = function() {
+  console.log(this);
+  $(".container").slick({
+    infinite: false,
+    swipe: false,
+    slidesToShow: 2,
+    onBeforeChange: function(self, currentIndex, targetIndex) {
+      Template.gauge.toggleActive($("#gauge-heart"));
+    },
+    arrows: false
+  });
+};
+
+Template.pois.helpers({
+  "getTop3PoisByInterestedVisitors" : function() {
+    return this.poiMetric.topInterested;
+  }
+});
+
 /**
- * Created by g on 9/2/15.
+ * A helper for other template to swipe
+ * @param isActive
  */
+Template.pois.swipe = function(isActive) {
+  if (!isActive) {
+    $(".container").slickNext();
+  } else {
+    $(".container").slickPrev();
+  }
+};

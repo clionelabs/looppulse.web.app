@@ -1,9 +1,61 @@
 <template name="poi">
-  <div class="container-fluid poi">
-    <div class="row page-top-bar">
-      <div class="col-md-12 name"><h1>{{ poiMetric.name }}</h1><sup class="activity {{ poiMetric.activity }}">&#8226;</sup>
-        <a class="btn btn-lp pull-right" href="{{urlFor route='engagement.create' workspaceId=workspace._id poiId=poiMetric.id }}">Engage Visitors</a>
-      </div>
+    <div class="container-fluid poi">
+        <div class="row page-top-bar">
+            <div class="col-md-12 name"><h1>{{ poiMetric.poi.name }}</h1><sup class="activity {{ poiMetric.activity }}">&#8226;</sup>
+                <a class="btn btn-lp pull-right" href="{{urlFor route='engagement.create' workspaceId=workspace._id poiId=poiMetric.id }}">Engage Visitors</a>
+            </div>
+        </div>
+        <div class="row main-slider">
+            <div class="col-md-12 container">
+                <div class="content">
+                    <div class="aggregate-info center-block">
+                        <div class="row center-block">
+                            <table>
+                                <tr>
+                                    <td class="data-type-icon"><span class="glyphicon glyphicon-user"></span></td>
+                                    <td class="detail"> {{_.numberFormat poiMetric.totalVisitors }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="data-type-icon"></td>
+                                    <td class="title pull-right">TOTAL VISITORS</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <hr/>
+                        <div class="row center-block">
+                            <table>
+                                <tr>
+                                    <td class="data-type-icon"><span class="glyphicon glyphicon-time"></span></td>
+                                    <td class="detail"> {{formatDuration poiMetric.averageDwellTime }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="data-type-icon"></td>
+                                    <td class="title pull-right">AVERAGE DWELL</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                  {{> gauge data=poiMetric.gaugeData }}
+                </div>
+                <div class="content">
+                    <table class="highlighted-list table-responsive">
+                        <tr>
+                            <th>Top Interested</th>
+                            <th>number</th>
+                        </tr>
+                        <!--
+                  {{#each getTop3PoisByInterestedVisitors }}
+                      <tr>
+                          <td>{{_.capitalize name}}</td>
+                          <td>{{ interestedVisitors }}</td>
+                      </tr>
+                  {{/each }}
+                  -->
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>

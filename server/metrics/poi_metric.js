@@ -34,27 +34,56 @@ PoiMetric.prototype._publishCursor = function (sub) {
 
 PoiMetric.prototype._createAggregate = function () {
   var self = this;
-  self.poi = Pois.find({_id : self.poiId }).fetch()[0];
+  self.poi = Pois.findOne({_id : self.poiId });
   var current = moment();
   var engine = new PoisMetricEngine([self.poi], current);
 
-  var subObj = {};
-  subObj.id = self.poi._id;
-  subObj.name = self.poi.name;
+  self.id = self.poi._id;
   //TODO impl
-  subObj.activity = "active";
-  subObj.totalVisitors = engine.computeTotalVisitorsCnt();
-  subObj.totalCurrentVisitors = engine.computeCurrentVisitorsCnt();
+  self.activity = "active";
+  self.totalVisitors = engine.computeTotalVisitorsCnt();
+  self.totalCurrentVisitors = engine.computeCurrentVisitorsCnt();
   var aWeekAgo = moment(current).subtract(7, 'days').startOf('day');
-  subObj.max7daysVisitors = engine.computePeakVisitorsCnt(aWeekAgo, current);
+  self.max7daysVisitors = engine.computePeakVisitorsCnt(aWeekAgo, current);
   var startOfToday = moment(current).startOf('day');
-  subObj.maxDailyVisitors = engine.computePeakVisitorsCnt(startOfToday, current);
-  subObj.interestedVisitors = engine.computeInterestedCnt();
-  subObj.averageDwellTime = engine.computeAvgDwellTime();
+  self.maxDailyVisitors = engine.computePeakVisitorsCnt(startOfToday, current);
+  self.interestedVisitors = engine.computeInterestedCnt();
+  self.averageDwellTime = engine.computeAvgDwellTime();
 
-  return subObj;
+  //TODO impl common interested
+
+  self.gaugeData = self._toGauge();
+
+  return self;
 };
 
 PoiMetric.prototype._getCollectionName = function () {
   return "poi-metric";
 };
+
+PoiMetric.prototype._toGauge = function() {
+  var self = this;
+  return {
+    current: {
+      "total": self.totalCurrentVisitors,
+      "title": "CURRENT",
+      "arm" : self.maxDailyVisitors / self.max7daysVisitors, //TODO display logic
+      "subContent": self.max7daysVisitors,
+      "subTitle": "max of last 7 days",
+      //array because need to cater "related top 3" in detail view
+      percentage: [self.totalCurrentVisitors / self.max7daysVisitors]
+    },
+    interested: {
+      "total": self.interestedVisitors,
+      "title": "INTERESTED",
+      "subContent": self.totalVisitors,
+      "subTitle": "total unique",
+      percentage: self._constructInterestedList()
+    }
+  };
+};
+
+PoiMetric.prototype._constructInterestedList = function() {
+  //TODO impl
+  return [];
+}

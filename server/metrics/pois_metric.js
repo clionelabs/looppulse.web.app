@@ -42,6 +42,7 @@ PoisMetric.prototype._createAggregate = function () {
   var current = moment();
   var engine = new PoisMetricEngine(self.pois, current);
 
+  //TODO impl
   self.activity = "active";
   self.count = self.pois.length;
   self.totalVisitors = engine.computeTotalVisitorsCnt();
@@ -106,10 +107,6 @@ PoisMetric.prototype._toGauge = function() {
   };
 };
 
-/**
- *
- * @param poismetric
- */
 PoisMetric.prototype._constructInterestedList = function() {
   var self = this;
   return _.map(self.topInterested, function(r) {
