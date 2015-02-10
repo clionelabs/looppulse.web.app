@@ -1,23 +1,19 @@
 /**
- * This related to lib/metrics/pois_metric.js
+ * This related to lib/metrics/poi_metric.js
  */
 
-
 /**
- * @property {Poi[]} pois
- * @property {Object} name
+ * @property {String} poiId
  * @param doc
  * @constructor
  */
-PoisMetric = function (doc) {
+PoiMetric = function (doc) {
   _.extend(this, doc);
-  this.name = "pois-metric";
+  this.name = "poi-metric";
   this.interval = 1000 * 10;
-  this.topInterestsLimit = 3;
 };
 
-PoisMetric.prototype._publishCursor = function (sub) {
-
+PoiMetric.prototype._publishCursor = function (sub) {
   var self = this;
 
   var subObj = self._createAggregate();
@@ -36,15 +32,15 @@ PoisMetric.prototype._publishCursor = function (sub) {
 
 };
 
-PoisMetric.prototype._createAggregate = function () {
+PoiMetric.prototype._createAggregate = function () {
   var self = this;
-  self.pois = Pois.find().fetch();
+  self.poi = Pois.findOne({_id : self.poiId });
   var current = moment();
-  var engine = new PoisMetricEngine(self.pois, current);
+  var engine = new PoisMetricEngine([self.poi], current);
 
+  self.id = self.poi._id;
   //TODO impl
   self.activity = "active";
-  self.count = self.pois.length;
   self.totalVisitors = engine.computeTotalVisitorsCnt();
   self.totalCurrentVisitors = engine.computeCurrentVisitorsCnt();
   var aWeekAgo = moment(current).subtract(7, 'days').startOf('day');
@@ -54,38 +50,18 @@ PoisMetric.prototype._createAggregate = function () {
   self.interestedVisitors = engine.computeInterestedCnt();
   self.averageDwellTime = engine.computeAvgDwellTime();
 
-  self.pois = _.map(self.pois, function (poi) {
-    var additionalInfo = {
-      "interestedVisitors" : engine.computeInterestedCnt([poi._id]),
-      "totalVisitors" : engine.computeTotalVisitorsCnt([poi._id])
-    };
-    return _.extend({}, additionalInfo, poi);
-  });
-
-  var sortedPois = _.sortBy(self.pois, function(poi) {
-    return -poi.interestedVisitors;
-  });
-  var topInterestedPois = _.first(sortedPois, self.topInterestsLimit);
-  var restPoiIds = _.pluck(_.rest(sortedPois, self.topInterestsLimit), '_id');
-
-  var topInterested = _.reduce(topInterestedPois, function(memo, poi) {
-    memo.push({name: poi.name, interestedVisitors: poi.interestedVisitors});
-    return memo;
-  }, []);
-  if (restPoiIds.length > 0) {
-    topInterested.push({name: "Others", interestedVisitors: engine.computeTotalVisitorsCnt(restPoiIds)});
-  }
-  self.topInterested = topInterested;
+  //TODO impl common interested
 
   self.gaugeData = self._toGauge();
+
   return self;
 };
 
-PoisMetric.prototype._getCollectionName = function () {
-  return "pois-metric";
+PoiMetric.prototype._getCollectionName = function () {
+  return "poi-metric";
 };
 
-PoisMetric.prototype._toGauge = function() {
+PoiMetric.prototype._toGauge = function() {
   var self = this;
   return {
     current: {
@@ -107,9 +83,7 @@ PoisMetric.prototype._toGauge = function() {
   };
 };
 
-PoisMetric.prototype._constructInterestedList = function() {
-  var self = this;
-  return _.map(self.topInterested, function(r) {
-    return r.interestedVisitors / self.totalVisitors;
-  });
+PoiMetric.prototype._constructInterestedList = function() {
+  //TODO impl
+  return [];
 }

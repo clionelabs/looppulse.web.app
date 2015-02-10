@@ -2,50 +2,14 @@
  * Template functions related to template "gauge"
  */
 Template.gauge.rendered = function() {
-
-    var self = new GaugeData(this);
-    this.autorun(function() {
-      Template.gauge.updateGauge(self.tmplToGauge().current);
-    });
+  var self = this;
+  this.autorun(function() {
+    var tmplData = self.data.data;
+    var isHeartActive = Session.get("isHeartActive");
+    var selectedData = isHeartActive ? "interested" : "current";
+    Template.gauge.updateGauge(tmplData[selectedData]);
+  });
 };
-
-GaugeData = function(data) {
-  return _.extend({}, data, {
-    tmplToGauge: function () {
-      var poisMetric = this.data.poisMetric;
-      return {
-        current: {
-          "total": poisMetric.totalCurrentVisitors,
-          "title": "CURRENT",
-          "arm" : poisMetric.maxDailyVisitors / poisMetric.max7daysVisitors, //TODO display logic
-          "subContent": poisMetric.max7daysVisitors,
-          "subTitle": "max of last 7 days",
-          //array because need to cater "related top 3" in detail view
-          percentage: [poisMetric.totalCurrentVisitors / poisMetric.max7daysVisitors]
-        },
-        interested: {
-          "total": poisMetric.interestedVisitors,
-          "title": "INTERESTED",
-          "subContent": poisMetric.totalVisitors,
-          "subTitle": "total unique",
-          percentage: Template.gauge.poisInterestedData(poisMetric)
-
-        }
-      };
-    }
-  });
-
-}
-
-/**
- *
- * @param poismetric
- */
-Template.gauge.poisInterestedData = function(poismetric) {
-  return _.map(poismetric.topInterested, function(r) {
-    return r.interestedVisitors / poismetric.totalVisitors;
-  });
-}
 
 /**
  *
@@ -156,10 +120,6 @@ Template.gauge.events({
       var heart = $(e.currentTarget);
       Template.pois.swipe(heart.hasSVGClass("active"));
       Session.set("isHeartActive", heart.hasSVGClass("active"));
-      var isHeartActive = Session.get("isHeartActive");
-      var selectedData = isHeartActive ? "interested" : "current";
-      var gaugeData = new GaugeData(tmpl);
-      Template.gauge.updateGauge(gaugeData.tmplToGauge()[selectedData]);
     }
   });
 

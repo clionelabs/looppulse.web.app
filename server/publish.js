@@ -2,8 +2,8 @@
  * Here defines every publication.
  */
 
-Meteor.publish("pois", function (workspaceId) {
-  return Pois.find({ workspaceId : workspaceId });
+Meteor.publish("poiMetric", function (poiId) {
+  return new PoiMetric({ "poiId" : poiId });
 });
 
 /**
@@ -12,8 +12,7 @@ Meteor.publish("pois", function (workspaceId) {
 Meteor.publish('poisMetric', function (workspaceId) {
   var workspace = Workspaces.findOne({ _id : workspaceId });
   var pois = workspace.getPois();
-  var poiDescriptors = workspace.poiDescriptors;
-  return new PoisMetric({ "pois" : pois, "name" : poiDescriptors});
+  return new PoisMetric({ "pois" : pois });
 });
 
 /**
@@ -22,7 +21,7 @@ Meteor.publish('poisMetric', function (workspaceId) {
 Meteor.publish('currentWorkspaceAndOrganization', function() {
   if (this.userId) {
     var organization = Organizations.findByUserId(this.userId);
-    var workspace = Workspaces.find({organizationId: organization._id});
+    var workspace = Workspaces.find({organizationId: organization.fetch()[0]._id});
     return [organization, workspace];
   } else {
     return [];

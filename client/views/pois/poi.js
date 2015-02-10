@@ -1,4 +1,5 @@
-Template.pois.rendered = function() {
+Template.poi.rendered = function() {
+  console.log(this);
   $(".container").slick({
     infinite: false,
     swipe: false,
@@ -10,9 +11,9 @@ Template.pois.rendered = function() {
   });
 };
 
-Template.pois.helpers({
-  "getTop3PoisByInterestedVisitors" : function() {
-    return this.poisMetric.topInterested;
+Template.poi.helpers({
+  "getTopPoisByInterestedVisitors" : function() {
+    return this.poiMetric.topInterested;
   }
 });
 
