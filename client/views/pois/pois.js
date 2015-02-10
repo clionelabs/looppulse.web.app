@@ -1,13 +1,13 @@
 Template.pois.rendered = function() {
-    $(".container").slick({
-        infinite: false,
-        swipe: false,
-        slidesToShow: 2,
-        onBeforeChange: function(self, currentIndex, targetIndex) {
-            Template.gauge.toggleActive($("#gauge-heart"));
-        },
-        arrows: false
-    });
+  $(".container").slick({
+    infinite: false,
+    swipe: false,
+    slidesToShow: 2,
+    onBeforeChange: function(self, currentIndex, targetIndex) {
+      Template.gauge.toggleActive($("#gauge-heart"));
+    },
+    arrows: false
+  });
 };
 
 Template.pois.helpers({
@@ -21,12 +21,9 @@ Template.pois.helpers({
  * @param isActive
  */
 Template.pois.swipe = function(isActive) {
-    if (!isActive) {
-        $(".container").slickNext();
-    } else {
-        $(".container").slickPrev();
-    }
+  if (!isActive) {
+    $(".container").slickNext();
+  } else {
+    $(".container").slickPrev();
+  }
 };
-
-
-

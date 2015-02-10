@@ -2,6 +2,7 @@
  * This related to lib/metrics/pois_metric.js
  */
 
+
 /**
  * @property {Poi[]} pois
  * @property {Object} name
@@ -9,28 +10,29 @@
  * @constructor
  */
 PoisMetric = function (doc) {
-    _.extend(this, doc);
-    this.name = "pois-metric";
-    this.interval = 1000 * 10;
-    this.topInterestsLimit = 3;
+  _.extend(this, doc);
+  this.name = "pois-metric";
+  this.interval = 1000 * 10;
+  this.topInterestsLimit = 3;
 };
 
 PoisMetric.prototype._publishCursor = function (sub) {
-    var self = this;
 
+  var self = this;
+
+  var subObj = self._createAggregate();
+
+  sub.added(self.name, self.name, subObj);
+
+  var handler = Meteor.setInterval(function() {
     var subObj = self._createAggregate();
+    sub.changed(self.name, self.name, subObj);
 
-    sub.added(self.name, self.name, subObj);
+  }, self.interval);
 
-    var handler = Meteor.setInterval(function() {
-        var subObj = self._createAggregate();
-        sub.changed(self.name, self.name, subObj);
-
-    }, self.interval);
-
-    sub.onStop(function() {
-        Meteor.clearInterval(handler);
-    });
+  sub.onStop(function() {
+    Meteor.clearInterval(handler);
+  });
 
 };
 
@@ -40,19 +42,18 @@ PoisMetric.prototype._createAggregate = function () {
   var current = moment();
   var engine = new PoisMetricEngine(self.pois, current);
 
-  var subObj = {};
-  subObj.activity = "active";
-  subObj.count = self.pois.length;
-  subObj.totalVisitors = engine.computeTotalVisitorsCnt();
-  subObj.totalCurrentVisitors = engine.computeCurrentVisitorsCnt();
+  self.activity = "active";
+  self.count = self.pois.length;
+  self.totalVisitors = engine.computeTotalVisitorsCnt();
+  self.totalCurrentVisitors = engine.computeCurrentVisitorsCnt();
   var aWeekAgo = moment(current).subtract(7, 'days').startOf('day');
-  subObj.max7daysVisitors = engine.computePeakVisitorsCnt(aWeekAgo, current);
+  self.max7daysVisitors = engine.computePeakVisitorsCnt(aWeekAgo, current);
   var startOfToday = moment(current).startOf('day');
-  subObj.maxDailyVisitors = engine.computePeakVisitorsCnt(startOfToday, current);
-  subObj.interestedVisitors = engine.computeInterestedCnt();
-  subObj.averageDwellTime = engine.computeAvgDwellTime();
+  self.maxDailyVisitors = engine.computePeakVisitorsCnt(startOfToday, current);
+  self.interestedVisitors = engine.computeInterestedCnt();
+  self.averageDwellTime = engine.computeAvgDwellTime();
 
-  subObj.pois = _.map(self.pois, function (poi) {
+  self.pois = _.map(self.pois, function (poi) {
     var additionalInfo = {
       "interestedVisitors" : engine.computeInterestedCnt([poi._id]),
       "totalVisitors" : engine.computeTotalVisitorsCnt([poi._id])
@@ -60,7 +61,7 @@ PoisMetric.prototype._createAggregate = function () {
     return _.extend({}, additionalInfo, poi);
   });
 
-  var sortedPois = _.sortBy(subObj.pois, function(poi) {
+  var sortedPois = _.sortBy(self.pois, function(poi) {
     return -poi.interestedVisitors;
   });
   var topInterestedPois = _.first(sortedPois, self.topInterestsLimit);
@@ -73,10 +74,45 @@ PoisMetric.prototype._createAggregate = function () {
   if (restPoiIds.length > 0) {
     topInterested.push({name: "Others", interestedVisitors: engine.computeTotalVisitorsCnt(restPoiIds)});
   }
-  subObj.topInterested = topInterested;
-  return subObj;
+  self.topInterested = topInterested;
+
+  self.gaugeData = self._toGauge();
+  return self;
 };
 
 PoisMetric.prototype._getCollectionName = function () {
-    return "pois-metric";
+  return "pois-metric";
 };
+
+PoisMetric.prototype._toGauge = function() {
+  var self = this;
+  return {
+    current: {
+      "total": self.totalCurrentVisitors,
+      "title": "CURRENT",
+      "arm" : self.maxDailyVisitors / self.max7daysVisitors, //TODO display logic
+      "subContent": self.max7daysVisitors,
+      "subTitle": "max of last 7 days",
+      //array because need to cater "related top 3" in detail view
+      percentage: [self.totalCurrentVisitors / self.max7daysVisitors]
+    },
+    interested: {
+      "total": self.interestedVisitors,
+      "title": "INTERESTED",
+      "subContent": self.totalVisitors,
+      "subTitle": "total unique",
+      percentage: self._constructInterestedList()
+    }
+  };
+};
+
+/**
+ *
+ * @param poismetric
+ */
+PoisMetric.prototype._constructInterestedList = function() {
+  var self = this;
+  return _.map(self.topInterested, function(r) {
+    return r.interestedVisitors / self.totalVisitors;
+  });
+}
