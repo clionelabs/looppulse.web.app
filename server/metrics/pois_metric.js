@@ -4,7 +4,7 @@
 
 
 /**
- * @property {Poi[]} pois
+ * @property {workspaceId} workspace
  * @property {Object} name
  * @param doc
  * @constructor
@@ -20,13 +20,13 @@ PoisMetric.prototype._publishCursor = function (sub) {
 
   var self = this;
 
-  var subObj = self._createAggregate();
+  self = self._createAggregate();
 
-  sub.added(self.name, self.name, subObj);
+  sub.added(self.name, self.name, self);
 
   var handler = Meteor.setInterval(function() {
-    var subObj = self._createAggregate();
-    sub.changed(self.name, self.name, subObj);
+    self = self._createAggregate();
+    sub.changed(self.name, self.name, self);
 
   }, self.interval);
 
@@ -38,7 +38,7 @@ PoisMetric.prototype._publishCursor = function (sub) {
 
 PoisMetric.prototype._createAggregate = function () {
   var self = this;
-  self.pois = Pois.find().fetch();
+  self.pois = Pois.find({ "workspaceId" : self.workspaceId }).fetch();
   var current = moment();
   var engine = new PoisMetricEngine(self.pois, current);
 

@@ -16,13 +16,13 @@ PoiMetric = function (doc) {
 PoiMetric.prototype._publishCursor = function (sub) {
   var self = this;
 
-  var subObj = self._createAggregate();
+  self = self._createAggregate();
 
-  sub.added(self.name, self.name, subObj);
+  sub.added(self.name, self.name, self);
 
   var handler = Meteor.setInterval(function() {
-    var subObj = self._createAggregate();
-    sub.changed(self.name, self.name, subObj);
+    self = self._createAggregate();
+    sub.changed(self.name, self.name, self);
 
   }, self.interval);
 

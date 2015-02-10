@@ -10,9 +10,7 @@ Meteor.publish("poiMetric", function (poiId) {
  * Poi Metrics is return a self defined collection
  */
 Meteor.publish('poisMetric', function (workspaceId) {
-  var workspace = Workspaces.findOne({ _id : workspaceId });
-  var pois = workspace.getPois();
-  return new PoisMetric({ "pois" : pois });
+  return new PoisMetric({ "workspaceId" : workspaceId });
 });
 
 /**
