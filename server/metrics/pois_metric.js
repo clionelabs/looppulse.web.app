@@ -73,7 +73,7 @@ PoisMetric.prototype._createAggregate = function () {
     return memo;
   }, []);
   if (restPoiIds.length > 0) {
-    topInterested.push({name: "Others", interestedVisitors: engine.computeTotalVisitorsCnt(restPoiIds)});
+    topInterested.push({name: "Others", interestedVisitors: engine.computeInterestedCnt(restPoiIds)});
   }
   self.topInterested = topInterested;
 
