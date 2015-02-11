@@ -1,5 +1,4 @@
 Template.poi.rendered = function() {
-  console.log(this);
   $(".container").slick({
     infinite: false,
     swipe: false,
@@ -21,7 +20,7 @@ Template.poi.helpers({
  * A helper for other template to swipe
  * @param isActive
  */
-Template.pois.swipe = function(isActive) {
+Template.poi.swipe = function(isActive) {
   if (!isActive) {
     $(".container").slickNext();
   } else {
