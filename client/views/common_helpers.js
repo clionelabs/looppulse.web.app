@@ -12,9 +12,9 @@ Template.registerHelper("_", function() {
 Template.registerHelper("formatDuration", function(duration) {
     var d = moment.duration(+duration);
     if (d.hours() > 0) {
-        return d.hours() + ":" + d.minutes();
+        return _.str.pad(d.hours(), 2, "0") + ":" + _.str.pad(d.minutes(), 2, "0");
     } else {
-        return d.minutes() + ":" + d.seconds();
+        return _.str.pad(d.minutes(), 2, "0") + ":" + _.str.pad(d.seconds(), 2, "0");
     }
 });
 
