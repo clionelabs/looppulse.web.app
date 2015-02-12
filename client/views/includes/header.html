@@ -14,7 +14,7 @@
               {{#if currentUser}}
               <ul class="nav navbar-nav">
                   <li class="active">
-                      <a href="{{pathFor route="pois"}}">{{_.str.capitalize poiDescriptors.many }}</a>
+                      <a href="{{urlFor route="pois" workspaceId=_id }}">{{_.str.capitalize poiDescriptors.many }}</a>
                   </li>
                   <li>
                       <a href="{{pathFor route="engagements"}}">Engagements</a>
