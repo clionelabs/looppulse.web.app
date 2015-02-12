@@ -4,7 +4,7 @@
 .navbar-dimen { //same specificity as `.navbar-default`, but it will override the default as it appear later
   background: $dimen-header-bg;
   height: $dimen-header-height;
-  border-color: transparent transparent white transparent;
+  border-color: transparent transparent $lp-white transparent;
   border-radius: 0;
   margin-bottom: 0;
   font-size:$dimen-h3-size;
