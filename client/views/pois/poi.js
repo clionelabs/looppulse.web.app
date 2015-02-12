@@ -1,5 +1,4 @@
 Template.poi.rendered = function() {
-  console.log(this);
   $(".container").slick({
     infinite: false,
     swipe: false,
@@ -9,6 +8,9 @@ Template.poi.rendered = function() {
     },
     arrows: false
   });
+
+  var isHeartActive = Session.get("isHeartActive");
+  Template.poi.swipe(!isHeartActive);
 };
 
 Template.poi.helpers({
@@ -21,7 +23,7 @@ Template.poi.helpers({
  * A helper for other template to swipe
  * @param isActive
  */
-Template.pois.swipe = function(isActive) {
+Template.poi.swipe = function(isActive) {
   if (!isActive) {
     $(".container").slickNext();
   } else {
