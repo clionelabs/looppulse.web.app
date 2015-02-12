@@ -62,3 +62,17 @@ CSV.export = function (data) {
 CSV.sanitizeJSON = function (unsanitizedJSON) {
   return JSON.parse(JSON.stringify(unsanitizedJSON));
 }
+
+CSV.exportPois = function(pois) {
+  var data = [];
+  _.each(pois, function(poi) {
+    var interest = PoiInterests.findOne({poiId: poi._id});
+    _.each(interest.visitorUUIDs, function(visitorUUID) {
+      data.push({
+        "name": poi.name,
+        "visitorUUID": visitorUUID
+      });
+    });
+  });
+  return CSV.export(data);
+}

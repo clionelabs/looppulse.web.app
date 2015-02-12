@@ -64,18 +64,16 @@ Meteor.methods({
    * @param {String} workspaceId
    * @return CSV formatted data
    */
-  exportPois: function(workspaceId) {
-    var pois = Pois.find({"workspaceId": workspaceId}).fetch();
-    var current = moment();
-    var engine = new PoisMetricEngine(pois, current);
+  exportWorkspacePois: function(workspaceId) {
+    var pois = Workspaces.findOne(workspaceId).getPois();
+    return CSV.exportPois(pois);
+  },
 
-    var data = _.map(pois, function(poi) {
-      return {
-        "name": poi.name,
-        "interestedCount": engine.computeInterestedCnt([poi._id]),
-        "totalCount": engine.computeTotalVisitorsCnt([poi._id])
-      }
-    });
-    return CSV.export(data);
-  }
+  /**
+   * @param {String} poiId
+   * @return CSV formmated data
+   */
+  exportPoi: function(poiId) {
+    return CSV.exportPois([Pois.findOne(poiId)]);
+  },
 });
