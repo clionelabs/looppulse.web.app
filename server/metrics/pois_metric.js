@@ -68,7 +68,8 @@ PoisMetric.prototype._createAggregate = function () {
   var topInterestedPois = _.first(sortedPois, self.topInterestsLimit);
 
   var topInterested = _.reduce(topInterestedPois, function(memo, poi) {
-    memo.push({name: poi.name, interestedVisitors: poi.interestedVisitors});
+    //for some reason the scope of the data context is terrible in Blaze, had to put workspaceId here
+    memo.push({workspaceId : self.workspaceId, _id: poi._id, name: poi.name, interestedVisitors: poi.interestedVisitors});
     return memo;
   }, []);
 
