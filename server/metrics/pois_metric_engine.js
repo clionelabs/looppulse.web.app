@@ -43,7 +43,9 @@ PoisMetricEngine.prototype.computeInterestedCnt = function(filterPoiIdList) {
   var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): [];
   var visitorList = _.reduce(this.interests, function(memo, interest) {
     if (isAllPoi || filterPoiIdSet[interest.poiId]) {
-      memo = _.union(memo, interest.visitorUUIDs);
+      if (interest.visitorUUIDs) {
+        memo = _.union(memo, interest.visitorUUIDs);
+      }
     }
     return memo;
   }, [])
