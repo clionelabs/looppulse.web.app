@@ -8,6 +8,9 @@ Template.poi.rendered = function() {
     },
     arrows: false
   });
+
+  var isHeartActive = Session.get("isHeartActive");
+  Template.poi.swipe(!isHeartActive);
 };
 
 Template.poi.helpers({

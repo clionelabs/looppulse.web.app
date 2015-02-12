@@ -119,6 +119,7 @@ Template.gauge.events({
   "click #gauge-heart": function (e, tmpl) {
     var heart = $(e.currentTarget);
     Template.pois.swipe(heart.hasSVGClass("active"));
+    //TODO update slick package to 1.4 to allow callback
     Session.set("isHeartActive", heart.hasSVGClass("active"));
   }
 });
