@@ -41,7 +41,7 @@
         }
       }
 
-      &:hover, &.active {
+      &.active {
         polygon {
           fill: $lp-blue;
         }
@@ -53,11 +53,13 @@
       polygon {
         fill: transparent;
         stroke: transparent;
+        cursor:hand;
       }
 
       text {
         fill: $lp-blue;
         font-size: $dimen-h3-size;
+        cursor:hand;
       }
     }
   }
@@ -101,3 +103,4 @@
     }
   }
 }
+
