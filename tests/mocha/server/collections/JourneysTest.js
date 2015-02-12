@@ -161,5 +161,76 @@ if (!(typeof MochaWeb === 'undefined')) {
         chai.assert.deepEqual(journey.encounters[0], new JourneyEncounter({enteredAt: enteredAt1, exitedAt: null}));
       });
     });
+
+    describe("Journeys - clearDanglingEncounters", function() {
+      // pre-defined current time
+      var current = moment();
+
+      // helper function to create encounter by just taking a number of seconds before currente
+      var getEncounter = function(enteredAtBefore, exitedAtBefore) {
+        var enteredAt = moment(current).subtract(enteredAtBefore, 's').valueOf();
+        var exitedAt = exitedAtBefore === null? null: moment(current).subtract(exitedAtBefore, 's').valueOf();
+        return {enteredAt: enteredAt, exitedAt: exitedAt};
+      };
+
+      beforeEach(function() {
+        Journeys.remove({});
+      });
+
+      it("closed encounters - within dangling period", function() {
+        Journeys.insert({poiId: '1', visitorUUID: '1', encounters: [getEncounter(Journeys.DANGLING_PERIOD_IN_SEC, Journeys.DANGLING_PERIOD_IN_SEC-1)]});
+        var journeyBefore = Journeys.findOne();
+        Journeys.clearDanglingEncounters(current);
+        var journeyAfter = Journeys.findOne();
+        chai.assert.equal(journeyAfter.encounters.length, 1);
+        chai.assert.deepEqual(journeyBefore, journeyAfter);
+      });
+
+      it("closed encounters - after dangling period", function() {
+        Journeys.insert({poiId: '1', visitorUUID: '1', encounters: [getEncounter(Journeys.DANGLING_PERIOD_IN_SEC+1, Journeys.DANGLING_PERIOD_IN_SEC)]});
+        var journeyBefore = Journeys.findOne();
+        Journeys.clearDanglingEncounters(current);
+        var journeyAfter = Journeys.findOne();
+        chai.assert.equal(journeyAfter.encounters.length, 1);
+        chai.assert.deepEqual(journeyBefore, journeyAfter);
+      });
+
+      it("opened encounters - within dangling period", function() {
+        Journeys.insert({poiId: '1', visitorUUID: '1', encounters: [getEncounter(Journeys.DANGLING_PERIOD_IN_SEC-1, null)]});
+        var journeyBefore = Journeys.findOne();
+        Journeys.clearDanglingEncounters(current);
+        var journeyAfter = Journeys.findOne();
+        chai.assert.equal(journeyAfter.encounters.length, 1);
+        chai.assert.deepEqual(journeyBefore, journeyAfter);
+      });
+
+      it("opened encounters - after dangling period", function() {
+        Journeys.insert({poiId: '1', visitorUUID: '1', encounters: [getEncounter(Journeys.DANGLING_PERIOD_IN_SEC+1, null)]});
+        Journeys.clearDanglingEncounters(current);
+        var journeyAfter = Journeys.findOne();
+        chai.assert.equal(journeyAfter.encounters.length, 0);
+      });
+
+      it("multiple encounters", function() {
+        Journeys.insert({poiId: '1', visitorUUID: '1', encounters: [getEncounter(Journeys.DANGLING_PERIOD_IN_SEC+100, Journeys.DANGLING_PERIOD_IN_SEC+90), getEncounter(Journeys.DANGLING_PERIOD_IN_SEC+1, null)]});
+        Journeys.insert({poiId: '2', visitorUUID: '1', encounters: [getEncounter(Journeys.DANGING_PERIOD_IN_SEC+100, Journeys.DANGING_PERIOD_IN_SEC+90)]});
+        Journeys.insert({poiId: '1', visitorUUID: '2', encounters: [getEncounter(Journeys.DANGING_PERIOD_IN_SEC-1, null)]});
+        var journeyBefore1 = Journeys.findOne({poiId: '1', visitorUUID: '1'});
+        var journeyBefore2 = Journeys.findOne({poiId: '2', visitorUUID: '1'});
+        var journeyBefore3 = Journeys.findOne({poiId: '1', visitorUUID: '2'});
+        Journeys.clearDanglingEncounters(current);
+        var journeyAfter1 = Journeys.findOne({poiId: '1', visitorUUID: '1'});
+        var journeyAfter2 = Journeys.findOne({poiId: '2', visitorUUID: '1'});
+        var journeyAfter3 = Journeys.findOne({poiId: '1', visitorUUID: '2'});
+        chai.assert.equal(journeyAfter2.encounters.length, 1);
+        chai.assert.equal(journeyAfter3.encounters.length, 1);
+        chai.assert.deepEqual(journeyBefore2, journeyAfter2);
+        chai.assert.deepEqual(journeyBefore3, journeyAfter3);
+
+        chai.assert.equal(journeyAfter1.encounters.length, 1);
+        journeyBefore1.encounters.pop();
+        chai.assert.deepEqual(journeyBefore1, journeyAfter1);
+      });
+    });
   });
 }

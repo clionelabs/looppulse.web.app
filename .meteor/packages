@@ -29,3 +29,4 @@ meteoric:ionic-sass
 mike:mocha
 harrison:babyparse
 http
+percolate:synced-cron
