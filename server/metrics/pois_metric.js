@@ -66,15 +66,12 @@ PoisMetric.prototype._createAggregate = function () {
     return -poi.interestedVisitors;
   });
   var topInterestedPois = _.first(sortedPois, self.topInterestsLimit);
-  var restPoiIds = _.pluck(_.rest(sortedPois, self.topInterestsLimit), '_id');
 
   var topInterested = _.reduce(topInterestedPois, function(memo, poi) {
     memo.push({name: poi.name, interestedVisitors: poi.interestedVisitors});
     return memo;
   }, []);
-  if (restPoiIds.length > 0) {
-    topInterested.push({name: "Others", interestedVisitors: engine.computeInterestedCnt(restPoiIds)});
-  }
+
   self.topInterested = topInterested;
 
   self.gaugeData = self._toGauge();
@@ -110,6 +107,6 @@ PoisMetric.prototype._toGauge = function() {
 PoisMetric.prototype._constructInterestedList = function() {
   var self = this;
   return _.map(self.topInterested, function(r) {
-    return r.interestedVisitors / self.totalVisitors;
+    return r.interestedVisitors / self.interestedVisitors;
   });
 }

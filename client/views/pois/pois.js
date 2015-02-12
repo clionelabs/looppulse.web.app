@@ -1,3 +1,5 @@
+
+
 Template.pois.rendered = function() {
   $(".container").slick({
     infinite: false,
@@ -8,6 +10,9 @@ Template.pois.rendered = function() {
     },
     arrows: false
   });
+
+  var isHeartActive = Session.get("isHeartActive");
+  Template.pois.swipe(!isHeartActive);
 };
 
 Template.pois.helpers({
