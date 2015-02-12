@@ -17,6 +17,7 @@ Template.pois.rendered = function() {
 
 Template.pois.helpers({
   "getTop3PoisByInterestedVisitors" : function() {
+    console.log(this.poisMetric.topInterested);
     return this.poisMetric.topInterested;
   }
 });

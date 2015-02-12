@@ -86,22 +86,30 @@
           }
           &:nth-child(2) {
             td:first-child {
-              color: $lp-blue-deep;
+              a {
+                color: $lp-blue-deep;
+              }
             }
           }
           &:nth-child(3) {
             td:first-child {
-              color: $lp-blue;
+              a {
+                color: $lp-blue;
+              }
             }
           }
           &:nth-child(4) {
             td:first-child {
-              color: $lp-blue-light1;
+              a {
+                color: $lp-blue-light1;
+              }
             }
           }
           &:nth-child(5) {
             td:first-child {
-              color: $lp-blue-light2;
+              a {
+                color: $lp-blue-light2;
+              }
             }
           }
         }

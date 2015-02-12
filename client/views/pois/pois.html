@@ -47,7 +47,7 @@
                         </tr>
                       {{#each getTop3PoisByInterestedVisitors }}
                           <tr>
-                              <td>{{_.capitalize name}}</td>
+                              <td><a href="{{urlFor route='poi' }}">{{_.capitalize name}}</a></td>
                               <td>{{ interestedVisitors }}</td>
                           </tr>
                       {{/each }}
@@ -66,7 +66,7 @@
                     </tr>
                   {{#each poisMetric.pois}}
                       <tr>
-                          <td><a href="{{urlFor route='poi' id=this._id }}">{{_.capitalize name }}</a></td>
+                          <td><a href="{{urlFor route='poi'}}">{{_.capitalize name }}</a></td>
                           <td>{{ interestedVisitors }}</td>
                           <td>{{ totalVisitors }}</td>
                       </tr>
