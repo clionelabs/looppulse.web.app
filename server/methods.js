@@ -58,5 +58,22 @@ Meteor.methods({
       console.log("Result POI" + JSON.stringify(result));
       return result;
     }
-  }
+  },
+
+  /**
+   * @param {String} workspaceId
+   * @return CSV formatted data
+   */
+  exportWorkspacePois: function(workspaceId) {
+    var pois = Workspaces.findOne(workspaceId).getPois();
+    return CSV.exportPois(pois);
+  },
+
+  /**
+   * @param {String} poiId
+   * @return CSV formmated data
+   */
+  exportPoi: function(poiId) {
+    return CSV.exportPois([Pois.findOne(poiId)]);
+  },
 });

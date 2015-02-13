@@ -32,3 +32,20 @@ Template.pois.swipe = function(isActive) {
     $(".container").slickPrev();
   }
 };
+
+Template.pois.events({
+  "click #gauge-download": function (e, tmpl) {
+    // TODO: The click event should be captured from Template.gauge, which is then being delegated to here
+    // TODO: Can we have a more robust way to retrieve workspace?
+    var workspaceId = Workspaces.findOne()._id;
+    Meteor.call('exportWorkspacePois', workspaceId, function(error, result) {
+      if (error) {
+        Notifications.error('Export CSV', 'Export CSV failed -- ' + error + ' --');
+      } else {
+        var uri = "data:text/csv;charset=utf-8," + escape(result);
+        var filename =  workspaceId + "-" + "pois" +  "-" + moment().format() + ".csv";
+        Template.triggerDownloadCSV(filename, uri);
+      }
+    });
+  }
+});
