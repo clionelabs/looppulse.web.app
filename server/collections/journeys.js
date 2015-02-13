@@ -5,6 +5,7 @@
  */
 
 Journeys.GRACE_PERIOD_IN_SEC = 60; // Grace period to determine whether a new ENTER event is a real encounter, or just noise as part of the previous.
+Journeys.DANGLING_PERIOD_IN_SEC = 60 * 60 * 3; // Period beyond which an non-closed encounter is considered error - the corresponding exit event is missed.
 
 /**
  * @private
@@ -130,6 +131,20 @@ Journeys.handleNewBeaconEvent = function(beaconEvent) {
       // We might have missed an ENTER event, so the best we can do here is to ignore this EXIT.
     }
   }
+};
+
+/**
+ * This function clear all danging encounters in journeys.
+ * Dangling encounters are encounters which were opened for unreasonably long without closing. They are caused mainly by missing exit events.
+ * @param {Moment} current Current timeT
+ */
+Journeys.clearDanglingEncounters = function(current) {
+  _.each(Journeys.find().fetch(), function(journey) {
+    var lastEncounter = _.last(journey.encounters);
+    if (!lastEncounter.isClosed() && lastEncounter.duration(current) > Journeys.DANGLING_PERIOD_IN_SEC * 1000) {
+      Journeys._popEncounter(journey.poiId, journey.visitorUUID);
+    }
+  });
 };
 
 /**
