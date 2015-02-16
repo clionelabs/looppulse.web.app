@@ -30,3 +30,6 @@ mike:mocha
 harrison:babyparse
 http
 percolate:synced-cron
+mrt:garlic
+meteorhacks:kadira-profiler
+meteorhacks:kadira
