@@ -18,8 +18,7 @@ Scheduler.jobs = [
       return parser.text('every 2 hours');
     },
     job: function () {
-      console.log("[Scheduler] Running scheduled task: Clear Dangling Journey Encounter");
-      return function() {Journeys.clearDanglingEncounters(moment());};
+      return Journeys.clearDanglingEncounters(moment());
     }
   }
 ];

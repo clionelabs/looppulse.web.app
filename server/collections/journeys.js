@@ -141,7 +141,7 @@ Journeys.handleNewBeaconEvent = function(beaconEvent) {
 Journeys.clearDanglingEncounters = function(current) {
   _.each(Journeys.find().fetch(), function(journey) {
     var lastEncounter = _.last(journey.encounters);
-    if (!lastEncounter.isClosed() && lastEncounter.duration(current) > Journeys.DANGLING_PERIOD_IN_SEC * 1000) {
+    if (lastEncounter && !lastEncounter.isClosed() && lastEncounter.duration(current) > Journeys.DANGLING_PERIOD_IN_SEC * 1000) {
       Journeys._popEncounter(journey.poiId, journey.visitorUUID);
     }
   });
