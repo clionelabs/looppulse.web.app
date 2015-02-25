@@ -9,6 +9,46 @@ Template.engageCreate.events({
       console.log(downloadUrl);
       });
     });
+  },
+  "blur input, change input": function(e) {
+    //TODO prefetch and attach the lookup key as data in DOM
+    var keys = (function findKeys(elem, arr) {
+      if (!arr) { arr = []; }
+      if (elem.parentNode) {
+        var key = $(elem).data("id");
+        if (key) {
+          return findKeys(elem.parentNode, [{"key":key, "element" : elem}].concat(arr));
+        } else {
+          return findKeys(elem.parentNode, arr);
+        }
+      } else {
+        return arr;
+      }
+    })(e.currentTarget);
+
+    //Code Smell but work
+    var formKey = keys[0].key;
+    var formObject = Session.get(formKey);
+    var currentObject = formObject;
+    var parentObject = null;
+    for(var i = 1; i < keys.length; i++) {
+      if(currentObject[keys[i].key] === undefined) {
+        if(i < keys.length - 1) {
+          currentObject[keys[i].key] = {};
+        } else {
+          var currentElement =  $(keys[i].element);
+          if (currentElement.is(":checkbox")) {
+            currentObject[keys[i].key] = currentElement.is(':checked');
+          } else {
+            currentObject[keys[i].key] = currentElement.val();
+          }
+        }
+      }
+      parentObject = currentObject;
+      currentObject = currentObject[keys[i].key];
+    }
+    Session.set(keys[0].key, formObject);
+
   }
 });
 
@@ -78,4 +118,8 @@ Template.engageCreate.created = function () {
   }
 
   Session.setDefault(sessionKey, s);
+};
+
+Template.engageCreate.rendered = function() {
+
 };
