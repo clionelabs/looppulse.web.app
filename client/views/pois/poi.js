@@ -14,8 +14,8 @@ Template.poi.rendered = function() {
 };
 
 Template.poi.helpers({
-  "getTopPoisByInterestedVisitors" : function() {
-    return this.poiMetric.topInterested;
+  "getTopRelatedPois" : function() {
+    return this.poiMetric.topRelatedPois;
   }
 });
 

@@ -11,6 +11,7 @@ PoiMetric = function (doc) {
   _.extend(this, doc);
   this.name = "poi-metric";
   this.interval = 1000 * 10;
+  this.topRelatedLimit = 3;
 };
 
 PoiMetric.prototype._publishCursor = function (sub) {
@@ -50,7 +51,20 @@ PoiMetric.prototype._createAggregate = function () {
   self.interestedVisitors = engine.computeInterestedCnt();
   self.averageDwellTime = engine.computeAvgDwellTime();
 
-  //TODO impl common interested
+  // Compute top common interests
+  var pois = Pois.find({ "workspaceId" : self.poi.getWorkspace()._id }).fetch();
+  var otherPois = _.reject(pois, function(poi) {
+    return poi._id === self.poiId;
+  });
+  var allPoisEngine = new PoisMetricEngine(pois, current);
+  var topRelatedPois = _.map(otherPois, function(poi) {
+    return {poiId: poi._id, name: poi.name, interestedVisitors: allPoisEngine.computeIntersectInterestedCnt([self.poiId, poi._id])};
+  });
+  topRelatedPois = _.sortBy(topRelatedPois, function(poi) {
+    return -poi.interestedVisitors;
+  });
+  topRelatedPois = _.first(topRelatedPois, self.topRelatedLimit);
+  self.topRelatedPois = topRelatedPois;
 
   self.gaugeData = self._toGauge();
 
