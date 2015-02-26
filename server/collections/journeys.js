@@ -152,10 +152,12 @@ Journeys.clearDanglingEncounters = function(current) {
  */
 
 Meteor.startup(function() {
+  /*
   BeaconEvents.find().observe({
     _suppress_initial: true,
     "added": function(beaconEvent) {
       Journeys.handleNewBeaconEvent(beaconEvent);
     }
   });
+  */
 });
