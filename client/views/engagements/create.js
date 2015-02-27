@@ -2,23 +2,29 @@ Template.engageCreate.FORM_SESSION_KEY = "engageCreateForm";
 
 Template.engageCreate.events({
   "click .create": function () {
-    var uploader = new Slingshot.Upload("engageCreateGraphic");
-    var files = Dropzone.instances[0].files; //TODO look for better way
-    //currently only handle 1 file
-    uploader.send(files[0], function (error, downloadUrl) {
-      var formData = Session.get(Template.engageCreate.FORM_SESSION_KEY);
-      formData.imageUrl = downloadUrl;
-      Meteor.call("addEngagement", formData, function(e, r) {
-        if (r) {
-          Notifications.info('Engagement Created', '');
-          Session.set(Template.engageCreate.FORM_SESSION_KEY, Engagement.getDefault());
-          window.history.back();
+    var formData = Session.get(Template.engageCreate.FORM_SESSION_KEY);
+    Meteor.call("addEngagement", formData, function(e, r) {
+      if (r) {
+        console.log("added", r);
+        var uploader = new Slingshot.Upload("engageCreateGraphic", { engagementId : r._id });
+        var files = Dropzone.instances[0].files; //TODO look for better way
+        //currently only handle 1 file
+        uploader.send(files[0], function (error, downloadUrl) {
+          r.imageUrl = downloadUrl;
+          Meteor.call("upsertEngagement", r, function(e,r2) {
+            if (r) {
+              Notifications.info('Engagement Created', '');
+              Session.set(Template.engageCreate.FORM_SESSION_KEY, Engagement.getDefault());
+              window.history.back();
+            } else {
+              Notifications.error('Engagement Created Failed', '');
+            }
+          });
+        });
 
-        } else {
-          Notifications.error('Engagement Created Failed', '');
-        }
-      });
-      console.log(downloadUrl);
+      } else {
+        Notifications.error('Engagement Created Failed', '');
+      }
     });
   },
   "blur input, change input": function(e) {
