@@ -21,6 +21,11 @@
     }
   },
 
+  "kadira": {
+    "appId" : "xQaKq3hd4Yy9FaQCh",
+    "appSecret" : "0e35628b-06bb-4750-83c1-235d0e44fc4f"
+  },
+
   "accounts": {
     "forbidClientAccountCreation": true
   },

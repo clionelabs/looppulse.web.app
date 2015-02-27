@@ -31,3 +31,5 @@ http
 percolate:synced-cron
 gilbertwat:deepmerge
 momentjs:moment
+meteorhacks:kadira-profiler
+meteorhacks:kadira

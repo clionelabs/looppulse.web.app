@@ -47,6 +47,10 @@ loftsteinn:bootstrap3-daterangepicker@0.3.1
 logging@1.0.6
 meteor@1.1.4
 meteor-platform@1.2.1
+meteorhacks:kadira@2.18.3
+meteorhacks:kadira-binary-deps@1.3.1
+meteorhacks:kadira-profiler@1.0.2
+meteorhacks:meteorx@1.3.1
 meteorhacks:subs-manager@1.2.4
 meteoric:ionic-sass@0.1.7
 mike:mocha@0.5.1
@@ -55,8 +59,10 @@ minimongo@1.0.6
 mobile-status-bar@1.0.2
 momentjs:moment@2.9.0
 mongo@1.0.11
+mongo-livedata@1.0.7
 mrt:firebase@0.6.15
 mrt:firebase-token-generator@0.1.4
+mrt:garlic@0.1.0
 mrt:moment@2.8.1
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
