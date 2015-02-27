@@ -4,10 +4,21 @@ Template.engageCreate.events({
   "click .create": function () {
     var uploader = new Slingshot.Upload("engageCreateGraphic");
     var files = Dropzone.instances[0].files; //TODO look for better way
-    _.each(files, function (f) {
-      uploader.send(f, function (error, downloadUrl) {
-      console.log(downloadUrl);
+    //currently only handle 1 file
+    uploader.send(files[0], function (error, downloadUrl) {
+      var formData = Session.get(Template.engageCreate.FORM_SESSION_KEY);
+      formData.imageUrl = downloadUrl;
+      Meteor.call("addEngagement", formData, function(e, r) {
+        if (r) {
+          Notifications.info('Engagement Created', '');
+          Session.set(Template.engageCreate.FORM_SESSION_KEY, Engagement.getDefault());
+          window.history.back();
+
+        } else {
+          Notifications.error('Engagement Created Failed', '');
+        }
       });
+      console.log(downloadUrl);
     });
   },
   "blur input, change input": function(e) {
@@ -42,7 +53,7 @@ Template.engageCreate.helpers({
     var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
     if (Session.get(sessionKey).selectedPoi) {
       var str = "Currently targeting ";
-      var vg_interested = Template.visitorGroupSelector.visitorGroup.INTERESTED;
+      var vg_interested = Engagement.visitorGroup.INTERESTED;
       if (Session.get(sessionKey).visitorGroup === vg_interested) {
         str = str + "\<br>\<b>" + Session.get(sessionKey).selectedPoi.interestedVisitors + "\</b> " + "interested ";
       } else {
@@ -61,7 +72,7 @@ Template.engageCreate.helpers({
     var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
     var formData = Session.get(sessionKey);
 
-    if (Session.get(sessionKey).type === Template.budgetFiller.type.lifetime) {
+    if (Session.get(sessionKey).type === Engagement.budgetType.LIFETIME) {
 
       return "";
 
@@ -82,22 +93,24 @@ Template.engageCreate.helpers({
 Template.engageCreate.created = function () {
   var self = this;
   var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-  var s = {
-    startDate: moment().format("YYYY-MM-DD"),
-    visitorGroup: Template.visitorGroupSelector.visitorGroup.INTERESTED,
-    amount: 200,
-    type: Template.budgetFiller.type.perDay
-  };
+  var s = Engagement.getDefault();
+  console.log("Created", Iron.controller().state.get("selectedPoiId"));
   if (Iron.controller().state.get("selectedPoiId")) {
     var sp = _.first(_.filter(PoisMetric.get().pois,
       function(p) {
         return p._id === Iron.controller().state.get("selectedPoiId");
       }
     ));
+    console.log("sp", sp);
     s = _.extend({}, s, { "selectedPoi" : Template.poiNameSelector.toSelectorObj(sp) });
   }
+  console.log(s);
 
-  Session.setDefault(sessionKey, s);
+  Session.set(sessionKey, s);
+};
+
+Template.engageCreate.destroyed = function() {
+  Session.set(Template.engageCreate.FORM_SESSION_KEY, Engagement.getDefault());
 };
 
 Template.engageCreate.rendered = function() {

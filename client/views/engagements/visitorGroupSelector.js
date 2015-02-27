@@ -1,28 +1,23 @@
-Template.visitorGroupSelector.visitorGroup = {
-    "INTERESTED" : "interested",
-    "VISITED" : "visited"
-};
-
 
 Template.visitorGroupSelector.helpers({
     isInterested : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        return Session.get(sessionKey).visitorGroup === Template.visitorGroupSelector.visitorGroup.INTERESTED;
+        return Session.get(sessionKey).visitorGroup === Engagement.visitorGroup.INTERESTED;
 
     },
     isVisited : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        return Session.get(sessionKey).visitorGroup === Template.visitorGroupSelector.visitorGroup.VISITED;
+        return Session.get(sessionKey).visitorGroup === Engagement.visitorGroup.VISITED;
     }
 });
 
 Template.visitorGroupSelector.events({
     "click #interested" : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        Session.extend(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.INTERESTED });
+        Session.extend(sessionKey, { visitorGroup : Engagement.visitorGroup.INTERESTED });
     },
     "click #visited" : function() {
         var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-        Session.extend(sessionKey, { visitorGroup : Template.visitorGroupSelector.visitorGroup.VISITED });
+        Session.extend(sessionKey, { visitorGroup : Engagement.visitorGroup.VISITED });
     }
 });

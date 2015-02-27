@@ -1,13 +1,14 @@
 
 Template.poiNameSelector.helpers({
   get : function() {
-    return PoisMetric.get().pois.map(Template.poiNameSelector.toSelectorObj);
+    if (PoisMetric.get()) {
+      return PoisMetric.get().pois.map(Template.poiNameSelector.toSelectorObj);
+    } else {
+      return [];
+    }
   },
   selected: function(e, suggestion, dataset) {
     var sessionKey = Template.engageCreate.FORM_SESSION_KEY;
-    console.log(suggestion);
-    console.log(e);
-    console.log(dataset);
     Session.extend(sessionKey, { "selectedPoi" : suggestion });
     $("#poiSelectionModal").modal('hide');
     }

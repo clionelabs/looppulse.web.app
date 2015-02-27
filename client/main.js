@@ -30,3 +30,7 @@ $.toggleView = function(selectorToShow, selectorToHide) {
         console.error("element state is not ok");
     }
 };
+
+Meteor.startup(function() {
+  Notifications.settings.timeout = 3000;
+});
