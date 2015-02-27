@@ -11,44 +11,24 @@ Template.engageCreate.events({
     });
   },
   "blur input, change input": function(e) {
-    //TODO prefetch and attach the lookup key as data in DOM
-    var keys = (function findKeys(elem, arr) {
-      if (!arr) { arr = []; }
-      if (elem.parentNode) {
-        var key = $(elem).data("id");
-        if (key) {
-          return findKeys(elem.parentNode, [{"key":key, "element" : elem}].concat(arr));
+    var cur = e.currentTarget;
+    var currentObject = {};
+    var rootKey = $(cur).data("id");
+    while (cur) {
+      var id = $(cur).data("id");
+      if (id) {
+        if (_.isEqual(currentObject,{})) {
+          currentObject[id] = $(cur).is(":checkbox")? $(cur).is(':checked'): $(cur).val();
         } else {
-          return findKeys(elem.parentNode, arr);
+          var newObject = {};
+          newObject[id] = currentObject;
+          currentObject = newObject;
         }
-      } else {
-        return arr;
+        rootKey = id;
       }
-    })(e.currentTarget);
-
-    //Code Smell but work
-    var formKey = keys[0].key;
-    var formObject = Session.get(formKey);
-    var currentObject = formObject;
-    var parentObject = null;
-    for(var i = 1; i < keys.length; i++) {
-      if(currentObject[keys[i].key] === undefined) {
-        if(i < keys.length - 1) {
-          currentObject[keys[i].key] = {};
-        } else {
-          var currentElement =  $(keys[i].element);
-          if (currentElement.is(":checkbox")) {
-            currentObject[keys[i].key] = currentElement.is(':checked');
-          } else {
-            currentObject[keys[i].key] = currentElement.val();
-          }
-        }
-      }
-      parentObject = currentObject;
-      currentObject = currentObject[keys[i].key];
+      cur = cur.parentNode;
     }
-    Session.set(keys[0].key, formObject);
-
+    Session.rextend(rootKey, currentObject[rootKey]);
   }
 });
 
@@ -121,5 +101,34 @@ Template.engageCreate.created = function () {
 };
 
 Template.engageCreate.rendered = function() {
+  var formData = Session.get(Template.engageCreate.FORM_SESSION_KEY);
+  $('input[data-id]').each(function (i, e) {
+    var keys = [$(e).data("id")];
+    var cur = e;
+    while (cur) {
+      var id = $(cur).data("id");
+      if (id) {
+        keys = [id].concat(keys);
+      }
+      cur = cur.parentNode;
+    }
 
+    var currentData = formData;
+    _.each(_.rest(keys), function (key) {
+      if (_.isObject(currentData) && currentData.hasOwnProperty(key)) {
+        currentData = currentData[key];
+      } else {
+        return;
+      }
+    });
+
+    if (currentData !== null) {
+      if ($(e).is(":checkbox")) {
+        $(e).prop("checked", currentData);
+      } else {
+        $(e).val(currentData);
+      }
+    }
+
+  });
 };

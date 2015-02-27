@@ -3,3 +3,9 @@ Session.extend = function (formKey, obj) {
     s = _.extend({}, s, obj);
     Session.set(formKey, s);
 };
+
+Session.rextend = function (formKey, obj) {
+  var s = Session.get(formKey);
+  s = deepmerge(s, obj);
+  Session.set(formKey, s);
+};
