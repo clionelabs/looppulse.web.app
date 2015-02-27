@@ -13,13 +13,7 @@ PoiInterests.THRESHOLD_DURATION_SEC = 5 * 60; // 5 minutes
 PoiInterests.THRESHOLD_ENCOUNTER_COUNT = 2;
 
 PoiInterests.handleChangedJourney = function (journey, oldJourney) {
-  var poiId = journey.poiId;
-  var visitorUUID = journey.visitorUUID;
-  if (PoiInterests.isInterested(journey)) {
-    PoiInterests.markInterested(poiId, visitorUUID);
-  } else {
-    PoiInterests.markNotInterested(poiId, visitorUUID);
-  }
+  PoiInterests.recomputeJourney(journey);
 };
 
 /*
@@ -47,6 +41,22 @@ PoiInterests.markInterested = function (poiId, visitorUUID) {
 PoiInterests.markNotInterested = function (poiId, visitorUUID) {
   PoiInterests.upsert({poiId: poiId}, {$pull: {visitorUUIDs: visitorUUID}});
 };
+
+PoiInterests.recomputeAllJourneys = function() {
+  Journeys.find().forEach(function(journey) {
+    PoiInterests.recomputeJourney(journey);
+  });
+}
+
+PoiInterests.recomputeJourney = function(journey) {
+  var poiId = journey.poiId;
+  var visitorUUID = journey.visitorUUID;
+  if (PoiInterests.isInterested(journey)) {
+    PoiInterests.markInterested(poiId, visitorUUID);
+  } else {
+    PoiInterests.markNotInterested(poiId, visitorUUID);
+  }
+}
 
 Meteor.startup(function() {
   Journeys.find().observe({
