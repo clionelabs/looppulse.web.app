@@ -3,28 +3,21 @@ Template.engageCreate.FORM_SESSION_KEY = "engageCreateForm";
 Template.engageCreate.events({
   "click .create": function () {
     var formData = Session.get(Template.engageCreate.FORM_SESSION_KEY);
-    Meteor.call("addEngagement", formData, function(e, r) {
-      if (r) {
-        console.log("added", r);
-        var uploader = new Slingshot.Upload("engageCreateGraphic", { engagementId : r._id });
-        var files = Dropzone.instances[0].files; //TODO look for better way
-        //currently only handle 1 file
-        uploader.send(files[0], function (error, downloadUrl) {
-          r.imageUrl = downloadUrl;
-          Meteor.call("upsertEngagement", r, function(e,r2) {
-            if (r) {
-              Notifications.info('Engagement Created', '');
-              Session.set(Template.engageCreate.FORM_SESSION_KEY, Engagement.getDefault());
-              window.history.back();
-            } else {
-              Notifications.error('Engagement Created Failed', '');
-            }
-          });
-        });
-
-      } else {
-        Notifications.error('Engagement Created Failed', '');
-      }
+    formData._id = Engagements._makeNewID();
+    var uploader = new Slingshot.Upload("engageCreateGraphic", { engagementId : formData._id });
+    var files = Dropzone.instances[0].files; //TODO look for better way
+    //currently only handle 1 file
+    uploader.send(files[0], function (error, downloadUrl) {
+      formData.imageUrl = downloadUrl;
+      Meteor.call("upsertEngagement", formData, function(e, formData) {
+        if (formData) {
+          Notifications.info('Engagement Created', '');
+          Session.set(Template.engageCreate.FORM_SESSION_KEY, Engagement.getDefault());
+          window.history.back();
+        } else {
+          Notifications.error('Engagement Created Failed', '');
+        }
+      });
     });
   },
   "blur input, change input": function(e) {
@@ -141,12 +134,10 @@ Template.engageCreate.rendered = function() {
       }
     });
 
-    if (currentData !== null) {
-      if ($(e).is(":checkbox")) {
-        $(e).prop("checked", currentData);
-      } else {
-        $(e).val(currentData);
-      }
+    if ($(e).is(":checkbox")) {
+      $(e).prop("checked", currentData);
+    } else {
+      $(e).val(currentData);
     }
 
   });

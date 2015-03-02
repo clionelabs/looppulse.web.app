@@ -62,7 +62,6 @@ mongo@1.0.11
 mongo-livedata@1.0.7
 mrt:firebase@0.6.15
 mrt:firebase-token-generator@0.1.4
-mrt:garlic@0.1.0
 mrt:moment@2.8.1
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
