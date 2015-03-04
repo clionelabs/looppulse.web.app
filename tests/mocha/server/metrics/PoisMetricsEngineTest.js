@@ -155,26 +155,30 @@ if (!(typeof MochaWeb === 'undefined')) {
         PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: []});
         var engine = new PoisMetricEngine(pois, current);
         chai.assert.equal(engine.computeInterestedCnt(), 0);
+        chai.assert.equal(engine.computeIntersectInterestedCnt(), 0);
       });
 
       it("interested count - single poi - single interest", function() {
         PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1']});
         var engine = new PoisMetricEngine(pois, current);
         chai.assert.equal(engine.computeInterestedCnt(), 1);
+        chai.assert.equal(engine.computeIntersectInterestedCnt(), 1);
       });
 
       it("interested count - single poi - multiple interests", function() {
         PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1', '2']});
         var engine = new PoisMetricEngine(pois, current);
         chai.assert.equal(engine.computeInterestedCnt(), 2);
+        chai.assert.equal(engine.computeIntersectInterestedCnt(), 2);
       });
 
       it("interested count - multiple poi", function() {
-        PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1', '2']});
-        PoiInterests.insert({poiId: pois[1]._id, visitorUUIDs: ['2', '3']});
-        PoiInterests.insert({poiId: pois[2]._id, visitorUUIDs: ['3', '4']});
+        PoiInterests.insert({poiId: pois[0]._id, visitorUUIDs: ['1', '2', '5']});
+        PoiInterests.insert({poiId: pois[1]._id, visitorUUIDs: ['2', '3', '5']});
+        PoiInterests.insert({poiId: pois[2]._id, visitorUUIDs: ['3', '4', '5']});
         var engine = new PoisMetricEngine(pois, current);
-        chai.assert.equal(engine.computeInterestedCnt(), 4);
+        chai.assert.equal(engine.computeInterestedCnt(), 5);
+        chai.assert.equal(engine.computeIntersectInterestedCnt(), 1);
       });
 
       it("interested count - filter poi", function() {
@@ -183,6 +187,9 @@ if (!(typeof MochaWeb === 'undefined')) {
         PoiInterests.insert({poiId: pois[2]._id, visitorUUIDs: ['3', '4']});
         var engine = new PoisMetricEngine(pois, current);
         chai.assert.equal(engine.computeInterestedCnt([pois[0]._id, pois[1]._id]), 3);
+        chai.assert.equal(engine.computeInterestedCnt([pois[0]._id, pois[2]._id]), 4);
+        chai.assert.equal(engine.computeIntersectInterestedCnt([pois[0]._id, pois[1]._id]), 1);
+        chai.assert.equal(engine.computeIntersectInterestedCnt([pois[0]._id, pois[2]._id]), 0);
       });
     });
   });

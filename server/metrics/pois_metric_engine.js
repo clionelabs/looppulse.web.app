@@ -23,7 +23,7 @@ PoisMetricEngine = function(pois, current) {
  */
 PoisMetricEngine.prototype.computeTotalVisitorsCnt = function(filterPoiIdList) {
   var isAllPoi = !filterPoiIdList;
-  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): [];
+  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): {};
   var users = _.reduce(this.journeys, function(memo, journey) {
     if (isAllPoi || filterPoiIdSet[journey.poiId]) {
       memo[journey.visitorUUID] = true;
@@ -34,13 +34,13 @@ PoisMetricEngine.prototype.computeTotalVisitorsCnt = function(filterPoiIdList) {
 };
 
 /**
- * Compute number of visitors who show interested in any of the pois
+ * Compute number of visitors who show interested in ANY of the pois
  * @param {String[]} filterPoiIdList (Optional) List of poiIds that being considered. All pois are considered if not specified.
  * @returns {Number} number of interested visitors
  */
 PoisMetricEngine.prototype.computeInterestedCnt = function(filterPoiIdList) {
   var isAllPoi = !filterPoiIdList;
-  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): [];
+  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): {};
   var visitorList = _.reduce(this.interests, function(memo, interest) {
     if (isAllPoi || filterPoiIdSet[interest.poiId]) {
       if (interest.visitorUUIDs) {
@@ -51,6 +51,25 @@ PoisMetricEngine.prototype.computeInterestedCnt = function(filterPoiIdList) {
   }, [])
   return visitorList.length;
 };
+
+/**
+ * Compute number of visitors who show interested in ALL of the pois
+ * @param {String[]} filterPoiIdList (Optional) List of poiIds that being considered. All pois are considered if not specified.
+ * @returns {Number} number of interested visitors
+ */
+PoisMetricEngine.prototype.computeIntersectInterestedCnt = function(filterPoiIdList) {
+  var isAllPoi = !filterPoiIdList;
+  var filterPoiIdSet = filterPoiIdList? this._convertListToSet(filterPoiIdList): {};
+  var visitorList = _.reduce(this.interests, function(memo, interest) {
+    if (isAllPoi || filterPoiIdSet[interest.poiId]) {
+      if (interest.visitorUUIDs) {
+        memo = memo === null? interest.visitorUUIDs: _.intersection(memo, interest.visitorUUIDs);
+      }
+    }
+    return memo;
+  }, null);
+  return visitorList.length;
+}
 
 /**
  * Compute the current number of visitors still inside any of the poi regions
