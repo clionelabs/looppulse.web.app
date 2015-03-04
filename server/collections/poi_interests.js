@@ -1,6 +1,6 @@
 /**
-  * This is a temporary solution for storing POI interested visitor.
-  * Whenever there is a new beacon event, we probabilistically put/remove the visitor from the poi interested list.
+ * A journey is classified as interested if it's encounters meet the following criteria:
+ *   Within last 30 days, there are at least two encounters, each of which has a duration longer than 5 minutes
   *
   * Document property
   * @property {String} poiId {@link POI}
@@ -8,19 +8,30 @@
   */
 PoiInterests = new Meteor.Collection('poi_interests');
 
+PoiInterests.THRESHOLD_WITHIN_SEC = 30 * 24 * 60 * 60; // 30 days
+PoiInterests.THRESHOLD_DURATION_SEC = 5 * 60; // 5 minutes
+PoiInterests.THRESHOLD_ENCOUNTER_COUNT = 2;
+
 PoiInterests.handleChangedJourney = function (journey, oldJourney) {
-  var poiId = journey.poiId;
-  var visitorUUID = journey.visitorUUID;
-  if (PoiInterests.isInterested(journey)) {
-    PoiInterests.markInterested(poiId, visitorUUID);
-  } else {
-    PoiInterests.markNotInterested(poiId, visitorUUID);
-  }
+  PoiInterests.recomputeJourney(journey);
 };
 
+/*
+ * This function determine whether a journey is classified as interested (i.e. a visitor interested in a poi)
+ *
+ * @param {Journey} journey
+ * @returns {Boolean} isInterested
+ */
 PoiInterests.isInterested = function (journey) {
-  // HACK: interested if it's the second time there
-  return (journey.encounters.length > 1);
+  var current = moment();
+  var validCount = _.reduce(journey.encounters, function(memo, encounter) {
+    if (moment(current).diff(encounter.enteredAt) < PoiInterests.THRESHOLD_WITHIN_SEC * 1000
+        && encounter.duration(current) >= PoiInterests.THRESHOLD_DURATION_SEC * 1000) {
+      memo++;
+    }
+    return memo;
+  }, 0);
+  return validCount >= PoiInterests.THRESHOLD_ENCOUNTER_COUNT;
 };
 
 PoiInterests.markInterested = function (poiId, visitorUUID) {
@@ -30,6 +41,22 @@ PoiInterests.markInterested = function (poiId, visitorUUID) {
 PoiInterests.markNotInterested = function (poiId, visitorUUID) {
   PoiInterests.upsert({poiId: poiId}, {$pull: {visitorUUIDs: visitorUUID}});
 };
+
+PoiInterests.recomputeAllJourneys = function() {
+  Journeys.find().forEach(function(journey) {
+    PoiInterests.recomputeJourney(journey);
+  });
+}
+
+PoiInterests.recomputeJourney = function(journey) {
+  var poiId = journey.poiId;
+  var visitorUUID = journey.visitorUUID;
+  if (PoiInterests.isInterested(journey)) {
+    PoiInterests.markInterested(poiId, visitorUUID);
+  } else {
+    PoiInterests.markNotInterested(poiId, visitorUUID);
+  }
+}
 
 Meteor.startup(function() {
   Journeys.find().observe({

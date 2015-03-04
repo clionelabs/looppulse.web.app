@@ -20,6 +20,15 @@ Scheduler.jobs = [
     job: function () {
       return Journeys.clearDanglingEncounters(moment());
     }
+  },
+  {
+    name: "Recompute all poi interests",
+    schedule: function (parser) {
+      return parser.text('every 24 hours');
+    },
+    job: function () {
+      return PoiInterests.recomputeAllJourneys();
+    }
   }
 ];
 
