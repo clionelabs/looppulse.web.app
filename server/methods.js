@@ -77,16 +77,6 @@ Meteor.methods({
     return CSV.exportPois([Pois.findOne(poiId)]);
   },
 
-  addEngagement: function(engagementData) {
-    if (Engagement.validate(engagementData)) {
-      var id = Engagements.insert(engagementData);
-      var result = _.extend({}, {_id : id}, engagementData);
-      return result;
-    } else {
-      return Meteor.Error("Validation failed");
-    }
-  },
-
   upsertEngagement: function(engagementData) {
     if (Engagement.validate(engagementData)) {
       var id = Engagements.upsert({ _id : engagementData._id }, engagementData);
