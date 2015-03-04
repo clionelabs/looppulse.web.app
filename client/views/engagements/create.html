@@ -1,8 +1,8 @@
 <template name="engageCreate">
-    <div class="container-fluid engage-create">
+    <div class="container-fluid engage-create" data-id="engageCreateForm">
         <section class="row name-input">
             <div class="col-sm-12">
-                <input id="engage-name" class="col-sm-9 form-control" type="text" placeholder="Engagement On...">
+                <input data-id="name" id="engage-name" class="col-sm-9 form-control" type="text" placeholder="Engagement On...">
                 <button class="create btn btn-lp pull-right">Create</button>
             </div>
         </section>
@@ -75,7 +75,7 @@
                             Target URL:
                         </td>
                         <td>
-                            <input id="ec-target-url" class="input-lp" type="url"/>
+                            <input data-id="targetUrl" id="ec-target-url" class="input-lp" type="url"/>
                         </td>
                         <td>
                             <div class="help-text">Track conversion for optimal result.</div>
@@ -86,7 +86,7 @@
                             Text:
                         </td>
                         <td>
-                            <input id="ec-text" class="input-lp" type="url"/>
+                            <input data-id="text" id="ec-text" class="input-lp" type="text"/>
                         </td>
                         <td>
                         </td>
@@ -105,24 +105,24 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="row-align-top">
+                    <tr class="row-align-top" >
                         <td>
                             Placement:
                         </td>
-                        <td>
+                        <td data-id="feedPlacement">
                             <div class="placement-item">
                                 Desktop News Feed
-                                <input id="ec-desktop-news-feed" type="checkbox"/>
+                                <input data-id="desktop" id="ec-desktop-news-feed" type="checkbox"/>
                                 <label for="ec-desktop-news-feed" class="pull-right"><span></span></label>
                             </div>
                             <div class="placement-item">
                                 Mobile News Feed
-                                <input id="ec-mobile-news-feed" type="checkbox"/>
+                                <input data-id="mobile" id="ec-mobile-news-feed" type="checkbox"/>
                                 <label for="ec-mobile-news-feed" class="pull-right"><span></span></label>
                             </div>
                             <div class="placement-item">
                                 Right Column
-                                <input id="ec-right-column" type="checkbox"/>
+                                <input data-id="rightColumn" id="ec-right-column" type="checkbox"/>
                                 <label for="ec-right-column" class="pull-right"><span></span></label>
                             </div>
                         </td>

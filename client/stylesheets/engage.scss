@@ -31,6 +31,10 @@
     margin: 15px 0px;
     width: 100%;
 
+    input {
+      background-color: transparent;
+    }
+
     tr.row-align-top {
       td {
         vertical-align: top;

@@ -12,10 +12,10 @@ Slingshot.createDirective("engageCreateGraphic", Slingshot.S3Storage, {
         return true;
     },
 
-    key: function (file) {
+    key: function (file, metaContext) {
         //Store file into a directory by the user's username.
         //var user = Meteor.users.findOne(this.userId);
         //return user.username + "/" + file.name;
-        return file.name;
+        return metaContext.engagementId + "/" + Date.now() + "-" + file.name;
     }
 });

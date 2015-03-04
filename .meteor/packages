@@ -15,7 +15,6 @@ accounts-password
 d3js:d3
 mrt:firebase-token-generator
 wizonesolutions:underscore-string
-mrt:moment
 udondan:slick
 u2622:persistent-session
 sergeyt:typeahead
@@ -30,6 +29,7 @@ mike:mocha
 harrison:babyparse
 http
 percolate:synced-cron
-mrt:garlic
+gilbertwat:deepmerge
+momentjs:moment
 meteorhacks:kadira-profiler
 meteorhacks:kadira
